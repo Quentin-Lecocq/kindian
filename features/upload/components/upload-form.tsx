@@ -43,8 +43,11 @@ const UploadForm = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <h2>Upload your kindle notes on txt format</h2>
+      <form
+        onSubmit={handleSubmit}
+        className="flex flex-col gap-4"
+        encType="multipart/form-data"
+      >
         <Input type="file" id="file" name="file" accept=".txt" />
         <SubmitButton
           isUploading={isUploading}
