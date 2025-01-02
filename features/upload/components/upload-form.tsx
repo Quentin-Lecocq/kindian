@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { isApiError } from '@/lib/utils';
 import { useState } from 'react';
 import { uploadFile } from '../server/actions/upload';
 
@@ -19,8 +20,12 @@ const UploadForm = () => {
     try {
       const url = await uploadFile(formData);
       setDownloadUrl(url);
-    } catch (error: any) {
-      setError(error.message || 'An error occurred.');
+    } catch (error: unknown) {
+      if (isApiError(error)) {
+        setError(error.message);
+      } else {
+        setError('An error occurred.');
+      }
     } finally {
       setIsUploading(false);
     }
