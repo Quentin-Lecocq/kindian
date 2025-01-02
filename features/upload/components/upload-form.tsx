@@ -1,5 +1,6 @@
 'use client';
 
+import SubmitButton from '@/components/submit-button';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { isApiError } from '@/lib/utils';
@@ -45,11 +46,12 @@ const UploadForm = () => {
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <h2>Upload your kindle notes on txt format</h2>
         <Input type="file" id="file" name="file" accept=".txt" />
-        <Button type="submit" disabled={isUploading}>
-          {isUploading ? 'Uploading...' : 'Upload'}
-        </Button>
+        <SubmitButton
+          isUploading={isUploading}
+          label={isUploading ? 'Uploading...' : 'Upload'}
+        />
       </form>
-      {error && <p className="text-red-500">{error}</p>}
+      {error && <p className="text-red-500 text-sm">{error}</p>}
       {downloadUrl && (
         <div>
           <p>File processed successfully! You can download it below.</p>
