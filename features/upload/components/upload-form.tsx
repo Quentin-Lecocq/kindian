@@ -4,39 +4,38 @@ import SubmitButton from '@/components/submit-button';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { isApiError } from '@/lib/utils';
-import { useState } from 'react';
+import { useReducer } from 'react';
+import { formReducer, initialState } from '../reducers/form-reducer';
 import { uploadFile } from '../server/actions/upload';
 
 const UploadForm = () => {
-  const [error, setError] = useState<string | null>(null);
-  const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
+  const [formState, dispatch] = useReducer(formReducer, initialState);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsUploading(true);
+    dispatch({ type: 'SET_UPLOADING', payload: true });
 
     const formData = new FormData(e.currentTarget as HTMLFormElement);
 
     try {
       const urls = await uploadFile(formData);
       // TODO: handle multiple files to download
-      setDownloadUrl(urls[0]);
+      dispatch({ type: 'SET_DOWNLOAD_URL', payload: urls[0] });
     } catch (error: unknown) {
       if (isApiError(error)) {
-        setError(error.message);
+        dispatch({ type: 'SET_ERROR', payload: error.message });
       } else {
-        setError('An error occurred.');
+        dispatch({ type: 'SET_ERROR', payload: 'An error occurred.' });
       }
     } finally {
-      setIsUploading(false);
+      dispatch({ type: 'SET_UPLOADING', payload: false });
     }
   };
 
   const handleDownload = () => {
-    if (downloadUrl) {
+    if (formState.downloadUrl) {
       const link = document.createElement('a');
-      link.href = downloadUrl;
+      link.href = formState.downloadUrl;
       link.download = 'kindle-notes.md';
       link.click();
     }
@@ -51,12 +50,14 @@ const UploadForm = () => {
       >
         <Input type="file" id="file" name="file" accept=".txt" />
         <SubmitButton
-          isUploading={isUploading}
-          label={isUploading ? 'Uploading...' : 'Upload'}
+          isUploading={formState.isUploading}
+          label={formState.isUploading ? 'Uploading...' : 'Upload'}
         />
       </form>
-      {error && <p className="text-red-500 text-sm">{error}</p>}
-      {downloadUrl && (
+      {formState.error && (
+        <p className="text-red-500 text-sm">{formState.error}</p>
+      )}
+      {formState.downloadUrl && (
         <div>
           <p>File processed successfully! You can download it below.</p>
           <Button onClick={handleDownload}>Download</Button>
