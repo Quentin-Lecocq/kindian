@@ -1,17 +1,8 @@
-type FormState = {
-  error: string | null;
-  downloadUrl: string | null;
-  isUploading: boolean;
-};
-
-type FormAction =
-  | { type: 'SET_UPLOADING'; payload: boolean }
-  | { type: 'SET_ERROR'; payload: string }
-  | { type: 'SET_DOWNLOAD_URL'; payload: string };
+import { FormAction, FormState } from './type';
 
 export const initialState: FormState = {
   error: null,
-  downloadUrl: null,
+  downloadUrl: [],
   isUploading: false,
 };
 
@@ -27,6 +18,6 @@ export const formReducer = (
     case 'SET_DOWNLOAD_URL':
       return { ...state, downloadUrl: action.payload };
     default:
-      throw new Error('Unknown action state');
+      throw new Error(`Unhandled action type: ${action.type}`);
   }
 };

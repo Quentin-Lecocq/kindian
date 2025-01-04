@@ -22,7 +22,8 @@ export const uploadFile = async (formData: FormData): Promise<string[]> => {
 
     const fileUrls = await parseFileToMarkdown(
       content,
-      file.name.replace('.txt', '')
+      file.name.replace('.txt', ''),
+      []
     );
 
     console.log(`Markdown files generated successfully: ${fileUrls}`);

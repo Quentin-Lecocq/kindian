@@ -3,10 +3,7 @@ import path from 'path';
 import { Book, Highlight } from '../../type';
 import { sanitizeFileName } from '../lib/utils';
 
-export const parseFileToMarkdown = async (
-  fileContent: string,
-  fileName: string
-): Promise<string[]> => {
+export const extractBooksFromClippings = (fileContent: string): Book[] => {
   const clippings = fileContent
     .replace(/\uFEFF/g, '')
     .split('==========')
@@ -22,10 +19,16 @@ export const parseFileToMarkdown = async (
     }
   });
 
+  return books;
+};
+
+export const generateMarkdownFiles = async (
+  books: Book[],
+  fileName: string
+): Promise<string[]> => {
   const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
   await fs.mkdir(uploadsDir, { recursive: true });
 
-  // Si un seul livre, regroupez tout dans un fichier nommé comme le fichier TXT
   if (books.length === 1) {
     const book = books[0];
     const globalMarkdown = convertBookToMarkdown(book);
@@ -37,7 +40,6 @@ export const parseFileToMarkdown = async (
     return [`/uploads/${sanitizeFileName(fileName)}.md`];
   }
 
-  // Si plusieurs livres, créez un fichier par livre
   const fileUrls: string[] = [];
   for (const book of books) {
     const bookMarkdown = convertBookToMarkdown(book);
@@ -64,6 +66,52 @@ const convertBookToMarkdown = (book: Book): string => {
   });
 
   return markdownString.trim();
+};
+
+export const parseFileToMarkdown = async (
+  fileContent: string,
+  // useless ????
+  fileName: string,
+  selectedBooks: string[]
+): Promise<string[]> => {
+  const clippings = fileContent
+    .replace(/\uFEFF/g, '')
+    .split('==========')
+    .map((clipping) => clipping.trim());
+
+  const books: Book[] = [];
+
+  clippings.forEach((clipping) => {
+    try {
+      addHighlightToBook(clipping, books);
+    } catch (error) {
+      console.error('Error processing clipping:', clipping, error);
+    }
+  });
+
+  const filteredBooks = books.filter((book) =>
+    selectedBooks.includes(book.title)
+  );
+
+  if (filteredBooks.length === 0) {
+    throw new Error('No valid books selected for export.');
+  }
+
+  const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+  await fs.mkdir(uploadsDir, { recursive: true });
+
+  const fileUrls: string[] = [];
+  for (const book of filteredBooks) {
+    const bookMarkdown = convertBookToMarkdown(book);
+    const bookFilePath = path.join(
+      uploadsDir,
+      `${sanitizeFileName(book.title)}.md`
+    );
+    await fs.writeFile(bookFilePath, bookMarkdown, 'utf8');
+    fileUrls.push(`/uploads/${sanitizeFileName(book.title)}.md`);
+  }
+
+  return fileUrls;
 };
 
 const addHighlightToBook = (clipping: string, books: Book[]) => {
