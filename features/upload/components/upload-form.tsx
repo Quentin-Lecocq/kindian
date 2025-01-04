@@ -19,8 +19,9 @@ const UploadForm = () => {
     const formData = new FormData(e.currentTarget as HTMLFormElement);
 
     try {
-      const url = await uploadFile(formData);
-      setDownloadUrl(url);
+      const urls = await uploadFile(formData);
+      // TODO: handle multiple files to download
+      setDownloadUrl(urls[0]);
     } catch (error: unknown) {
       if (isApiError(error)) {
         setError(error.message);
