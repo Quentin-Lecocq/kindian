@@ -1,4 +1,4 @@
-import UploadForm from '@/features/upload/components/upload-form';
+import FileUploader from '@/features/upload/components/file-uploader';
 
 export default function Home() {
   return (
@@ -9,7 +9,7 @@ export default function Home() {
           Upload your kindle notes on txt format and get a markdown file
         </h2>
       </div>
-      <UploadForm />
+      <FileUploader />
     </div>
   );
 }
