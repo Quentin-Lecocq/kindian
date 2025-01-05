@@ -4,6 +4,8 @@ export const initialState: FormState = {
   error: null,
   downloadUrl: [],
   isUploading: false,
+  books: [],
+  fileContent: null,
 };
 
 export const formReducer = (
@@ -17,6 +19,10 @@ export const formReducer = (
       return { ...state, error: action.payload };
     case 'SET_DOWNLOAD_URL':
       return { ...state, downloadUrl: action.payload };
+    case 'SET_BOOKS':
+      return { ...state, books: action.payload };
+    case 'SET_FILE_CONTENT':
+      return { ...state, fileContent: action.payload };
     default:
       throw new Error(`Unhandled action type: ${action.type}`);
   }

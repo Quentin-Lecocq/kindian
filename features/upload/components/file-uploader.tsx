@@ -8,12 +8,9 @@ import Dropzone from 'react-dropzone';
 import { formReducer, initialState } from '../reducers/form-reducer';
 import { exportSelectedBooks } from '../server/actions/exportBook';
 import { handleExtractBooks } from '../server/actions/extractBook';
-import { Book } from '../type';
 
 const FileUploader = () => {
   const [formState, dispatch] = useReducer(formReducer, initialState);
-  const [books, setBooks] = useState<Book[]>([]);
-  const [fileContent, setFileContent] = useState<string | null>(null);
 
   const handleFileChange = async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -24,11 +21,21 @@ const FileUploader = () => {
 
     try {
       const content = await file.text();
-      setFileContent(content);
+      dispatch({ type: 'SET_FILE_CONTENT', payload: content });
       const extractedBooks = await handleExtractBooks(content);
-      setBooks(extractedBooks.map((book) => ({ ...book, selected: false })));
-    } catch (error) {
-      dispatch({ type: 'SET_ERROR', payload: 'Failed to extract books.' });
+      dispatch({
+        type: 'SET_BOOKS',
+        payload: extractedBooks.map((book) => ({
+          ...book,
+          selected: false,
+        })),
+      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch({ type: 'SET_ERROR', payload: error.message });
+      } else {
+        dispatch({ type: 'SET_ERROR', payload: 'Failed to extract books.' });
+      }
     } finally {
       dispatch({ type: 'SET_UPLOADING', payload: false });
     }
@@ -50,7 +57,7 @@ const FileUploader = () => {
   };
 
   const handleExport = async () => {
-    const selectedBooks = books.filter((book) => book.selected);
+    const selectedBooks = formState.books.filter((book) => book.selected);
     if (selectedBooks.length === 0) {
       dispatch({ type: 'SET_ERROR', payload: 'No books selected.' });
       return;
@@ -61,18 +68,22 @@ const FileUploader = () => {
     try {
       const selectedBookTitles = selectedBooks.map((book) => book.title);
       const fileUrls = await exportSelectedBooks(
-        fileContent || '',
+        formState.fileContent || '',
         'kindle-notes',
         selectedBookTitles
       );
 
       dispatch({ type: 'SET_DOWNLOAD_URL', payload: fileUrls });
       console.log('Exported files:', fileUrls);
-    } catch (error) {
-      dispatch({
-        type: 'SET_ERROR',
-        payload: 'Failed to export selected books.',
-      });
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        dispatch({ type: 'SET_ERROR', payload: error.message });
+      } else {
+        dispatch({
+          type: 'SET_ERROR',
+          payload: 'Failed to export selected books.',
+        });
+      }
     } finally {
       dispatch({ type: 'SET_UPLOADING', payload: false });
     }
@@ -84,7 +95,7 @@ const FileUploader = () => {
 
   return (
     <div>
-      {!books.length && (
+      {!formState.books.length && (
         <form>
           <Dropzone
             accept={{
@@ -142,18 +153,18 @@ const FileUploader = () => {
           </Dropzone>
         </form>
       )}
-      {books.length > 0 && (
+      {formState.books.length > 0 && (
         <div className="mt-4">
           <h2>Select books to export:</h2>
-          {books.map((book, index) => (
+          {formState.books.map((book, index) => (
             <div key={index} className="flex items-center gap-2">
               <input
                 type="checkbox"
                 checked={book.selected}
                 onChange={() => {
-                  const updatedBooks = [...books];
+                  const updatedBooks = [...formState.books];
                   updatedBooks[index].selected = !updatedBooks[index].selected;
-                  setBooks(updatedBooks);
+                  dispatch({ type: 'SET_BOOKS', payload: updatedBooks });
                 }}
               />
               <span>
@@ -167,7 +178,7 @@ const FileUploader = () => {
       {formState.error && (
         <p className="text-red-500 text-sm">{formState.error}</p>
       )}
-      {books.length > 0 && formState.downloadUrl && (
+      {formState.books.length > 0 && formState.downloadUrl && (
         <div>
           <div>
             {formState.downloadUrl.map((url) => (
