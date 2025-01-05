@@ -1,7 +1,7 @@
 export interface Book {
   title: string;
   highlights: Highlight[];
-  selected: boolean;
+  selected?: boolean;
 }
 
 export interface Highlight {

@@ -1,6 +1,5 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { Upload } from 'lucide-react';
 import { useReducer, useState } from 'react';
@@ -8,6 +7,9 @@ import Dropzone from 'react-dropzone';
 import { formReducer, initialState } from '../reducers/form-reducer';
 import { exportSelectedBooks } from '../server/actions/exportBook';
 import { handleExtractBooks } from '../server/actions/extractBook';
+import BookList from './book-list';
+import ErrorDisplay from './error-display';
+import LinksDownloader from './links-downloader';
 
 const FileUploader = () => {
   const [formState, dispatch] = useReducer(formReducer, initialState);
@@ -93,6 +95,12 @@ const FileUploader = () => {
   const [isDisabled, setIsDisabled] = useState(false);
   const [className, setClassName] = useState('');
 
+  const handleSelectBook = (index: number) => {
+    const updatedBooks = [...formState.books];
+    updatedBooks[index].selected = !updatedBooks[index].selected;
+    dispatch({ type: 'SET_BOOKS', payload: updatedBooks });
+  };
+
   return (
     <div>
       {!formState.books.length && (
@@ -154,50 +162,18 @@ const FileUploader = () => {
         </form>
       )}
       {formState.books.length > 0 && (
-        <div className="mt-4">
-          <h2>Select books to export:</h2>
-          {formState.books.map((book, index) => (
-            <div key={index} className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                checked={book.selected}
-                onChange={() => {
-                  const updatedBooks = [...formState.books];
-                  updatedBooks[index].selected = !updatedBooks[index].selected;
-                  dispatch({ type: 'SET_BOOKS', payload: updatedBooks });
-                }}
-              />
-              <span>
-                {book.title} ({book.highlights.length} highlights)
-              </span>
-            </div>
-          ))}
-          <Button onClick={handleExport}>Export Selected Books</Button>
-        </div>
+        <BookList
+          books={formState.books}
+          onSelectBook={handleSelectBook}
+          onExport={handleExport}
+        />
       )}
-      {formState.error && (
-        <p className="text-red-500 text-sm">{formState.error}</p>
-      )}
+      {formState.error && <ErrorDisplay error={formState.error} />}
       {formState.books.length > 0 && formState.downloadUrl && (
-        <div>
-          <div>
-            {formState.downloadUrl.map((url) => (
-              <div key={url}>
-                <a href={url} download={url.split('/').pop()}>
-                  {url.split('/').pop()}
-                </a>
-              </div>
-            ))}
-          </div>
-          <Button
-            onClick={handleDownload}
-            disabled={
-              !formState.downloadUrl || formState.downloadUrl.length === 0
-            }
-          >
-            Download All Files
-          </Button>
-        </div>
+        <LinksDownloader
+          downloadUrl={formState.downloadUrl}
+          handleDownloadAllLinks={handleDownload}
+        />
       )}
     </div>
   );

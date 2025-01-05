@@ -24,6 +24,6 @@ export const formReducer = (
     case 'SET_FILE_CONTENT':
       return { ...state, fileContent: action.payload };
     default:
-      throw new Error(`Unhandled action type: ${action.type}`);
+      throw new Error('Unhandled action type');
   }
 };
