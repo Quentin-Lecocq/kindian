@@ -1,6 +1,6 @@
-import { FormAction, FormState } from './type';
+import { FileUploaderAction, FileUploaderState } from './type';
 
-export const initialState: FormState = {
+export const initialState: FileUploaderState = {
   error: null,
   downloadUrl: [],
   isUploading: false,
@@ -8,10 +8,10 @@ export const initialState: FormState = {
   fileContent: null,
 };
 
-export const formReducer = (
-  state: FormState,
-  action: FormAction
-): FormState => {
+export const fileUploaderReducer = (
+  state: FileUploaderState,
+  action: FileUploaderAction
+): FileUploaderState => {
   switch (action.type) {
     case 'SET_UPLOADING':
       return { ...state, isUploading: action.payload };

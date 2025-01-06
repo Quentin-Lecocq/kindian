@@ -1,6 +1,6 @@
 import { Book } from '../type';
 
-export type FormState = {
+export type FileUploaderState = {
   error: string | null;
   downloadUrl: string[];
   isUploading: boolean;
@@ -8,7 +8,7 @@ export type FormState = {
   fileContent: string | null;
 };
 
-export type FormAction =
+export type FileUploaderAction =
   | { type: 'SET_UPLOADING'; payload: boolean }
   | { type: 'SET_ERROR'; payload: string | null }
   | { type: 'SET_DOWNLOAD_URL'; payload: string[] }

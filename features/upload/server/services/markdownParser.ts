@@ -70,8 +70,6 @@ const convertBookToMarkdown = (book: Book): string => {
 
 export const parseFileToMarkdown = async (
   fileContent: string,
-  // useless ????
-  fileName: string,
   selectedBooks: string[]
 ): Promise<string[]> => {
   const clippings = fileContent
@@ -89,8 +87,8 @@ export const parseFileToMarkdown = async (
     }
   });
 
-  const filteredBooks = books.filter((book) =>
-    selectedBooks.includes(book.title)
+  const filteredBooks = books.filter(({ title }) =>
+    selectedBooks.includes(title)
   );
 
   if (filteredBooks.length === 0) {
@@ -147,5 +145,5 @@ const addHighlightToBook = (clipping: string, books: Book[]) => {
 };
 
 const getBookWithTitle = (books: Book[], bookTitle: string) => {
-  return books.find((book) => book.title === bookTitle);
+  return books.find(({ title }) => title === bookTitle);
 };

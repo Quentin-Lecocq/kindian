@@ -4,23 +4,23 @@ import { Book } from '../type';
 
 type BookListProps = {
   books: Book[];
-  onSelectBook: (index: number) => void;
+  onSelect: (index: number) => void;
   onExport: () => void;
 };
 
-const BookList: FC<BookListProps> = ({ books, onSelectBook, onExport }) => {
+const BookList: FC<BookListProps> = ({ books, onSelect, onExport }) => {
   return (
     <div>
       <h2>Select books to export:</h2>
-      {books.map((book, index) => (
+      {books.map(({ title, highlights, selected }, index) => (
         <div key={index} className="flex items-center gap-2">
           <input
             type="checkbox"
-            checked={book.selected}
-            onChange={() => onSelectBook(index)}
+            checked={selected}
+            onChange={() => onSelect(index)}
           />
           <span>
-            {book.title} ({book.highlights.length} highlights)
+            {title} ({highlights.length} highlights)
           </span>
         </div>
       ))}

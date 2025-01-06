@@ -8,11 +8,7 @@ export const exportSelectedBooks = async (
   selectedBooks: string[]
 ): Promise<string[]> => {
   try {
-    const fileUrls = await parseFileToMarkdown(
-      fileContent,
-      fileName,
-      selectedBooks
-    );
+    const fileUrls = await parseFileToMarkdown(fileContent, selectedBooks);
     console.log('Markdown files generated:', fileUrls);
     return fileUrls;
   } catch (error) {
