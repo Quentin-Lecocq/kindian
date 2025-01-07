@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Upload } from 'lucide-react';
+import { DownloadIcon, FileDownIcon, Upload } from 'lucide-react';
 import Dropzone from 'react-dropzone';
 import BookList from './book-list';
 import ErrorDisplay from './error-display';
@@ -69,23 +69,26 @@ const FileUploader = () => {
           </Dropzone>
         ) : (
           <div className="w-96 flex flex-col gap-4">
-            <h4 className="text-lg font-bold">Actions available</h4>
+            <h4 className="text-2xl font-bold">Actions available</h4>
             <p className="text-sm text-muted-foreground">
-              All the file content has been upload. You can now select the
-              highlights you want to export.
+              Books imported successfully. Select an export option below.
             </p>
             <div className="flex gap-4">
               <Button className="w-full bg-emerald-400" onClick={handleExport}>
+                <FileDownIcon />
                 Export selected books
               </Button>
-              <Button className="w-full">Export all books</Button>
+              <Button className="w-full">
+                <DownloadIcon />
+                Export all books
+              </Button>
             </div>
             <Button
               onClick={handleResetUploader}
               variant="link"
-              className="p-0 self-start"
+              className="p-0 self-start text-muted-foreground"
             >
-              Reset all books
+              reset uploader
             </Button>
           </div>
         )}
