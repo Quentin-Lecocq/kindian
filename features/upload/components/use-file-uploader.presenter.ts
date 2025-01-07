@@ -16,6 +16,7 @@ type UseFileUploaderPresenterReturn = {
   handleDownload: () => void;
   handleExport: () => Promise<void>;
   handleSelectBook: (index: number) => void;
+  handleResetUploader: () => void;
 };
 
 const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
@@ -23,6 +24,14 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     fileUploaderReducer,
     initialState
   );
+
+  const handleResetUploader = () => {
+    // TODO: surely there is a better way to do this
+    dispatch({ type: 'SET_BOOKS', payload: [] });
+    dispatch({ type: 'SET_FILE_CONTENT', payload: '' });
+    dispatch({ type: 'SET_DOWNLOAD_URL', payload: [] });
+    dispatch({ type: 'SET_ERROR', payload: null });
+  };
 
   const handleFileChange = async (acceptedFiles: File[]) => {
     const file = acceptedFiles[0];
@@ -121,6 +130,7 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     handleDownload,
     handleExport,
     handleSelectBook,
+    handleResetUploader,
   };
 };
 

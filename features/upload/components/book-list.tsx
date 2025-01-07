@@ -1,30 +1,27 @@
-import { Button } from '@/components/ui/button';
 import { FC } from 'react';
 import { Book } from '../type';
+import BookListCard from './book-list-card';
 
 type BookListProps = {
   books: Book[];
   onSelect: (index: number) => void;
-  onExport: () => void;
 };
 
-const BookList: FC<BookListProps> = ({ books, onSelect, onExport }) => {
+// title
+// number highlights
+// picture books => Open Library API ???
+// tags ??
+
+const BookList: FC<BookListProps> = ({ books, onSelect }) => {
   return (
-    <div>
-      <h2>Select books to export:</h2>
+    <div className="m-4 flex gap-4 flex-wrap">
       {books.map(({ title, highlights, selected }, index) => (
-        <div key={index} className="flex items-center gap-2">
-          <input
-            type="checkbox"
-            checked={selected}
-            onChange={() => onSelect(index)}
-          />
-          <span>
-            {title} ({highlights.length} highlights)
-          </span>
-        </div>
+        <BookListCard
+          key={index}
+          book={{ title, highlights, selected }}
+          handleSelect={() => onSelect(index)}
+        />
       ))}
-      <Button onClick={onExport}>Export Selected Books</Button>
     </div>
   );
 };

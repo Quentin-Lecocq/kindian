@@ -2,11 +2,10 @@
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { LucideCircleCheck, Upload } from 'lucide-react';
+import { Upload } from 'lucide-react';
 import Dropzone from 'react-dropzone';
 import BookList from './book-list';
 import ErrorDisplay from './error-display';
-import LinksDownloader from './links-downloader';
 import useFileUploaderPresenter from './use-file-uploader.presenter';
 
 const FileUploader = () => {
@@ -18,28 +17,29 @@ const FileUploader = () => {
     handleDownload,
     handleExport,
     handleSelectBook,
+    handleResetUploader,
   } = useFileUploaderPresenter();
 
   return (
-    <div className="flex flex-col gap-12 items-center mt-10 justify-center h-screen">
-      <div className="flex gap-4 flex-col">
-        <Dropzone
-          accept={{
-            'text/plain': ['.txt'],
-          }}
-          onDrop={handleFileChange}
-          maxFiles={1}
-        >
-          {({ getRootProps, getInputProps, open }) => (
-            <div
-              {...getRootProps()}
-              className={cn(
-                'group relative grid h-60 w-full min-w-96 cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25',
-                'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
-              )}
-            >
-              <input {...getInputProps()} />
-              {!books.length ? (
+    <div className="flex flex-col gap-12 items-center justify-center h-screen">
+      <div className="w-full mt-10 flex h-60 items-center justify-center">
+        {!books.length ? (
+          <Dropzone
+            accept={{
+              'text/plain': ['.txt'],
+            }}
+            onDrop={handleFileChange}
+            maxFiles={1}
+          >
+            {({ getRootProps, getInputProps, open }) => (
+              <div
+                {...getRootProps()}
+                className={cn(
+                  'group relative grid h-60 w-96 cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25',
+                  'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
+                )}
+              >
+                <input {...getInputProps()} />
                 <div className="flex flex-col gap-4">
                   <div className="flex flex-col items-center justify-center gap-4 sm:px-5">
                     <div className="rounded-full border border-dashed p-3">
@@ -64,33 +64,47 @@ const FileUploader = () => {
                     Upload File
                   </Button>
                 </div>
-              ) : (
-                <div>
-                  <LucideCircleCheck className="text-emerald-400" size={64} />
-                </div>
-              )}
+              </div>
+            )}
+          </Dropzone>
+        ) : (
+          <div className="w-96 flex flex-col gap-4">
+            <h4 className="text-lg font-bold">Actions available</h4>
+            <p className="text-sm text-muted-foreground">
+              All the file content has been upload. You can now select the
+              highlights you want to export.
+            </p>
+            <div className="flex gap-4">
+              <Button className="w-full bg-emerald-400" onClick={handleExport}>
+                Export selected books
+              </Button>
+              <Button className="w-full">Export all books</Button>
             </div>
-          )}
-        </Dropzone>
+            <Button
+              onClick={handleResetUploader}
+              variant="link"
+              className="p-0 self-start"
+            >
+              Reset all books
+            </Button>
+          </div>
+        )}
       </div>
+
       {error && <ErrorDisplay error={error} />}
 
-      <div className="border-t flex-1 border-gray-500 w-full flex">
-        <div className="w-1/6 outline outline-1">SIDEBAR</div>
+      <div className="border-t flex-1 w-full flex">
+        <div className="w-1/6 border-r">SIDEBAR</div>
         <div className="w-5/6">
           {books.length > 0 && (
-            <BookList
-              books={books}
-              onSelect={handleSelectBook}
-              onExport={handleExport}
-            />
+            <BookList books={books} onSelect={handleSelectBook} />
           )}
-          {books.length > 0 && downloadUrl && (
+          {/* {books.length > 0 && downloadUrl && (
             <LinksDownloader
               downloadUrl={downloadUrl}
               handleDownloadAllLinks={handleDownload}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>
