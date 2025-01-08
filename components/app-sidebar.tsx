@@ -1,4 +1,7 @@
+'use client';
+
 import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 import NavUser from './nav-user';
 import {
   Sidebar,
@@ -18,7 +21,11 @@ const user = {
   avatar: 'https://github.com/shadcn.png',
 };
 
-const items: { title: string; url: string; icon: React.ElementType }[] = [
+const items: {
+  title: string;
+  url: string;
+  icon: React.ElementType;
+}[] = [
   {
     title: 'Dashboard',
     url: '/dashboard',
@@ -52,18 +59,21 @@ const items: { title: string; url: string; icon: React.ElementType }[] = [
 ];
 
 const AppSidebar = () => {
+  // TODO: temporary solution, i'll need to create a nav-main component to handle active state and use use-client at the bottom of the sidebar
+  const pathname = usePathname();
+
   return (
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel>
-            <h1 className="text-3xl font-bold text-white">Kindian</h1>
+            <h1 className="text-2xl font-bold">Kindian</h1>
           </SidebarGroupLabel>
-          <SidebarGroupContent className="mt-10">
+          <SidebarGroupContent className="mt-4">
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
+                  <SidebarMenuButton asChild isActive={pathname === item.url}>
                     <a href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
