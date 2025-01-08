@@ -1,7 +1,18 @@
-import { Calendar, Home, Inbox, Search, Settings } from 'lucide-react';
+import {
+  BarChart,
+  FileDown,
+  FileUp,
+  Heart,
+  Home,
+  Inbox,
+  Star,
+} from 'lucide-react';
+import NavUser from './nav-user';
+import ThemeToggle from './theme-toggle';
 import {
   Sidebar,
   SidebarContent,
+  SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
@@ -10,32 +21,47 @@ import {
   SidebarMenuItem,
 } from './ui/sidebar';
 
-// Menu items.
-const items = [
+const user = {
+  name: 'John Doe',
+  email: 'john.doe@example.com',
+  avatar: 'https://github.com/shadcn.png',
+};
+
+const items: { title: string; url: string; icon: React.ElementType }[] = [
   {
-    title: 'Home',
-    url: '#',
+    title: 'Dashboard',
+    url: '/',
     icon: Home,
   },
   {
-    title: 'Inbox',
-    url: '#',
+    title: 'My Books',
+    url: '/books',
     icon: Inbox,
   },
   {
-    title: 'Calendar',
-    url: '#',
-    icon: Calendar,
+    title: 'My Highlights',
+    url: '/highlights',
+    icon: Star,
   },
   {
-    title: 'Search',
-    url: '#',
-    icon: Search,
+    title: 'Export',
+    url: '/export',
+    icon: FileDown,
   },
   {
-    title: 'Settings',
-    url: '#',
-    icon: Settings,
+    title: 'Import',
+    url: '/import',
+    icon: FileUp,
+  },
+  {
+    title: 'Favorites',
+    url: '/favorites',
+    icon: Heart,
+  },
+  {
+    title: 'Statistics',
+    url: '/statistics',
+    icon: BarChart,
   },
 ];
 
@@ -44,7 +70,10 @@ const AppSidebar = () => {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel className="text-2xl font-bold">
+            <h1>Kindian</h1>
+            <ThemeToggle />
+          </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {items.map((item) => (
@@ -61,6 +90,9 @@ const AppSidebar = () => {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+      <SidebarFooter>
+        <NavUser user={user} />
+      </SidebarFooter>
     </Sidebar>
   );
 };
