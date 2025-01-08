@@ -21,7 +21,7 @@ const FileUploader = () => {
   } = useFileUploaderPresenter();
 
   return (
-    <div className="flex flex-col gap-12 items-center justify-center h-screen">
+    <div className="flex flex-col gap-12 p-10 items-center justify-center h-screen">
       <div className="w-full mt-10 flex h-60 items-center justify-center">
         {!books.length ? (
           <Dropzone
@@ -35,7 +35,7 @@ const FileUploader = () => {
               <div
                 {...getRootProps()}
                 className={cn(
-                  'group relative grid h-60 w-96 cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25',
+                  'group relative grid h-60 w-full cursor-pointer place-items-center rounded-lg border-2 border-dashed border-muted-foreground/25 px-5 py-2.5 text-center transition hover:bg-muted/25',
                   'ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2'
                 )}
               >
@@ -97,8 +97,8 @@ const FileUploader = () => {
       {error && <ErrorDisplay error={error} />}
 
       <div className="border-t flex-1 w-full flex">
-        <div className="w-1/6 border-r">SIDEBAR</div>
-        <div className="w-5/6">
+        {/* <div className="w-1/6 border-r">SIDEBAR</div> */}
+        <div>
           {books.length > 0 && (
             <BookList books={books} onSelect={handleSelectBook} />
           )}
