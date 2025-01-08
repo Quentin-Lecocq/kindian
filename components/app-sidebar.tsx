@@ -1,14 +1,5 @@
-import {
-  BarChart,
-  FileDown,
-  FileUp,
-  Heart,
-  Home,
-  Inbox,
-  Star,
-} from 'lucide-react';
+import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
 import NavUser from './nav-user';
-import ThemeToggle from './theme-toggle';
 import {
   Sidebar,
   SidebarContent,
@@ -30,17 +21,17 @@ const user = {
 const items: { title: string; url: string; icon: React.ElementType }[] = [
   {
     title: 'Dashboard',
-    url: '/',
+    url: '/dashboard',
     icon: Home,
   },
   {
     title: 'My Books',
-    url: '/books',
+    url: '/dashboard/books',
     icon: Inbox,
   },
   {
     title: 'My Highlights',
-    url: '/highlights',
+    url: '/dashboard/highlights',
     icon: Star,
   },
   {
@@ -49,18 +40,13 @@ const items: { title: string; url: string; icon: React.ElementType }[] = [
     icon: FileDown,
   },
   {
-    title: 'Import',
-    url: '/import',
-    icon: FileUp,
-  },
-  {
     title: 'Favorites',
-    url: '/favorites',
+    url: '/dashboard/favorites',
     icon: Heart,
   },
   {
     title: 'Statistics',
-    url: '/statistics',
+    url: '/dashboard/statistics',
     icon: BarChart,
   },
 ];
@@ -70,11 +56,10 @@ const AppSidebar = () => {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-2xl font-bold">
-            <h1>Kindian</h1>
-            <ThemeToggle />
+          <SidebarGroupLabel>
+            <h1 className="text-3xl font-bold text-white">Kindian</h1>
           </SidebarGroupLabel>
-          <SidebarGroupContent>
+          <SidebarGroupContent className="mt-10">
             <SidebarMenu>
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
