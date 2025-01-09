@@ -1,3 +1,5 @@
+import { saveAs } from 'file-saver';
+import JSZip from 'jszip';
 import { useReducer } from 'react';
 
 import {
@@ -11,12 +13,10 @@ import { Book } from '../type';
 type UseFileUploaderPresenterReturn = {
   books: Book[];
   error: string | null;
-  downloadUrl: string[];
   handleFileChange: (acceptedFiles: File[]) => Promise<void>;
-  handleDownload: () => void;
-  handleExport: () => Promise<void>;
   handleSelectBook: (index: number) => void;
   handleResetUploader: () => void;
+  handleExportAndDownload: () => Promise<void>;
 };
 
 const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
@@ -29,7 +29,6 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     // TODO: surely there is a better way to do this
     dispatch({ type: 'SET_BOOKS', payload: [] });
     dispatch({ type: 'SET_FILE_CONTENT', payload: '' });
-    dispatch({ type: 'SET_DOWNLOAD_URL', payload: [] });
     dispatch({ type: 'SET_ERROR', payload: null });
   };
 
@@ -62,28 +61,11 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     }
   };
 
-  const handleDownload = () => {
-    if (
-      !fileUploaderState.downloadUrl ||
-      fileUploaderState.downloadUrl.length === 0
-    ) {
-      return;
-    }
-
-    fileUploaderState.downloadUrl.forEach((url) => {
-      const link = document.createElement('a');
-      link.href = url;
-      link.download = url.split('/').pop() || 'download.md';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    });
-  };
-
-  const handleExport = async () => {
+  const handleExportAndDownload = async () => {
     const selectedBooks = fileUploaderState.books.filter(
       ({ selected }) => selected
     );
+
     if (selectedBooks.length === 0) {
       dispatch({ type: 'SET_ERROR', payload: 'No books selected.' });
       return;
@@ -93,14 +75,23 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
 
     try {
       const selectedBookTitles = selectedBooks.map(({ title }) => title);
+
       const fileUrls = await exportSelectedBooks(
         fileUploaderState.fileContent || '',
         'kindle-notes',
         selectedBookTitles
       );
 
-      dispatch({ type: 'SET_DOWNLOAD_URL', payload: fileUrls });
-      console.log('Exported files:', fileUrls);
+      const zip = new JSZip();
+
+      for (let i = 0; i < fileUrls.length; i++) {
+        const response = await fetch(fileUrls[i]);
+        const content = await response.blob();
+        zip.file(`${selectedBookTitles[i]}.md`, content);
+      }
+
+      const zipBlob = await zip.generateAsync({ type: 'blob' });
+      saveAs(zipBlob, 'selected-books.zip');
     } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch({ type: 'SET_ERROR', payload: error.message });
@@ -125,12 +116,10 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
   return {
     books: fileUploaderState.books,
     error: fileUploaderState.error,
-    downloadUrl: fileUploaderState.downloadUrl,
     handleFileChange,
-    handleDownload,
-    handleExport,
     handleSelectBook,
     handleResetUploader,
+    handleExportAndDownload,
   };
 };
 

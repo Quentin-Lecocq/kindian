@@ -12,12 +12,10 @@ const FileUploader = () => {
   const {
     books,
     error,
-    downloadUrl,
     handleFileChange,
-    handleDownload,
-    handleExport,
     handleSelectBook,
     handleResetUploader,
+    handleExportAndDownload,
   } = useFileUploaderPresenter();
 
   return (
@@ -74,7 +72,10 @@ const FileUploader = () => {
               Books imported successfully. Select an export option below.
             </p>
             <div className="flex gap-4">
-              <Button className="w-full bg-emerald-400" onClick={handleExport}>
+              <Button
+                className="w-full bg-emerald-400"
+                onClick={handleExportAndDownload}
+              >
                 <FileDownIcon />
                 Export selected books
               </Button>
@@ -97,17 +98,10 @@ const FileUploader = () => {
       {error && <ErrorDisplay error={error} />}
 
       <div className="border-t flex-1 w-full flex">
-        {/* <div className="w-1/6 border-r">SIDEBAR</div> */}
         <div>
           {books.length > 0 && (
             <BookList books={books} onSelect={handleSelectBook} />
           )}
-          {/* {books.length > 0 && downloadUrl && (
-            <LinksDownloader
-              downloadUrl={downloadUrl}
-              handleDownloadAllLinks={handleDownload}
-            />
-          )} */}
         </div>
       </div>
     </div>
