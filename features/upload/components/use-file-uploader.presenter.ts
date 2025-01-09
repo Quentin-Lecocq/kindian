@@ -5,8 +5,8 @@ import {
   fileUploaderReducer,
   initialState,
 } from '../reducers/file-uploader.reducer';
-import { exportSelectedBooks } from '../server/actions/export-selected-books';
-import { handleExtractBooks } from '../server/actions/extract-books';
+import { exportSelectedBooks } from '../server/actions/export';
+import { extractBooksFromClippings } from '../server/actions/extract';
 import { Book } from '../type';
 
 type UseFileUploaderPresenterReturn = {
@@ -41,7 +41,7 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     try {
       const content = await file.text();
       dispatch({ type: 'SET_FILE_CONTENT', payload: content });
-      const extractedBooks = await handleExtractBooks(content);
+      const extractedBooks = await extractBooksFromClippings(content);
       dispatch({
         type: 'SET_BOOKS',
         payload: extractedBooks.map((book) => ({

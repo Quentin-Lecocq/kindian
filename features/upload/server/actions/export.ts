@@ -1,6 +1,6 @@
 'use server';
 
-import { parseFileToMarkdown } from '../services/markdownParser';
+import { parseFileToMarkdown } from '../services/parse';
 
 export const exportSelectedBooks = async (
   fileContent: string,
