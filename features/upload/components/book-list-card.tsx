@@ -19,11 +19,6 @@ const BookListCard = ({ book, handleSelect }: BookListCardProps) => {
       <div className="flex rounded-t-md items-center justify-center bg-gray-600 pb-2">
         <Image src={BookCover} alt={title} width={80} height={80} />
       </div>
-      {/* <input
-        type="checkbox"
-        className={selected ? 'accent-emerald-500' : ''}
-        checked={selected}
-      /> */}
       <div className="flex flex-col gap-1 p-2 bg-slate-50 rounded-b-md text-gray-900">
         <p className="text-sm truncate">{title}</p>
         <p className="text-xs">{highlights.length} highlights</p>
