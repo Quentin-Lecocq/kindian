@@ -4,13 +4,10 @@ import { parseFileToMarkdown } from '../services/markdownParser';
 
 export const exportSelectedBooks = async (
   fileContent: string,
-  fileName: string,
   selectedBooks: string[]
-): Promise<string[]> => {
+): Promise<Buffer> => {
   try {
-    const fileUrls = await parseFileToMarkdown(fileContent, selectedBooks);
-    console.log('Markdown files generated:', fileUrls);
-    return fileUrls;
+    return await parseFileToMarkdown(fileContent, selectedBooks);
   } catch (error) {
     console.error('Error exporting selected books:', error);
     throw new Error('Failed to export selected books.');

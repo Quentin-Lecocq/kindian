@@ -1,7 +1,6 @@
-import { saveAs } from 'file-saver';
-import JSZip from 'jszip';
 import { useReducer } from 'react';
 
+import { saveAs } from 'file-saver';
 import {
   fileUploaderReducer,
   initialState,
@@ -80,24 +79,12 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     dispatch({ type: 'SET_UPLOADING', payload: true });
 
     try {
-      const selectedBookTitles = selectedBooks.map(({ title }) => title);
-
-      const fileUrls = await exportSelectedBooks(
+      const zipBlob = await exportSelectedBooks(
         fileUploaderState.fileContent || '',
-        'kindle-notes',
-        selectedBookTitles
+        selectedBooks.map(({ title }) => title)
       );
 
-      const zip = new JSZip();
-
-      for (let i = 0; i < fileUrls.length; i++) {
-        const response = await fetch(fileUrls[i]);
-        const content = await response.blob();
-        zip.file(`${selectedBookTitles[i]}.md`, content);
-      }
-
-      const zipBlob = await zip.generateAsync({ type: 'blob' });
-      saveAs(zipBlob, 'selected-books.zip');
+      saveAs(new Blob([zipBlob]), 'selected-books.zip');
     } catch (error: unknown) {
       if (error instanceof Error) {
         dispatch({ type: 'SET_ERROR', payload: error.message });

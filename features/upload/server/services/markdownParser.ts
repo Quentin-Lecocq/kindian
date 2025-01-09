@@ -1,4 +1,5 @@
 import { promises as fs } from 'fs';
+import JSZip from 'jszip';
 import path from 'path';
 import { Book, Highlight } from '../../type';
 import { sanitizeFileName } from '../lib/utils';
@@ -71,7 +72,7 @@ const convertBookToMarkdown = (book: Book): string => {
 export const parseFileToMarkdown = async (
   fileContent: string,
   selectedBooks: string[]
-): Promise<string[]> => {
+): Promise<Buffer> => {
   const clippings = fileContent
     .replace(/\uFEFF/g, '')
     .split('==========')
@@ -95,21 +96,15 @@ export const parseFileToMarkdown = async (
     throw new Error('No valid books selected for export.');
   }
 
-  const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-  await fs.mkdir(uploadsDir, { recursive: true });
+  const zip = new JSZip();
 
-  const fileUrls: string[] = [];
   for (const book of filteredBooks) {
     const bookMarkdown = convertBookToMarkdown(book);
-    const bookFilePath = path.join(
-      uploadsDir,
-      `${sanitizeFileName(book.title)}.md`
-    );
-    await fs.writeFile(bookFilePath, bookMarkdown, 'utf8');
-    fileUrls.push(`/uploads/${sanitizeFileName(book.title)}.md`);
+    const fileName = `${sanitizeFileName(book.title)}.md`;
+    zip.file(fileName, bookMarkdown);
   }
 
-  return fileUrls;
+  return zip.generateAsync({ type: 'nodebuffer' });
 };
 
 const addHighlightToBook = (clipping: string, books: Book[]) => {
