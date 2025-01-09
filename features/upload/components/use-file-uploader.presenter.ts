@@ -16,7 +16,7 @@ type UseFileUploaderPresenterReturn = {
   handleFileChange: (acceptedFiles: File[]) => Promise<void>;
   handleSelectBook: (index: number) => void;
   handleResetUploader: () => void;
-  handleExportAndDownload: () => Promise<void>;
+  handleExportAndDownload: (allBooks: boolean) => Promise<void>;
 };
 
 const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
@@ -61,10 +61,16 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     }
   };
 
-  const handleExportAndDownload = async () => {
-    const selectedBooks = fileUploaderState.books.filter(
-      ({ selected }) => selected
-    );
+  const handleExportAndDownload = async (allBooks: boolean) => {
+    let selectedBooks: Book[] = [];
+
+    if (allBooks) {
+      selectedBooks = fileUploaderState.books;
+    } else {
+      selectedBooks = fileUploaderState.books.filter(
+        ({ selected }) => selected
+      );
+    }
 
     if (selectedBooks.length === 0) {
       dispatch({ type: 'SET_ERROR', payload: 'No books selected.' });

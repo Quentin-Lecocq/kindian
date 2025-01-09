@@ -74,12 +74,15 @@ const FileUploader = () => {
             <div className="flex gap-4">
               <Button
                 className="w-full bg-emerald-400"
-                onClick={handleExportAndDownload}
+                onClick={() => handleExportAndDownload(false)}
               >
                 <FileDownIcon />
                 Export selected books
               </Button>
-              <Button className="w-full">
+              <Button
+                className="w-full"
+                onClick={async () => handleExportAndDownload(true)}
+              >
                 <DownloadIcon />
                 Export all books
               </Button>
