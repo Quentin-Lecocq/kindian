@@ -1,7 +1,10 @@
 import AppSidebar from '@/components/app-sidebar';
+import SessionProvider from '@/components/session-provider';
 import ThemeProvider from '@/components/theme-provider';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { Toaster } from '@/components/ui/toaster';
 import type { Metadata } from 'next';
+import { getServerSession } from 'next-auth';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
@@ -20,11 +23,13 @@ export const metadata: Metadata = {
   description: 'Generate your own md file from your kindle notes',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
@@ -36,12 +41,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
-            <AppSidebar />
-            <SidebarTrigger />
-            <main className="w-full">{children}</main>
-          </SidebarProvider>
+          <SessionProvider session={session}>
+            <SidebarProvider>
+              <AppSidebar />
+              <SidebarTrigger />
+              <main className="w-full">{children}</main>
+            </SidebarProvider>
+          </SessionProvider>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );
