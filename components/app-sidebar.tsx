@@ -86,8 +86,13 @@ const AppSidebar = () => {
         {session ? (
           <NavUser user={session.user} />
         ) : (
-          <div className="flex justify-center">
-            <Button onClick={() => signIn('google')}>Sign in</Button>
+          <div className="flex justify-center flex-col gap-4">
+            <Button onClick={() => signIn('google')}>
+              Sign in with google
+            </Button>
+            <Button onClick={() => signIn('github')}>
+              Sign in with github
+            </Button>
           </div>
         )}
       </SidebarFooter>
