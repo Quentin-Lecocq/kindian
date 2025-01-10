@@ -2,6 +2,7 @@ import AppSidebar from '@/components/app-sidebar';
 import SessionProvider from '@/components/session-provider';
 import ThemeProvider from '@/components/theme-provider';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
+import { Toaster } from '@/components/ui/toaster';
 import type { Metadata } from 'next';
 import { getServerSession } from 'next-auth';
 import { Geist, Geist_Mono } from 'next/font/google';
@@ -48,6 +49,7 @@ export default async function RootLayout({
             </SidebarProvider>
           </SessionProvider>
         </ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

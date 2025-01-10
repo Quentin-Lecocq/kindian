@@ -1,6 +1,7 @@
 'use client';
 
 import SignInWrapper from '@/features/auth/components/signin-wrapper';
+import { useToast } from '@/hooks/use-toast';
 import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
@@ -65,6 +66,7 @@ const AppSidebar = () => {
   // TODO: temporary solution, i'll need to create a nav-main component to handle active state and use use-client at the bottom of the sidebar
   const pathname = usePathname();
   const { data: session } = useSession();
+  const { toast } = useToast();
 
   const alertUserProtectedSection = (
     e: React.MouseEvent<HTMLLIElement>,
@@ -72,8 +74,11 @@ const AppSidebar = () => {
   ) => {
     if (!session && isProtected) {
       e.preventDefault();
-      // TODO: create a proper ui for this
-      alert('Please sign in to access this section');
+      toast({
+        variant: 'destructive',
+        title: 'Unauthorized',
+        description: 'Please sign in to access this section',
+      });
     }
   };
 
