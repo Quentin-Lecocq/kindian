@@ -21,36 +21,43 @@ const items: {
   title: string;
   url: string;
   icon: React.ElementType;
+  protected: boolean;
 }[] = [
   {
     title: 'Dashboard',
     url: '/dashboard',
     icon: Home,
+    protected: true,
   },
   {
     title: 'My Books',
     url: '/dashboard/books',
     icon: Inbox,
+    protected: true,
   },
   {
     title: 'My Highlights',
     url: '/dashboard/highlights',
     icon: Star,
+    protected: true,
   },
   {
     title: 'Export',
     url: '/export',
     icon: FileDown,
+    protected: false,
   },
   {
     title: 'Favorites',
     url: '/dashboard/favorites',
     icon: Heart,
+    protected: true,
   },
   {
     title: 'Statistics',
     url: '/dashboard/statistics',
     icon: BarChart,
+    protected: true,
   },
 ];
 
@@ -58,6 +65,17 @@ const AppSidebar = () => {
   // TODO: temporary solution, i'll need to create a nav-main component to handle active state and use use-client at the bottom of the sidebar
   const pathname = usePathname();
   const { data: session } = useSession();
+
+  const alertUserProtectedSection = (
+    e: React.MouseEvent<HTMLLIElement>,
+    isProtected: boolean
+  ) => {
+    if (!session && isProtected) {
+      e.preventDefault();
+      // TODO: create a proper ui for this
+      alert('Please sign in to access this section');
+    }
+  };
 
   return (
     <Sidebar>
@@ -69,7 +87,15 @@ const AppSidebar = () => {
           <SidebarGroupContent className="mt-4">
             <SidebarMenu>
               {items.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem
+                  key={item.title}
+                  className={`${
+                    !session && item.protected ? 'opacity-50' : ''
+                  }`}
+                  onClick={(e) => {
+                    alertUserProtectedSection(e, item.protected);
+                  }}
+                >
                   <SidebarMenuButton asChild isActive={pathname === item.url}>
                     <a href={item.url}>
                       <item.icon />
