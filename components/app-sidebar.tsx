@@ -1,8 +1,10 @@
 'use client';
 
 import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
+import { signIn, useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
 import NavUser from './nav-user';
+import { Button } from './ui/button';
 import {
   Sidebar,
   SidebarContent,
@@ -14,12 +16,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from './ui/sidebar';
-
-const user = {
-  name: 'John Doe',
-  email: 'john.doe@example.com',
-  avatar: 'https://github.com/shadcn.png',
-};
 
 const items: {
   title: string;
@@ -61,6 +57,7 @@ const items: {
 const AppSidebar = () => {
   // TODO: temporary solution, i'll need to create a nav-main component to handle active state and use use-client at the bottom of the sidebar
   const pathname = usePathname();
+  const { data: session } = useSession();
 
   return (
     <Sidebar>
@@ -86,7 +83,13 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        <NavUser user={user} />
+        {session ? (
+          <NavUser user={session.user} />
+        ) : (
+          <div className="flex justify-center">
+            <Button onClick={() => signIn('google')}>Sign in</Button>
+          </div>
+        )}
       </SidebarFooter>
     </Sidebar>
   );
