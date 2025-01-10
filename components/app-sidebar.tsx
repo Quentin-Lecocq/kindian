@@ -1,12 +1,10 @@
 'use client';
 
+import SignInWrapper from '@/features/auth/components/signin-wrapper';
 import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
-import { signIn, useSession } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
 import { usePathname } from 'next/navigation';
-import { FaGithub } from 'react-icons/fa';
-import { FcGoogle } from 'react-icons/fc';
 import NavUser from './nav-user';
-import { Button } from './ui/button';
 import {
   Sidebar,
   SidebarContent,
@@ -85,23 +83,7 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        {session ? (
-          <NavUser user={session.user} />
-        ) : (
-          <div className="flex justify-center flex-col gap-4">
-            <Button className="bg-white" onClick={() => signIn('google')}>
-              <FcGoogle />
-              Sign in with Google
-            </Button>
-            <Button
-              className="bg-gray-800 text-white"
-              onClick={() => signIn('github')}
-            >
-              <FaGithub />
-              Sign in with Github
-            </Button>
-          </div>
-        )}
+        {session ? <NavUser user={session.user} /> : <SignInWrapper />}
       </SidebarFooter>
     </Sidebar>
   );
