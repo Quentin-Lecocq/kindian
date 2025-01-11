@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { convertBookToMarkdown } from '../server/services/convert';
+import { convertBookToMarkdown } from './convert';
 
 describe('convertBookToMarkdown', () => {
   it('should generate correct markdown for a book', () => {
