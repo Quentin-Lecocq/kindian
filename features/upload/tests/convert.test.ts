@@ -17,4 +17,15 @@ describe('convertBookToMarkdown', () => {
       `# Test Book\n\n* Highlight 1\n  Page 10\n\n* Highlight 2\n  Page 20`
     );
   });
+
+  it('should handle empty highlights', () => {
+    const book = {
+      title: 'Test Book',
+      highlights: [],
+    };
+
+    const markdown = convertBookToMarkdown(book);
+
+    expect(markdown).toBe(`# Test Book`);
+  });
 });
