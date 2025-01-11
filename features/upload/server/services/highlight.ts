@@ -1,9 +1,11 @@
 import { Book } from '../../type';
 
+const VALID_CLIPPING_MIN_LINES = 2;
+
 export const addHighlightToBook = (clipping: string, books: Book[]) => {
   const lines = clipping.trim().split('\n');
 
-  if (lines.length < 2) {
+  if (lines.length < VALID_CLIPPING_MIN_LINES) {
     console.warn('Skipping malformed clipping:', clipping);
     return;
   }
@@ -34,6 +36,6 @@ export const addHighlightToBook = (clipping: string, books: Book[]) => {
   book.highlights.push({ info: cleanedInfo, quote });
 };
 
-const getBookWithTitle = (books: Book[], bookTitle: string) => {
+export const getBookWithTitle = (books: Book[], bookTitle: string) => {
   return books.find(({ title }) => title === bookTitle);
 };
