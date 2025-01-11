@@ -1,6 +1,7 @@
 import { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
 import GoogleProvider from 'next-auth/providers/google';
+import { handleSignIn } from './callbacks/signin';
 
 export const authOptions: NextAuthOptions = {
   providers: [
@@ -13,4 +14,7 @@ export const authOptions: NextAuthOptions = {
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
     }),
   ],
+  callbacks: {
+    signIn: ({ user }) => handleSignIn(user),
+  },
 };
