@@ -1,0 +1,15 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`fileUploaderReducer > should add books to the state 1`] = `
+{
+  "books": [
+    {
+      "highlights": [],
+      "title": "Test Book",
+    },
+  ],
+  "error": null,
+  "fileContent": null,
+  "isUploading": false,
+}
+`;

@@ -6,15 +6,15 @@ describe('convertBookToMarkdown', () => {
     const book = {
       title: 'Test Book',
       highlights: [
-        { quote: 'Highlight 1', info: 'Page 10' },
-        { quote: 'Highlight 2', info: 'Page 20' },
+        { quote: 'highlight 1', info: 'page 10' },
+        { quote: 'highlight 2', info: 'page 20' },
       ],
     };
 
     const markdown = convertBookToMarkdown(book);
 
     expect(markdown).toBe(
-      `# Test Book\n\n* Highlight 1\n  Page 10\n\n* Highlight 2\n  Page 20`
+      `# Test Book\n\n* highlight 1\n  page 10\n\n* highlight 2\n  page 20`
     );
   });
 
