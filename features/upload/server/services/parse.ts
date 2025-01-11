@@ -24,7 +24,9 @@ export const parseFileToMarkdown = async (
   });
 
   const filteredBooks = books.filter(({ title }) =>
-    selectedBooks.includes(title)
+    selectedBooks
+      .map((b) => b.trim().toLowerCase())
+      .includes(title.toLowerCase())
   );
 
   if (filteredBooks.length === 0) {
