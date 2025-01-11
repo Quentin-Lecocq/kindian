@@ -9,16 +9,18 @@ export const addHighlightToBook = (clipping: string, books: Book[]) => {
   }
 
   const [bookTitleWithAuthor, info, ...quoteLines] = lines;
-  const quote = quoteLines.join(' ').trim();
 
-  if (!bookTitleWithAuthor || !info || !quote) {
+  const quote = quoteLines.join(' ').trim();
+  const cleanedInfo = info.trim();
+  const sanitizedTitleWithAuthor = bookTitleWithAuthor
+    .replace('(Z-Library)', '')
+    .trim();
+
+  if (!bookTitleWithAuthor || !cleanedInfo || !quote) {
     console.warn('Incomplete clipping data:', clipping);
     return;
   }
 
-  const sanitizedTitleWithAuthor = bookTitleWithAuthor
-    .replace('(Z-Library)', '')
-    .trim();
   let book = getBookWithTitle(books, sanitizedTitleWithAuthor);
 
   if (!book) {
@@ -29,7 +31,7 @@ export const addHighlightToBook = (clipping: string, books: Book[]) => {
     books.push(book);
   }
 
-  book.highlights.push({ info, quote });
+  book.highlights.push({ info: cleanedInfo, quote });
 };
 
 const getBookWithTitle = (books: Book[], bookTitle: string) => {
