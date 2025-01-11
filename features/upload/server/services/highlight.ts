@@ -12,11 +12,12 @@ export const addHighlightToBook = (clipping: string, books: Book[]) => {
 
   const [bookTitleWithAuthor, info, ...quoteLines] = lines;
 
-  const quote = quoteLines.join(' ').trim();
-  const cleanedInfo = info.trim();
+  const quote = quoteLines.join(' ').trim().toLowerCase();
+  const cleanedInfo = info.trim().toLowerCase();
   const sanitizedTitleWithAuthor = bookTitleWithAuthor
     .replace('(Z-Library)', '')
-    .trim();
+    .trim()
+    .toLowerCase();
 
   if (!bookTitleWithAuthor || !cleanedInfo || !quote) {
     console.warn('Incomplete clipping data:', clipping);

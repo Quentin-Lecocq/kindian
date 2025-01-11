@@ -5,7 +5,7 @@ import { addHighlightToBook, getBookWithTitle } from './highlight';
 describe('addHighlightToBook', () => {
   it('should add a highlight to a book', () => {
     const book: Book = {
-      title: 'Test Book',
+      title: 'test book',
       highlights: [] as Highlight[],
       selected: false,
     };
@@ -14,17 +14,16 @@ describe('addHighlightToBook', () => {
 
     addHighlightToBook(clipping, [book]);
 
-    expect(book.highlights).toHaveLength(1);
-    expect(book.highlights[0].quote).toBe('Highlight 1');
-    expect(book.highlights[0].info).toBe('Page 10');
-    expect(book.title).toBe('Test Book');
+    expect(book.highlights[0].quote).toBe('highlight 1');
+    expect(book.highlights[0].info).toBe('page 10');
+    expect(book.title).toBe('test book');
   });
 
   it('should add a highlight to an existing book', () => {
     const books: Book[] = [
       {
-        title: 'Sample Book (Author)',
-        highlights: [{ info: 'Page 5', quote: 'First highlight.' }],
+        title: 'sample book (author)',
+        highlights: [{ info: 'page 5', quote: 'first highlight.' }],
       },
     ];
     const clipping = `Sample Book (Author)
@@ -36,8 +35,8 @@ describe('addHighlightToBook', () => {
     expect(books).toHaveLength(1);
     expect(books[0].highlights).toHaveLength(2);
     expect(books[0].highlights[1]).toEqual({
-      info: 'Page 10',
-      quote: 'Second highlight.',
+      info: 'page 10',
+      quote: 'second highlight.',
     });
   });
 

@@ -12,7 +12,7 @@ describe('extractBooksFromClippings', () => {
 
       Book Title (Author)
       Page 15
-          Second highlight.    
+      Second highlight.    
 
       ==========
     `;
@@ -21,9 +21,9 @@ describe('extractBooksFromClippings', () => {
 
     expect(books).toHaveLength(1);
     expect(books[0].highlights).toEqual([
-      { info: 'Page 10', quote: 'First highlight.' },
-      { info: 'Page 15', quote: 'Second highlight.' },
+      { info: 'page 10', quote: 'first highlight.' },
+      { info: 'page 15', quote: 'second highlight.' },
     ]);
-    expect(books[0].title).toBe('Book Title (Author)');
+    expect(books[0].title).toBe('book title (author)');
   });
 });
