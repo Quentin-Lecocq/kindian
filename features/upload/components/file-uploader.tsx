@@ -2,6 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useI18n } from '@/locales/client';
 import { DownloadIcon, FileDownIcon, Upload } from 'lucide-react';
 import Dropzone from 'react-dropzone';
 import ErrorDisplay from './error-display';
@@ -9,6 +10,8 @@ import TableBooks from './table-books';
 import useFileUploaderPresenter from './use-file-uploader.presenter';
 
 const FileUploader = () => {
+  const t = useI18n();
+
   const {
     books,
     error,
@@ -60,7 +63,7 @@ const FileUploader = () => {
                     className="w-full bg-emerald-400"
                     onClick={() => open()}
                   >
-                    Upload File
+                    {t('upload.file')}
                   </Button>
                 </div>
               </div>
