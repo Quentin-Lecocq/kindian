@@ -6,6 +6,7 @@ exports[`fileUploaderReducer > should add books to the state 1`] = `
     {
       "author": "author",
       "highlights": [],
+      "id": "1",
       "title": "Test Book",
     },
   ],

@@ -5,6 +5,7 @@ import { addHighlightToBook, getBookWithTitle } from './highlight';
 describe('addHighlightToBook', () => {
   it('should add a highlight to a book', () => {
     const book: Book = {
+      id: '1',
       title: 'test book',
       author: 'author',
       highlights: [] as Highlight[],
@@ -23,6 +24,7 @@ describe('addHighlightToBook', () => {
   it('should add a highlight to an existing book', () => {
     const books: Book[] = [
       {
+        id: '1',
         title: 'sample book',
         author: 'author',
         highlights: [{ info: 'page 5', quote: 'first highlight.' }],
@@ -54,8 +56,9 @@ describe('addHighlightToBook', () => {
 describe('getBookWithTitle', () => {
   it('should return the book with the matching title', () => {
     const books: Book[] = [
-      { title: 'test book', author: 'author', highlights: [] },
+      { id: '1', title: 'test book', author: 'author', highlights: [] },
       {
+        id: '2',
         title: 'another book',
         author: 'author',
         highlights: [],
@@ -66,6 +69,7 @@ describe('getBookWithTitle', () => {
     const book = getBookWithTitle(books, title);
 
     expect(book).toEqual({
+      id: '1',
       title: 'test book',
       author: 'author',
       highlights: [],
@@ -74,7 +78,7 @@ describe('getBookWithTitle', () => {
 
   it('should return undefined if no book is found', () => {
     const books: Book[] = [
-      { title: 'Test Book', author: 'author', highlights: [] },
+      { id: '1', title: 'Test Book', author: 'author', highlights: [] },
     ];
     const title = 'Non-existent Book';
 

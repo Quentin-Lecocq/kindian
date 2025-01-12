@@ -12,7 +12,7 @@ import { Book } from '../type';
 
 type TableBooksProps = {
   books: Book[];
-  onSelect: (index: number) => void;
+  onSelect: (id: string) => void;
   onToggleSelectAll: () => void;
 };
 

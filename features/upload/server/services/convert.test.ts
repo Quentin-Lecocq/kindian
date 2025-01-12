@@ -4,6 +4,7 @@ import { convertBookToMarkdown } from './convert';
 describe('convertBookToMarkdown', () => {
   it('should generate correct markdown for a book', () => {
     const book = {
+      id: '1',
       title: 'Test Book',
       author: 'author',
       highlights: [
@@ -21,6 +22,7 @@ describe('convertBookToMarkdown', () => {
 
   it('should handle empty highlights', () => {
     const book = {
+      id: '1',
       title: 'Test Book',
       author: 'author',
       highlights: [],
