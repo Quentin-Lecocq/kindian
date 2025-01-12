@@ -4,8 +4,8 @@ import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { DownloadIcon, FileDownIcon, Upload } from 'lucide-react';
 import Dropzone from 'react-dropzone';
-import BookList from './book-list';
 import ErrorDisplay from './error-display';
+import TableBooks from './table-books';
 import useFileUploaderPresenter from './use-file-uploader.presenter';
 
 const FileUploader = () => {
@@ -14,6 +14,7 @@ const FileUploader = () => {
     error,
     handleFileChange,
     handleSelectBook,
+    handleToggleSelectAllBooks,
     handleResetUploader,
     handleExportAndDownload,
   } = useFileUploaderPresenter();
@@ -101,9 +102,13 @@ const FileUploader = () => {
       {error && <ErrorDisplay error={error} />}
 
       <div className="border-t flex-1 w-full flex">
-        <div>
+        <div className="w-full">
           {books.length > 0 && (
-            <BookList books={books} onSelect={handleSelectBook} />
+            <TableBooks
+              books={books}
+              onSelect={handleSelectBook}
+              onToggleSelectAll={handleToggleSelectAllBooks}
+            />
           )}
         </div>
       </div>

@@ -14,6 +14,7 @@ type UseFileUploaderPresenterReturn = {
   error: string | null;
   handleFileChange: (acceptedFiles: File[]) => Promise<void>;
   handleSelectBook: (index: number) => void;
+  handleToggleSelectAllBooks: () => void;
   handleResetUploader: () => void;
   handleExportAndDownload: (allBooks: boolean) => Promise<void>;
 };
@@ -106,11 +107,32 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     dispatch({ type: 'SET_BOOKS', payload: updatedBooks });
   };
 
+  const handleToggleSelectAllBooks = () => {
+    if (fileUploaderState.books.every((book) => book.selected)) {
+      dispatch({
+        type: 'SET_BOOKS',
+        payload: fileUploaderState.books.map((book) => ({
+          ...book,
+          selected: false,
+        })),
+      });
+    } else {
+      dispatch({
+        type: 'SET_BOOKS',
+        payload: fileUploaderState.books.map((book) => ({
+          ...book,
+          selected: true,
+        })),
+      });
+    }
+  };
+
   return {
     books: fileUploaderState.books,
     error: fileUploaderState.error,
     handleFileChange,
     handleSelectBook,
+    handleToggleSelectAllBooks,
     handleResetUploader,
     handleExportAndDownload,
   };
