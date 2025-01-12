@@ -1,6 +1,5 @@
-import BookCover from '@/features/upload/assets/book-cover.png';
 import { LucideCircleCheck } from 'lucide-react';
-import Image from 'next/image';
+import { FC } from 'react';
 import { Book } from '../type';
 
 type BookListCardProps = {
@@ -8,7 +7,7 @@ type BookListCardProps = {
   handleSelect: () => void;
 };
 
-const BookListCard = ({ book, handleSelect }: BookListCardProps) => {
+const BookListCard: FC<BookListCardProps> = ({ book, handleSelect }) => {
   const { title, highlights, selected } = book;
 
   return (
@@ -16,9 +15,6 @@ const BookListCard = ({ book, handleSelect }: BookListCardProps) => {
       className="border w-40 rounded-md cursor-pointer relative"
       onClick={handleSelect}
     >
-      <div className="flex rounded-t-md items-center justify-center bg-gray-600 pb-2">
-        <Image src={BookCover} alt={title} width={80} height={80} />
-      </div>
       <div className="flex flex-col gap-1 p-2 bg-slate-50 rounded-b-md text-gray-900">
         <p className="text-sm truncate">{title}</p>
         <p className="text-xs">{highlights.length} highlights</p>

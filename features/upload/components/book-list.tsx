@@ -15,10 +15,10 @@ type BookListProps = {
 const BookList: FC<BookListProps> = ({ books, onSelect }) => {
   return (
     <div className="m-4 flex gap-4 flex-wrap">
-      {books.map(({ title, highlights, selected }, index) => (
+      {books.map((book, index) => (
         <BookListCard
           key={index}
-          book={{ title, highlights, selected }}
+          book={book}
           handleSelect={() => onSelect(index)}
         />
       ))}

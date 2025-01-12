@@ -24,6 +24,7 @@ describe('extractBooksFromClippings', () => {
       { info: 'page 10', quote: 'first highlight.' },
       { info: 'page 15', quote: 'second highlight.' },
     ]);
-    expect(books[0].title).toBe('book title (author)');
+    expect(books[0].title).toBe('book title');
+    expect(books[0].author).toBe('author');
   });
 });

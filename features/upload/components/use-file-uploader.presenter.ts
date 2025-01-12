@@ -106,6 +106,8 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     dispatch({ type: 'SET_BOOKS', payload: updatedBooks });
   };
 
+  console.log(fileUploaderState.books);
+
   return {
     books: fileUploaderState.books,
     error: fileUploaderState.error,

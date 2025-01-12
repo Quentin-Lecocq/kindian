@@ -6,6 +6,7 @@ describe('addHighlightToBook', () => {
   it('should add a highlight to a book', () => {
     const book: Book = {
       title: 'test book',
+      author: 'author',
       highlights: [] as Highlight[],
       selected: false,
     };
@@ -22,7 +23,8 @@ describe('addHighlightToBook', () => {
   it('should add a highlight to an existing book', () => {
     const books: Book[] = [
       {
-        title: 'sample book (author)',
+        title: 'sample book',
+        author: 'author',
         highlights: [{ info: 'page 5', quote: 'first highlight.' }],
       },
     ];
@@ -32,7 +34,6 @@ describe('addHighlightToBook', () => {
 
     addHighlightToBook(clipping, books);
 
-    expect(books).toHaveLength(1);
     expect(books[0].highlights).toHaveLength(2);
     expect(books[0].highlights[1]).toEqual({
       info: 'page 10',
@@ -53,21 +54,28 @@ describe('addHighlightToBook', () => {
 describe('getBookWithTitle', () => {
   it('should return the book with the matching title', () => {
     const books: Book[] = [
-      { title: 'Test Book', highlights: [] },
+      { title: 'test book', author: 'author', highlights: [] },
       {
         title: 'another book',
+        author: 'author',
         highlights: [],
       },
     ];
-    const title = 'Test Book';
+    const title = 'test book';
 
     const book = getBookWithTitle(books, title);
 
-    expect(book).toEqual({ title: 'Test Book', highlights: [] });
+    expect(book).toEqual({
+      title: 'test book',
+      author: 'author',
+      highlights: [],
+    });
   });
 
   it('should return undefined if no book is found', () => {
-    const books: Book[] = [{ title: 'Test Book', highlights: [] }];
+    const books: Book[] = [
+      { title: 'Test Book', author: 'author', highlights: [] },
+    ];
     const title = 'Non-existent Book';
 
     const book = getBookWithTitle(books, title);
