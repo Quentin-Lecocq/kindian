@@ -40,12 +40,12 @@ const TableBooks: FC<TableBooksProps> = ({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {books.map(({ selected, title, author, highlights }, index) => (
-          <TableRow key={index}>
+        {books.map(({ id, selected, title, author, highlights }) => (
+          <TableRow key={id}>
             <TableCell className="flex items-center">
               <Checkbox
                 checked={selected}
-                onCheckedChange={() => onSelect(index)}
+                onCheckedChange={() => onSelect(id)}
               />
             </TableCell>
             <TableCell>{title}</TableCell>

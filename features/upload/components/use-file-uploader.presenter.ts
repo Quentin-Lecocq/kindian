@@ -13,7 +13,7 @@ type UseFileUploaderPresenterReturn = {
   books: Book[];
   error: string | null;
   handleFileChange: (acceptedFiles: File[]) => Promise<void>;
-  handleSelectBook: (index: number) => void;
+  handleSelectBook: (id: string) => void;
   handleToggleSelectAllBooks: () => void;
   handleResetUploader: () => void;
   handleExportAndDownload: (allBooks: boolean) => Promise<void>;
@@ -100,10 +100,10 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     }
   };
 
-  // TODO: work with id instead of index
-  const handleSelectBook = (index: number) => {
-    const updatedBooks = [...fileUploaderState.books];
-    updatedBooks[index].selected = !updatedBooks[index].selected;
+  const handleSelectBook = (id: string) => {
+    const updatedBooks = fileUploaderState.books.map((book) =>
+      book.id === id ? { ...book, selected: !book.selected } : book
+    );
     dispatch({ type: 'SET_BOOKS', payload: updatedBooks });
   };
 

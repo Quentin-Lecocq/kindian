@@ -30,6 +30,7 @@ describe('fileUploaderReducer', () => {
 
   it('should add books to the state', () => {
     const book: Book = {
+      id: '1',
       title: 'Test Book',
       author: 'author',
       highlights: [],

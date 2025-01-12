@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { Book } from '../../type';
 
 const VALID_CLIPPING_MIN_LINES = 2;
@@ -26,6 +27,7 @@ export const addHighlightToBook = (clipping: string, books: Book[]) => {
 
   if (!book) {
     book = {
+      id: uuidv4(),
       title: title.toLowerCase(),
       author: author ?? '',
       highlights: [],
