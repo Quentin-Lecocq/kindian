@@ -45,13 +45,16 @@ function parseTitleAndAuthor(bookTitleWithAuthor: string): {
   title: string;
   author: string | null;
 } {
-  const cleaned = bookTitleWithAuthor.replace('(Z-Library)', '').trim();
+  const cleaned = bookTitleWithAuthor
+    .replace('(Z-Library)', '')
+    .trim()
+    .toLowerCase();
 
   const match = cleaned.match(/^(.*?)\(([^()]+)\)\s*(?:\([^()]+\))*$/);
 
   if (match) {
-    const title = match[1].trim();
-    const author = match[2].trim();
+    const title = match[1].trim().toLowerCase();
+    const author = match[2].trim().toLowerCase();
     return { title, author };
   }
 

@@ -2,7 +2,6 @@
 
 import { Book } from '../../type';
 import { addHighlightToBook } from '../services/highlight';
-import { fetchBooksCover } from './fetch';
 
 export const extractBooksFromClippings = async (
   fileContent: string
@@ -22,14 +21,5 @@ export const extractBooksFromClippings = async (
     }
   });
 
-  for (const book of books) {
-    try {
-      book.coverUrl = await fetchBooksCover(book.title, book.author);
-    } catch (error) {
-      console.error('Error fetching cover URL:', book.title, error);
-    }
-  }
-
-  console.log(books);
   return books;
 };
