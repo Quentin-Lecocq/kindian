@@ -15,4 +15,10 @@ export default {
   'pages.export.table.books.highlights': 'HIGHLIGHTS',
   'pages.export.table.books.notes': 'NOTES',
   'pages.export.table.books.bookmarks': 'BOOKMARKS',
+  'sidebar.dashboard': 'Dashboard',
+  'sidebar.my-books': 'My Books',
+  'sidebar.my-highlights': 'My Highlights',
+  'sidebar.export': 'Export',
+  'sidebar.favorites': 'Favorites',
+  'sidebar.statistics': 'Statistics',
 } as const;
