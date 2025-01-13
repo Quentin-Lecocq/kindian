@@ -10,4 +10,9 @@ export default {
   'pages.export.export.selected.books': 'Export selected books',
   'pages.export.export.all.books': 'Export all books',
   'pages.export.reset.uploader': 'Reset uploader',
+  'pages.export.table.books.name': 'BOOKS NAME',
+  'pages.export.table.books.author': 'AUTHOR',
+  'pages.export.table.books.highlights': 'HIGHLIGHTS',
+  'pages.export.table.books.notes': 'NOTES',
+  'pages.export.table.books.bookmarks': 'BOOKMARKS',
 } as const;
