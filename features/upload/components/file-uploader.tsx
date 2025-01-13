@@ -2,13 +2,18 @@
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { useScopedI18n } from '@/locales/client';
 import { DownloadIcon, FileDownIcon, Upload } from 'lucide-react';
 import Dropzone from 'react-dropzone';
 import ErrorDisplay from './error-display';
 import TableBooks from './table-books';
 import useFileUploaderPresenter from './use-file-uploader.presenter';
 
+const MAX_FILE_UPLOAD = 1;
+
 const FileUploader = () => {
+  const t = useScopedI18n('pages.export');
+
   const {
     books,
     error,
@@ -28,7 +33,7 @@ const FileUploader = () => {
               'text/plain': ['.txt'],
             }}
             onDrop={handleFileChange}
-            maxFiles={1}
+            maxFiles={MAX_FILE_UPLOAD}
           >
             {({ getRootProps, getInputProps, open }) => (
               <div
@@ -49,10 +54,10 @@ const FileUploader = () => {
                     </div>
                     <div className="flex flex-col gap-px">
                       <p className="font-medium text-muted-foreground">
-                        Drag {`'n'`} drop files here, or click to select files
+                        {t('upload.file.first-instruction')}
                       </p>
                       <p className="text-sm text-muted-foreground/70">
-                        You can upload a txt file directly from your kindle
+                        {t('upload.file.second-instruction')}
                       </p>
                     </div>
                   </div>
@@ -60,7 +65,7 @@ const FileUploader = () => {
                     className="w-full bg-emerald-400"
                     onClick={() => open()}
                   >
-                    Upload File
+                    {t('upload.file')}
                   </Button>
                 </div>
               </div>
@@ -68,9 +73,9 @@ const FileUploader = () => {
           </Dropzone>
         ) : (
           <div className="w-96 flex flex-col gap-4">
-            <h4 className="text-2xl font-bold">Actions available</h4>
+            <h4 className="text-2xl font-bold">{t('actions.available')}</h4>
             <p className="text-sm text-muted-foreground">
-              Books imported successfully. Select an export option below.
+              {t('upload.success')}
             </p>
             <div className="flex gap-4">
               <Button
@@ -78,14 +83,14 @@ const FileUploader = () => {
                 onClick={() => handleExportAndDownload(false)}
               >
                 <FileDownIcon />
-                Export selected books
+                {t('export.selected.books')}
               </Button>
               <Button
                 className="w-full"
                 onClick={async () => handleExportAndDownload(true)}
               >
                 <DownloadIcon />
-                Export all books
+                {t('export.all.books')}
               </Button>
             </div>
             <Button
@@ -93,7 +98,7 @@ const FileUploader = () => {
               variant="link"
               className="p-0 self-start text-muted-foreground"
             >
-              reset uploader
+              {t('reset.uploader')}
             </Button>
           </div>
         )}

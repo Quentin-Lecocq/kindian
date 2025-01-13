@@ -25,37 +25,37 @@ const items: {
   protected: boolean;
 }[] = [
   {
-    title: 'Dashboard',
+    title: 'dashboard',
     url: '/dashboard',
     icon: Home,
     protected: true,
   },
   {
-    title: 'My Books',
+    title: 'my-books',
     url: '/dashboard/books',
     icon: Inbox,
     protected: true,
   },
   {
-    title: 'My Highlights',
+    title: 'my-highlights',
     url: '/dashboard/highlights',
     icon: Star,
     protected: true,
   },
   {
-    title: 'Export',
+    title: 'export',
     url: '/export',
     icon: FileDown,
     protected: false,
   },
   {
-    title: 'Favorites',
+    title: 'favorites',
     url: '/dashboard/favorites',
     icon: Heart,
     protected: true,
   },
   {
-    title: 'Statistics',
+    title: 'statistics',
     url: '/dashboard/statistics',
     icon: BarChart,
     protected: true,
