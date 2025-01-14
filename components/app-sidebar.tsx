@@ -4,6 +4,7 @@ import SignInWrapper from '@/features/auth/components/signin-wrapper';
 import { useToast } from '@/hooks/use-toast';
 import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
 import { useSession } from 'next-auth/react';
+import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import NavUser from './nav-user';
 import {
@@ -102,10 +103,10 @@ const AppSidebar = () => {
                   }}
                 >
                   <SidebarMenuButton asChild isActive={pathname === item.url}>
-                    <a href={item.url}>
+                    <Link href={item.url}>
                       <item.icon />
                       <span>{item.title}</span>
-                    </a>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
