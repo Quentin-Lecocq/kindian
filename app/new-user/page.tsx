@@ -17,7 +17,6 @@ const createNewUser = async () => {
     .where(eq(UsersTable.clerkId, user.id));
 
   if (match.length === 0) {
-    console.log('creating new user');
     await db.insert(UsersTable).values({
       clerkId: user.id,
       email: user.emailAddresses[0].emailAddress || '',
