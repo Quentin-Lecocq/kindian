@@ -1,6 +1,4 @@
-import AppSidebar from '@/components/app-sidebar';
 import ThemeProvider from '@/components/theme-provider';
-import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 import { Toaster } from '@/components/ui/toaster';
 import { ClerkProvider } from '@clerk/nextjs';
 import type { Metadata } from 'next';
@@ -26,7 +24,6 @@ export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }>) {
   return (
     <ClerkProvider>
@@ -40,11 +37,7 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <SidebarProvider>
-              <AppSidebar />
-              <SidebarTrigger />
-              <main className="w-full">{children}</main>
-            </SidebarProvider>
+            <main className="w-full">{children}</main>
           </ThemeProvider>
           <Toaster />
         </body>
