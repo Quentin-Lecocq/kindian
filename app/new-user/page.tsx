@@ -5,6 +5,7 @@ import { eq } from 'drizzle-orm';
 import { redirect } from 'next/navigation';
 
 const createNewUser = async () => {
+  // TODO: add try catch
   const user = await currentUser();
 
   if (!user) {
