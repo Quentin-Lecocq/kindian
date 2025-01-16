@@ -9,7 +9,8 @@ export const getUserByClerkId = async () => {
   const user = await db
     .select()
     .from(UsersTable)
-    .where(eq(UsersTable.clerkId, userId!));
+    .where(eq(UsersTable.clerkId, userId!))
+    .limit(1);
 
-  return user;
+  return user[0];
 };
