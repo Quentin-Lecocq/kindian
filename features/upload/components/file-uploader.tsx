@@ -3,6 +3,7 @@
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { DownloadIcon, FileDownIcon, Upload } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Dropzone from 'react-dropzone';
 import ErrorDisplay from './error-display';
 import TableBooks from './table-books';
@@ -11,6 +12,7 @@ import useFileUploaderPresenter from './use-file-uploader.presenter';
 const MAX_FILE_UPLOAD = 1;
 
 const FileUploader = () => {
+  const t = useTranslations('export-page.upload');
   const {
     books,
     error,
@@ -22,8 +24,8 @@ const FileUploader = () => {
   } = useFileUploaderPresenter();
 
   return (
-    <div className="flex flex-col gap-12 p-10 items-center justify-center h-screen">
-      <div className="w-full mt-10 flex h-60 items-center justify-center">
+    <div className="flex flex-col gap-12 items-center justify-center h-screen">
+      <div className="w-full flex h-60 items-center justify-center">
         {!books.length ? (
           <Dropzone
             accept={{
@@ -51,11 +53,10 @@ const FileUploader = () => {
                     </div>
                     <div className="flex flex-col gap-px">
                       <p className="font-medium text-muted-foreground">
-                        {/* {t('upload.file.first-instruction')} */}
-                        Upload your file
+                        {t('dropzone.title')}
                       </p>
                       <p className="text-sm text-muted-foreground/70">
-                        Select the books you want to export
+                        {t('dropzone.description')}
                       </p>
                     </div>
                   </div>
@@ -63,8 +64,7 @@ const FileUploader = () => {
                     className="w-full bg-emerald-400"
                     onClick={() => open()}
                   >
-                    {/* {t('upload.file')} */}
-                    Upload
+                    {t('dropzone.button')}
                   </Button>
                 </div>
               </div>
@@ -72,13 +72,9 @@ const FileUploader = () => {
           </Dropzone>
         ) : (
           <div className="w-96 flex flex-col gap-4">
-            <h4 className="text-2xl font-bold">
-              {/* {t('actions.available')} */}
-              Actions available
-            </h4>
+            <h4 className="text-2xl font-bold">{t('results.title')}</h4>
             <p className="text-sm text-muted-foreground">
-              {/* {t('upload.success')} */}
-              Upload successful
+              {t('results.description')}
             </p>
             <div className="flex gap-4">
               <Button
@@ -86,16 +82,14 @@ const FileUploader = () => {
                 onClick={() => handleExportAndDownload(false)}
               >
                 <FileDownIcon />
-                {/* {t('export.selected.books')} */}
-                Export selected books
+                {t('results.export-selected-books')}
               </Button>
               <Button
                 className="w-full"
                 onClick={async () => handleExportAndDownload(true)}
               >
                 <DownloadIcon />
-                {/* {t('export.all.books')} */}
-                Export all books
+                {t('results.export-all-books')}
               </Button>
             </div>
             <Button
@@ -103,8 +97,7 @@ const FileUploader = () => {
               variant="link"
               className="p-0 self-start text-muted-foreground"
             >
-              {/* {t('reset.uploader')} */}
-              Reset
+              {t('results.reset')}
             </Button>
           </div>
         )}

@@ -1,0 +1,36 @@
+{
+  "export-page": {
+    "sidebar": {
+      "title": "Kindian",
+      "dashboard": "Dashboard",
+      "books": "Books",
+      "highlights": "Highlights",
+      "export": "Export",
+      "favorites": "Favorites",
+      "statistics": "Statistics"
+    },
+    "upload": {
+      "dropzone": {
+        "title": "Upload your file",
+        "description": "Drag and drop your txt file here or click to upload",
+        "button": "Upload"
+      },
+      "results": {
+        "title": "Actions available",
+        "description": "Upload successful",
+        "export-selected-books": "Export selected books",
+        "export-all-books": "Export all books",
+        "download-selected-books": "Download selected books",
+        "download-all-books": "Download all books",
+        "reset": "Reset uploader"
+      }
+    },
+    "table-books": {
+      "name": "Name",
+      "author": "Author",
+      "highlights": "Highlights",
+      "notes": "Notes",
+      "bookmarks": "Bookmarks"
+    }
+  }
+}
