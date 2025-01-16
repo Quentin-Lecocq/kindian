@@ -1,0 +1,27 @@
+{
+  "export-page": {
+    "sidebar": {
+      "title": "Kindian",
+      "dashboard": "Cruscotto",
+      "books": "Libri",
+      "highlights": "Risaltati",
+      "export": "Esporta",
+      "favorites": "Preferiti",
+      "statistics": "Statistiche"
+    },
+    "upload": {
+      "dropzone": {
+        "title": "Carica il tuo file",
+        "description": "Trascina e rilascia il tuo file txt qui o clicca per caricare",
+        "button": "Carica"
+      },
+      "results": {
+        "title": "Azioni disponibili",
+        "description": "Caricamento effettuato con successo",
+        "export-selected-books": "Esporta libri selezionati",
+        "export-all-books": "Esporta tutti i libri",
+        "reset": "Reimposta caricatore"
+      }
+    }
+  }
+}

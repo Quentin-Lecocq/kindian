@@ -53,7 +53,7 @@ const items: {
 ];
 
 const AppSidebar = () => {
-  const t = useTranslations('sidebar');
+  const t = useTranslations('export-page.sidebar');
   // TODO: temporary solution, i'll need to create a nav-main component to handle active state and use use-client at the bottom of the sidebar
   const pathname = usePathname();
 

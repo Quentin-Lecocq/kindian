@@ -1,0 +1,34 @@
+{
+  "export-page": {
+    "sidebar": {
+      "title": "Kindian",
+      "dashboard": "Inicio",
+      "books": "Libros",
+      "highlights": "Resaltados",
+      "export": "Exportar",
+      "favorites": "Favoritos",
+      "statistics": "Estadísticas"
+    },
+    "upload": {
+      "dropzone": {
+        "title": "Carga tu archivo",
+        "description": "Arrastra y suelta tu archivo txt aquí o haz clic para cargar",
+        "button": "Cargar"
+      },
+      "results": {
+        "title": "Acciones disponibles",
+        "description": "Carga exitosa",
+        "export-selected-books": "Exportar libros seleccionados",
+        "export-all-books": "Exportar todos los libros",
+        "reset": "Reiniciar cargador"
+      },
+      "table-books": {
+        "name": "Nombre",
+        "author": "Autor",
+        "highlights": "Resaltados",
+        "notes": "Notas",
+        "bookmarks": "Marcadores"
+      }
+    }
+  }
+}

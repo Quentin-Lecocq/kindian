@@ -1,15 +1,27 @@
 {
-  "HomePage": {
-    "title": "hello world!",
-    "about": "aller à la page à propos"
-  },
-  "sidebar": {
-    "title": "Kindian",
-    "dashboard": "Tableau de bord",
-    "books": "Livres",
-    "highlights": "Mise en évidence",
-    "export": "Exporter",
-    "favorites": "Favoris",
-    "statistics": "Statistiques"
+  "export-page": {
+    "sidebar": {
+      "title": "Kindian",
+      "dashboard": "Tableau de bord",
+      "books": "Livres",
+      "highlights": "Mise en évidence",
+      "export": "Exporter",
+      "favorites": "Favoris",
+      "statistics": "Statistiques"
+    },
+    "upload": {
+      "dropzone": {
+        "title": "Charger votre fichier",
+        "description": "Glisser-déposer votre fichier txt ici ou cliquer pour charger",
+        "button": "Charger"
+      },
+      "results": {
+        "title": "Actions disponibles",
+        "description": "Chargement réussi",
+        "export-selected-books": "Exporter les livres sélectionnés",
+        "export-all-books": "Exporter tous les livres",
+        "reset": "Réinitialiser le chargement"
+      }
+    }
   }
 }

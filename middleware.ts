@@ -21,6 +21,6 @@ export const config = {
     // Always run for API routes
     '/(api|trpc)(.*)',
     '/',
-    '/(fr|en)/:path*',
+    '/(fr|en|es|it)/:path*',
   ],
 };
