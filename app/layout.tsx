@@ -1,6 +1,7 @@
 import ThemeProvider from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { ClerkProvider } from '@clerk/nextjs';
+import { dark } from '@clerk/themes';
 import type { Metadata } from 'next';
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -32,7 +33,7 @@ export default async function RootLayout({
   const messages = await getMessages();
 
   return (
-    <ClerkProvider>
+    <ClerkProvider appearance={{ baseTheme: dark }}>
       <html lang={locale} suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-sidebar`}
