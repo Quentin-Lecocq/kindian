@@ -1,9 +1,11 @@
 import { NextPage } from 'next';
+import { useTranslations } from 'next-intl';
 
 const DashboardPage: NextPage = () => {
+  const t = useTranslations('HomePage');
   return (
     <>
-      <h1>Dashboard</h1>
+      <h1>{t('title')}</h1>
     </>
   );
 };

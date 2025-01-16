@@ -1,0 +1,15 @@
+{
+  "HomePage": {
+    "title": "hello world!",
+    "about": "aller à la page à propos"
+  },
+  "sidebar": {
+    "title": "Kindian",
+    "dashboard": "Tableau de bord",
+    "books": "Livres",
+    "highlights": "Mise en évidence",
+    "export": "Exporter",
+    "favorites": "Favoris",
+    "statistics": "Statistiques"
+  }
+}
