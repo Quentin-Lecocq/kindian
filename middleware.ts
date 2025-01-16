@@ -1,32 +1,18 @@
-import { getToken } from 'next-auth/jwt';
-import { createI18nMiddleware } from 'next-international/middleware';
-import { NextRequest, NextResponse } from 'next/server';
+import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-const I18nMiddleware = createI18nMiddleware({
-  locales: ['en', 'fr'],
-  defaultLocale: 'en',
-  urlMappingStrategy: 'rewrite',
+const isPublicRoute = createRouteMatcher(['/sign-in(.*)', '/sign-up(.*)']);
+
+export default clerkMiddleware(async (auth, req) => {
+  if (!isPublicRoute(req)) {
+    await auth.protect();
+  }
 });
-
-export async function middleware(req: NextRequest) {
-  const publicRoutes = ['/export', '/api/auth'];
-
-  if (publicRoutes.some((path) => req.nextUrl.pathname.startsWith(path))) {
-    return I18nMiddleware(req);
-  }
-
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
-
-  if (!token) {
-    return NextResponse.redirect(new URL('/export', req.url));
-  }
-
-  return I18nMiddleware(req);
-}
 
 export const config = {
   matcher: [
-    '/((?!api|static|.*\\..*|_next|favicon.ico|robots.txt).*)',
-    '/dashboard/:path*',
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
   ],
 };

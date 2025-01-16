@@ -7,7 +7,6 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { useScopedI18n } from '@/locales/client';
 import { FC } from 'react';
 import { Book } from '../type';
 
@@ -26,8 +25,6 @@ const TableBooks: FC<TableBooksProps> = ({
   onSelect,
   onToggleSelectAll,
 }) => {
-  const t = useScopedI18n('pages.export.table.books');
-
   return (
     <Table>
       <TableHeader>
@@ -35,11 +32,11 @@ const TableBooks: FC<TableBooksProps> = ({
           <TableHead className="flex items-center">
             <Checkbox onCheckedChange={onToggleSelectAll} />
           </TableHead>
-          <TableHead>{t('name')}</TableHead>
-          <TableHead>{t('author')}</TableHead>
-          <TableHead>{t('highlights')}</TableHead>
-          <TableHead>{t('notes')}</TableHead>
-          <TableHead>{t('bookmarks')}</TableHead>
+          <TableHead>NAME</TableHead>
+          <TableHead>AUTHOR</TableHead>
+          <TableHead>HIGHLIGHTS</TableHead>
+          <TableHead>NOTES</TableHead>
+          <TableHead>BOOKMARKS</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
