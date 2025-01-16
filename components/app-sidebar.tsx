@@ -1,12 +1,9 @@
 'use client';
 
-import SignInWrapper from '@/features/auth/components/signin-wrapper';
 import { useToast } from '@/hooks/use-toast';
 import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
-import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import NavUser from './nav-user';
 import {
   Sidebar,
   SidebarContent,
@@ -66,21 +63,20 @@ const items: {
 const AppSidebar = () => {
   // TODO: temporary solution, i'll need to create a nav-main component to handle active state and use use-client at the bottom of the sidebar
   const pathname = usePathname();
-  const { data: session } = useSession();
   const { toast } = useToast();
 
   const alertUserProtectedSection = (
     e: React.MouseEvent<HTMLLIElement>,
     isProtected: boolean
   ) => {
-    if (!session && isProtected) {
-      e.preventDefault();
-      toast({
-        variant: 'destructive',
-        title: 'Unauthorized',
-        description: 'Please sign in to access this section',
-      });
-    }
+    // if (!session && isProtected) {
+    //   e.preventDefault();
+    //   toast({
+    //     variant: 'destructive',
+    //     title: 'Unauthorized',
+    //     description: 'Please sign in to access this section',
+    //   });
+    // }
   };
 
   return (
@@ -95,9 +91,9 @@ const AppSidebar = () => {
               {items.map((item) => (
                 <SidebarMenuItem
                   key={item.title}
-                  className={`${
-                    !session && item.protected ? 'opacity-50' : ''
-                  }`}
+                  // className={`${
+                  //   !session && item.protected ? 'opacity-50' : ''
+                  // }`}
                   onClick={(e) => {
                     alertUserProtectedSection(e, item.protected);
                   }}
@@ -115,7 +111,7 @@ const AppSidebar = () => {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter>
-        {session ? <NavUser user={session.user} /> : <SignInWrapper />}
+        {/* {session ? <NavUser user={session.user} /> : <SignInWrapper />} */}
       </SidebarFooter>
     </Sidebar>
   );
