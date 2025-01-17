@@ -15,6 +15,20 @@
       "when": 1737056279120,
       "tag": "0001_narrow_master_chief",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1737126221703,
+      "tag": "0002_charming_sunspot",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1737126560152,
+      "tag": "0003_productive_thunderball",
+      "breakpoints": true
     }
   ]
 }

@@ -2,7 +2,6 @@ import { db } from '@/db';
 import { BooksTable } from '@/db/schema';
 import { getUserByClerkId } from '@/utils/auth';
 import { and, eq } from 'drizzle-orm';
-import { revalidatePath } from 'next/cache';
 import { NextResponse } from 'next/server';
 
 export const DELETE = async (
@@ -22,8 +21,6 @@ export const DELETE = async (
       { status: 500 }
     );
   }
-
-  revalidatePath('/books');
 
   return NextResponse.json({ status: 200 });
 };
