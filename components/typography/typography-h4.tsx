@@ -4,9 +4,9 @@ type TypographyH4Props = {
 
 const TypographyH4 = ({ children }: TypographyH4Props) => {
   return (
-    <h4 className="text-xl font-semibold tracking-tight scroll-m-20 text-foreground mb-6">
+    <h3 className="text-xl font-semibold tracking-tight scroll-m-20 text-foreground mb-6">
       {children}
-    </h4>
+    </h3>
   );
 };
 

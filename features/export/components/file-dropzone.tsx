@@ -27,7 +27,7 @@ const FileDropzone = ({ open }: FileDropzoneProps) => {
           </TypographyP>
         </div>
       </div>
-      <Button className="w-full bg-emerald-400" onClick={open}>
+      <Button className="bg-emerald-400 mt-6" onClick={open}>
         {t('dropzone.button')}
       </Button>
     </div>

@@ -4,6 +4,7 @@ import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import Logo from './logo';
 import {
   Sidebar,
   SidebarContent,
@@ -59,13 +60,13 @@ const AppSidebar = () => {
 
   return (
     <Sidebar>
-      <SidebarContent>
+      <SidebarContent className="bg-background">
         <SidebarGroup>
-          <SidebarGroupLabel>
-            <h1 className="text-2xl font-bold">{t('title')}</h1>
+          <SidebarGroupLabel className="pt-6 pb-4">
+            <Logo />
           </SidebarGroupLabel>
           <SidebarGroupContent className="mt-4">
-            <SidebarMenu>
+            <SidebarMenu className="text-foreground">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton
