@@ -1,9 +1,10 @@
+import TypographyH4 from '@/components/typography/typography-h4';
 import { NextPage } from 'next';
 
 const StatisticsPage: NextPage = () => {
   return (
     <>
-      <h1>Statistics</h1>
+      <TypographyH4>Statistics</TypographyH4>
     </>
   );
 };

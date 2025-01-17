@@ -1,9 +1,10 @@
+import TypographyH4 from '@/components/typography/typography-h4';
 import { NextPage } from 'next';
 
 const FavoritesPage: NextPage = () => {
   return (
     <>
-      <h1>Favorites</h1>
+      <TypographyH4>Favorites</TypographyH4>
     </>
   );
 };

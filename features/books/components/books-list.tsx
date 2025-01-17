@@ -9,7 +9,7 @@ const BooksList = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mt-8">
+    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {books.map((book) => (
         <div key={book.id} className="border p-4 rounded-lg">
           <h3 className="text-lg font-bold">{book.title}</h3>
