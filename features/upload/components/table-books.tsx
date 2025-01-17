@@ -17,10 +17,6 @@ type TableBooksProps = {
   onToggleSelectAll: () => void;
 };
 
-// title
-// number highlights
-// tags ??
-
 const TableBooks: FC<TableBooksProps> = ({
   books,
   onSelect,

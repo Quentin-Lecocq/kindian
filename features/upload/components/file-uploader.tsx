@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { DownloadIcon, FileDownIcon, Upload } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Dropzone from 'react-dropzone';
-import ErrorDisplay from './error-display';
+import ErrorDisplay from '../../../components/error-display';
 import TableBooks from './table-books';
 import useFileUploaderPresenter from './use-file-uploader.presenter';
 

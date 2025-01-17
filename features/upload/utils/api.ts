@@ -1,11 +1,7 @@
-import { InsertBook } from '@/db/schema';
+import { createURL } from '@/utils/api';
+import { Book } from '../type';
 
-export const createURL = (path: string) => {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || '';
-  return baseUrl + path;
-};
-
-export const saveBooks = async (books: InsertBook[]) => {
+export const saveBooks = async (books: Book[]) => {
   const res = await fetch(
     new Request(createURL('/api/book'), {
       method: 'POST',
