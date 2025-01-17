@@ -23,6 +23,7 @@ const TableBooks: FC<TableBooksProps> = ({
   onToggleSelectAll,
 }) => {
   const t = useTranslations('export-page.table-books');
+
   return (
     <Table>
       <TableHeader>
