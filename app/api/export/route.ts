@@ -1,4 +1,4 @@
-import { Book } from '@/features/upload/type';
+import { Book } from '@/features/export/types';
 import { NextResponse } from 'next/server';
 
 type MarkdownFile = {

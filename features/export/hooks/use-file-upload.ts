@@ -1,4 +1,4 @@
-import { Book } from '@/features/upload/type';
+import { Book } from '@/features/export/types';
 import { useState } from 'react';
 import { extractBooks } from '../api/extract';
 

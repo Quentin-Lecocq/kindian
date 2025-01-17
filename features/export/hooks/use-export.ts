@@ -1,6 +1,6 @@
-import { Book } from '@/features/upload/type';
 import JSZip from 'jszip';
 import { exportToMarkdown } from '../api/export';
+import { Book } from '../types';
 
 export const useExport = () => {
   const handleExport = async (books: Book[]) => {

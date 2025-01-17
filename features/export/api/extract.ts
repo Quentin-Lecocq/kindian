@@ -1,4 +1,4 @@
-import { Book } from '@/features/upload/type';
+import { Book } from '../types';
 
 type ApiResponse<T> = {
   data: T;

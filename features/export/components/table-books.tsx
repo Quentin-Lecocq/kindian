@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/table';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
-import { Book } from '../../upload/type';
+import { Book } from '../types';
 
 type TableBooksProps = {
   books: Book[];

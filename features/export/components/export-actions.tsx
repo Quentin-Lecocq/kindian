@@ -1,8 +1,8 @@
 import { Button } from '@/components/ui/button';
-import { Book } from '@/features/upload/type';
 import { DownloadIcon, FileDownIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useExport } from '../hooks/use-export';
+import { Book } from '../types';
 
 const ExportActions = ({ books }: { books: Book[] }) => {
   const t = useTranslations('export-page.upload');

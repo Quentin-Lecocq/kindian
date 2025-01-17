@@ -1,6 +1,5 @@
 import TableBooks from '@/features/export/components/table-books';
-
-import { Book } from '@/features/upload/type';
+import { Book } from '@/features/export/types';
 import ExportActions from './export-actions';
 
 type ExportContainerProps = {
