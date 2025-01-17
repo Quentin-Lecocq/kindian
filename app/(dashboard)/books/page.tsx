@@ -1,6 +1,6 @@
-import { Button } from '@/components/ui/button';
 import { db } from '@/db';
 import { BooksTable } from '@/db/schema';
+import DeleteBookBtn from '@/features/books/components/delete-book-btn';
 import { getUserByClerkId } from '@/utils/auth';
 import { desc, eq } from 'drizzle-orm';
 import { NextPage } from 'next';
@@ -22,16 +22,16 @@ const BooksPage: NextPage = async () => {
     <>
       <h1>Books</h1>
       <div className="mt-8 grid grid-cols-3 gap-4">
-        {books.map((book) => (
-          <div className="border h-32" key={book.id}>
-            <h3 className="text-lg font-bold">{book.title}</h3>
+        {books.map(({ id, title, author, highlightsCount }) => (
+          <div className="border h-32" key={id}>
+            <h3 className="text-lg font-bold">{title}</h3>
             <div className="flex gap-2">
-              <span className="text-sm text-gray-500">{book.author}</span>
+              <span className="text-sm text-gray-500">{author}</span>
               <span className="text-sm text-gray-500">
-                {book.highlightsCount} highlights
+                {highlightsCount} highlights
               </span>
             </div>
-            <Button variant="destructive">delete</Button>
+            <DeleteBookBtn bookId={id} />
           </div>
         ))}
       </div>
