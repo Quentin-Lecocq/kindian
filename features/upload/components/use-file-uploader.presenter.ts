@@ -1,6 +1,7 @@
 import { useReducer } from 'react';
 
 import { saveAs } from 'file-saver';
+import { useRouter } from 'next/navigation';
 import {
   fileUploaderReducer,
   initialState,
@@ -8,6 +9,7 @@ import {
 import { exportSelectedBooks } from '../server/actions/export';
 import { extractBooksFromClippings } from '../server/actions/extract';
 import { Book } from '../type';
+import { saveBooks } from '../utils/api';
 
 type UseFileUploaderPresenterReturn = {
   books: Book[];
@@ -20,10 +22,16 @@ type UseFileUploaderPresenterReturn = {
 };
 
 const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
+  const router = useRouter();
   const [fileUploaderState, dispatch] = useReducer(
     fileUploaderReducer,
     initialState
   );
+
+  const onSaveBooks = async (books: Book[]) => {
+    await saveBooks(books);
+    router.push('/books');
+  };
 
   const handleResetUploader = () => {
     // TODO: surely there is a better way to do this
@@ -78,6 +86,7 @@ const useFileUploaderPresenter = (): UseFileUploaderPresenterReturn => {
     }
 
     dispatch({ type: 'SET_UPLOADING', payload: true });
+    await onSaveBooks(selectedBooks);
 
     try {
       const zipBlob = await exportSelectedBooks(

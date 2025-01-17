@@ -5,14 +5,11 @@ const createURL = (path: string) => {
   return baseUrl + path;
 };
 
-export const createNewBook = async (book: InsertBook) => {
-  console.log('createnewbook');
-  console.log({ book });
-  console.log('----------');
+export const saveBooks = async (books: InsertBook[]) => {
   const res = await fetch(
     new Request(createURL('/api/book'), {
       method: 'POST',
-      body: JSON.stringify(book),
+      body: JSON.stringify(books),
     })
   );
 

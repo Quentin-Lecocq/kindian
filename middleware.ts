@@ -2,12 +2,6 @@ import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
 // const int1Middleware = createMiddleware(routing);
 
-// const isPublicRoute = createRouteMatcher([
-//   '/sign-in(.*)',
-//   '/sign-up(.*)',
-//   '/new-user',
-// ]);
-
 const isProtectedRoute = createRouteMatcher([
   '/dashboard',
   '/books',
