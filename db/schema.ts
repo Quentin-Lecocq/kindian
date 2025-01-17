@@ -23,9 +23,11 @@ export const BooksTable = pgTable(
   'books',
   {
     id: uuid('id').primaryKey().defaultRandom(),
-    userId: uuid('user_id').references(() => UsersTable.id),
-    title: varchar('title', { length: 255 }),
-    author: varchar('author', { length: 255 }),
+    userId: uuid('user_id')
+      .references(() => UsersTable.id)
+      .notNull(),
+    title: varchar('title', { length: 255 }).notNull(),
+    author: varchar('author', { length: 255 }).notNull(),
     createdAt: timestamp('created_at').defaultNow(),
     updatedAt: timestamp('updated_at').defaultNow(),
     highlightsCount: integer('highlights_count').default(0),
