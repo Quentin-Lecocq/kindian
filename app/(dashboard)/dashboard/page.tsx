@@ -1,11 +1,10 @@
-'use client';
-
+import TypographyH4 from '@/components/typography/typography-h4';
 import { NextPage } from 'next';
 
 const DashboardPage: NextPage = () => {
   return (
     <>
-      <h1>dashboard</h1>
+      <TypographyH4>Dashboard</TypographyH4>
     </>
   );
 };

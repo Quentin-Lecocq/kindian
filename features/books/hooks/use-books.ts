@@ -32,9 +32,14 @@ export const useBooks = () => {
     },
   });
 
+  const openBook = (bookId: string) => {
+    console.log(bookId);
+  };
+
   return {
     books,
     isLoading,
     deleteBook: deleteMutation.mutate,
+    openBook,
   };
 };
