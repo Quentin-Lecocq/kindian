@@ -1,5 +1,6 @@
 import TableBooks from '@/features/export/components/table-books';
 import { Book } from '@/features/export/types';
+import { useExport } from '../hooks/use-export';
 import ExportActions from './export-actions';
 
 type ExportContainerProps = {
@@ -7,15 +8,22 @@ type ExportContainerProps = {
 };
 
 const ExportContainer = ({ books }: ExportContainerProps) => {
-  if (!books.length) return null;
+  const {
+    handleExport,
+    selectedBooks,
+    handleToggleSelectBook,
+    handleToggleSelectAll,
+  } = useExport(books);
+
+  if (!selectedBooks.length) return null;
 
   return (
     <div>
-      <ExportActions books={books} />
+      <ExportActions handleExport={handleExport} />
       <TableBooks
-        books={books}
-        onSelect={() => {}}
-        onToggleSelectAll={() => {}}
+        books={selectedBooks}
+        onSelect={handleToggleSelectBook}
+        onToggleSelectAll={handleToggleSelectAll}
       />
     </div>
   );

@@ -10,3 +10,8 @@ export interface Highlight {
   info: string;
   quote: string;
 }
+
+export interface MarkdownFile {
+  content: string;
+  filename: string;
+}
