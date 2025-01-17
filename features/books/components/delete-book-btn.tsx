@@ -1,22 +1,19 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
-import { FC, useTransition } from 'react';
-import { deleteBook } from '../server/actions/books';
+import { Trash2 } from 'lucide-react';
+import { useBooks } from '../hooks/use-books';
+
 type DeleteBookBtnProps = {
   bookId: string;
 };
 
-const DeleteBookBtn: FC<DeleteBookBtnProps> = ({ bookId }) => {
-  const [isPending, startTransition] = useTransition();
+const DeleteBookBtn = ({ bookId }: DeleteBookBtnProps) => {
+  const { deleteBook } = useBooks();
 
   return (
-    <Button
-      disabled={isPending}
-      onClick={() => startTransition(() => deleteBook(bookId))}
-      variant="destructive"
-    >
-      {isPending ? 'Deleting...' : 'Delete'}
+    <Button variant="ghost" size="icon" onClick={() => deleteBook(bookId)}>
+      <Trash2 className="h-4 w-4" />
     </Button>
   );
 };

@@ -4,6 +4,7 @@ import { db } from '@/db';
 import { BooksTable, InsertBook } from '@/db/schema';
 import { Book } from '@/features/upload/type';
 import { getUserByClerkId } from '@/utils/auth';
+import { eq } from 'drizzle-orm';
 
 export const POST = async (req: Request) => {
   const user = await getUserByClerkId();
@@ -39,3 +40,26 @@ export const POST = async (req: Request) => {
     );
   }
 };
+
+export async function GET() {
+  try {
+    const user = await getUserByClerkId();
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const books = await db
+      .select()
+      .from(BooksTable)
+      .where(eq(BooksTable.userId, user.id))
+      .orderBy(BooksTable.createdAt);
+
+    return NextResponse.json({ data: books });
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    return NextResponse.json(
+      { error: 'Failed to fetch books' },
+      { status: 500 }
+    );
+  }
+}

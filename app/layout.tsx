@@ -1,3 +1,4 @@
+import TanStackProvider from '@/components/tanstack-providers';
 import ThemeProvider from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -45,7 +46,7 @@ export default async function RootLayout({
               enableSystem
               disableTransitionOnChange
             >
-              <main className="w-full">{children}</main>
+              <TanStackProvider>{children}</TanStackProvider>
             </ThemeProvider>
             <Toaster />
           </NextIntlClientProvider>
