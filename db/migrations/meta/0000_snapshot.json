@@ -1,5 +1,5 @@
 {
-  "id": "9d7c45e9-7d60-4785-842d-5e528ea8572a",
+  "id": "5c336fc1-fc50-46c3-9de3-8592ed153d0b",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -17,6 +17,12 @@
         },
         "email": {
           "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "clerk_id": {
+          "name": "clerk_id",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
@@ -50,6 +56,13 @@
           "nullsNotDistinct": false,
           "columns": [
             "email"
+          ]
+        },
+        "users_clerk_id_unique": {
+          "name": "users_clerk_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "clerk_id"
           ]
         }
       },
