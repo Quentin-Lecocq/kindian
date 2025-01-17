@@ -1,10 +1,40 @@
 import JSZip from 'jszip';
+import { useState } from 'react';
 import { saveBooksToDb } from '../api/books';
 import { exportToMarkdown } from '../api/export';
 import { Book } from '../types';
 
-export const useExport = () => {
-  const handleExport = async (books: Book[]) => {
+export const useExport = (allBooks: Book[]) => {
+  const [selectedBooks, setSelectedBooks] = useState<Book[]>(allBooks);
+
+  const handleToggleSelectBook = (id: string) => {
+    setSelectedBooks((prev) =>
+      prev.map((book) =>
+        book.id === id ? { ...book, selected: !book.selected } : book
+      )
+    );
+  };
+
+  const handleToggleSelectAll = () => {
+    const hasUnselected = selectedBooks.some(({ selected }) => !selected);
+
+    setSelectedBooks((prev) =>
+      prev.map((book) => ({
+        ...book,
+        selected: hasUnselected,
+      }))
+    );
+  };
+
+  const handleExport = async ({
+    onlySelectedBooks,
+  }: {
+    onlySelectedBooks: boolean;
+  }) => {
+    const books = onlySelectedBooks
+      ? selectedBooks.filter(({ selected }) => selected)
+      : allBooks;
+
     try {
       await saveBooksToDb(books);
 
@@ -30,5 +60,10 @@ export const useExport = () => {
     }
   };
 
-  return { handleExport };
+  return {
+    handleExport,
+    selectedBooks,
+    handleToggleSelectBook,
+    handleToggleSelectAll,
+  };
 };
