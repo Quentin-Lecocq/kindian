@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@/db';
 import { BooksTable, InsertBook } from '@/db/schema';
-import { Book } from '@/features/upload/type';
+import { Book } from '@/features/export/types';
 import { getUserByClerkId } from '@/utils/auth';
 import { eq } from 'drizzle-orm';
 

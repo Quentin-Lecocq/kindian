@@ -9,17 +9,13 @@ import {
 } from '@/components/ui/table';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
-import { Book } from '../type';
+import { Book } from '../types';
 
 type TableBooksProps = {
   books: Book[];
   onSelect: (id: string) => void;
   onToggleSelectAll: () => void;
 };
-
-// title
-// number highlights
-// tags ??
 
 const TableBooks: FC<TableBooksProps> = ({
   books,

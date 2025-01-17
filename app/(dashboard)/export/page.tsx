@@ -1,8 +1,13 @@
-import FileUploader from '@/features/upload/components/file-uploader';
+import FileUpload from '@/features/export/components/file-upload';
 import { NextPage } from 'next';
 
 const ExportPage: NextPage = () => {
-  return <FileUploader />;
+  return (
+    <div>
+      <h1>Export</h1>
+      <FileUpload />
+    </div>
+  );
 };
 
 export default ExportPage;
