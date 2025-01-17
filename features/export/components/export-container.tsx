@@ -1,4 +1,4 @@
-import TableBooks from '@/features/upload/components/table-books';
+import TableBooks from '@/features/export/components/table-books';
 
 import { Book } from '@/features/upload/type';
 import ExportActions from './export-actions';
@@ -12,7 +12,7 @@ const ExportContainer = ({ books }: ExportContainerProps) => {
 
   return (
     <div>
-      <ExportActions />
+      <ExportActions books={books} />
       <TableBooks
         books={books}
         onSelect={() => {}}

@@ -1,9 +1,12 @@
 import { Button } from '@/components/ui/button';
+import { Book } from '@/features/upload/type';
 import { DownloadIcon, FileDownIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useExport } from '../hooks/use-export';
 
-const ExportActions = () => {
+const ExportActions = ({ books }: { books: Book[] }) => {
   const t = useTranslations('export-page.upload');
+  const { handleExport } = useExport();
 
   return (
     <div className="flex flex-col gap-4 w-96 mx-auto my-10">
@@ -12,7 +15,10 @@ const ExportActions = () => {
         {t('results.description')}
       </p>
       <div className="flex gap-4">
-        <Button className="w-full bg-emerald-400">
+        <Button
+          className="w-full bg-emerald-400"
+          onClick={() => handleExport(books)}
+        >
           <FileDownIcon />
           {t('results.export-selected-books')}
         </Button>
@@ -21,7 +27,11 @@ const ExportActions = () => {
           {t('results.export-all-books')}
         </Button>
       </div>
-      <Button variant="link" className="p-0 self-start text-muted-foreground">
+      <Button
+        variant="link"
+        className="p-0 self-start text-muted-foreground"
+        onClick={() => handleExport(books)}
+      >
         {t('results.reset')}
       </Button>
     </div>
