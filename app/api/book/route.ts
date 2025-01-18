@@ -2,13 +2,13 @@ import { NextResponse } from 'next/server';
 
 import { db } from '@/db';
 import { BooksTable, InsertBook } from '@/db/schema';
+import { fetchGoogleBookInfo } from '@/features/export/services/google-books';
 import { Book } from '@/features/export/types';
 import { getUserByClerkId } from '@/utils/auth';
 import { eq } from 'drizzle-orm';
 
 export const POST = async (req: Request) => {
   const user = await getUserByClerkId();
-
   const rawBooks: Book[] = await req.json();
 
   if (!Array.isArray(rawBooks)) {
@@ -22,16 +22,47 @@ export const POST = async (req: Request) => {
     return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
   }
 
-  const books: InsertBook[] = rawBooks.map(({ title, author, highlights }) => ({
-    userId: user.id,
-    title,
-    author,
-    highlightsCount: highlights.length,
-  }));
-
   try {
-    const book = await db.insert(BooksTable).values(books);
-    return NextResponse.json({ data: book });
+    const enrichedBooks = await Promise.all(
+      rawBooks.map(async (book) => {
+        const bookInfo = await fetchGoogleBookInfo(book.title, book.author);
+        if (!bookInfo) return null;
+
+        if (bookInfo.googleBooksId) {
+          const existingBook = await db
+            .select()
+            .from(BooksTable)
+            .where(eq(BooksTable.googleBooksId, bookInfo.googleBooksId))
+            .limit(1);
+
+          if (existingBook.length > 0) {
+            console.log(`Livre déjà existant : ${book.title}`);
+            return null;
+          }
+        }
+
+        return {
+          ...book,
+          ...(bookInfo || {}),
+          userId: user.id,
+          highlightsCount: book.highlights.length,
+        };
+      })
+    );
+
+    const newBooks = enrichedBooks.filter(Boolean);
+
+    if (newBooks.length > 0) {
+      const books = await db
+        .insert(BooksTable)
+        .values(newBooks as InsertBook[]);
+      return NextResponse.json({ data: books });
+    }
+
+    return NextResponse.json({
+      message: 'Tous les livres existent déjà',
+      data: [],
+    });
   } catch (error) {
     console.error('Error inserting books', error);
     return NextResponse.json(
