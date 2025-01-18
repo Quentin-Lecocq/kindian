@@ -40,7 +40,6 @@ export const POST = async (req: Request) => {
             return null;
           }
         }
-
         return {
           ...book,
           ...(bookInfo || {}),
@@ -56,6 +55,7 @@ export const POST = async (req: Request) => {
       const books = await db
         .insert(BooksTable)
         .values(newBooks as InsertBook[]);
+
       return NextResponse.json({ data: books });
     }
 

@@ -17,7 +17,7 @@ const BookCard = ({ book }: BookCardProps) => {
   const { title, author, highlightsCount, id } = book;
 
   return (
-    <Card className="flex flex-col justify-between">
+    <Card className="flex flex-col justify-between rounded-sm">
       <CardHeader>
         <CardTitle>{title}</CardTitle>
         <CardDescription>{author}</CardDescription>
