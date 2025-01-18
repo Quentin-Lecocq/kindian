@@ -8,8 +8,20 @@ CREATE TABLE "books" (
 	"highlights_count" integer DEFAULT 0,
 	"comments_count" integer DEFAULT 0,
 	"bookmarks_count" integer DEFAULT 0,
-	"isbn13" varchar(255),
-	CONSTRAINT "books_isbn13_unique" UNIQUE("isbn13")
+	"isbn13" varchar(13),
+	"isbn10" varchar(10),
+	"google_books_id" varchar(255),
+	"image_url" varchar(255),
+	"subtitle" varchar(255),
+	"published_date" varchar(10),
+	"page_count" integer,
+	"description" text,
+	"categories" text[] DEFAULT '{}'::text[] NOT NULL,
+	"text_snippet" text,
+	"google_books_link" varchar(255),
+	CONSTRAINT "books_isbn13_unique" UNIQUE("isbn13"),
+	CONSTRAINT "books_isbn10_unique" UNIQUE("isbn10"),
+	CONSTRAINT "books_google_books_id_unique" UNIQUE("google_books_id")
 );
 --> statement-breakpoint
 CREATE TABLE "users" (
