@@ -14,18 +14,23 @@ type BookCardProps = {
 };
 
 const BookCard = ({ book }: BookCardProps) => {
+  const { title, author, highlightsCount, id } = book;
   return (
-    <Card>
+    <Card className="flex flex-col justify-between">
       <CardHeader>
-        <CardTitle>{book.title}</CardTitle>
-        <CardDescription>{book.author}</CardDescription>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{author}</CardDescription>
         <p className="text-sm text-muted-foreground">
-          {book.highlightsCount} highlights
+          {highlightsCount} highlights
         </p>
       </CardHeader>
       <CardFooter>
-        <OpenBookBtn bookId={book.id!} />
-        <DeleteBookBtn bookId={book.id!} />
+        {id && (
+          <>
+            <OpenBookBtn bookId={id} />
+            <DeleteBookBtn bookId={id} />
+          </>
+        )}
       </CardFooter>
     </Card>
   );
