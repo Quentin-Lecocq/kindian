@@ -1,3 +1,4 @@
+import { sql } from 'drizzle-orm';
 import {
   index,
   integer,
@@ -42,8 +43,12 @@ export const BooksTable = pgTable(
     publishedDate: varchar('published_date', { length: 10 }),
     pageCount: integer('page_count'),
     description: text('description'),
-    categories: varchar('categories'),
+    categories: text('categories')
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
     textSnippet: text('text_snippet'),
+    googleBooksLink: varchar('google_books_link', { length: 255 }),
   },
   (books) => [
     {

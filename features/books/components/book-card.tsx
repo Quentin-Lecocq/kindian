@@ -1,3 +1,10 @@
+import {
+  Card,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
 import { InsertBook } from '@/db/schema';
 import DeleteBookBtn from './delete-book-btn';
 import OpenBookBtn from './open-book-btn';
@@ -7,18 +14,25 @@ type BookCardProps = {
 };
 
 const BookCard = ({ book }: BookCardProps) => {
+  const { title, author, highlightsCount, id } = book;
   return (
-    <div className="border p-4 rounded-sm text-foreground">
-      <h4 className="text-lg font-bold truncate">{book.title}</h4>
-      <p className="text-sm text-muted-foreground">{book.author}</p>
-      <p className="text-sm text-muted-foreground">
-        {book.highlightsCount} highlights
-      </p>
-      <div className="mt-4 flex justify-end gap-2">
-        <OpenBookBtn bookId={book.id!} />
-        <DeleteBookBtn bookId={book.id!} />
-      </div>
-    </div>
+    <Card className="flex flex-col justify-between">
+      <CardHeader>
+        <CardTitle>{title}</CardTitle>
+        <CardDescription>{author}</CardDescription>
+        <p className="text-sm text-muted-foreground">
+          {highlightsCount} highlights
+        </p>
+      </CardHeader>
+      <CardFooter>
+        {id && (
+          <>
+            <OpenBookBtn bookId={id} />
+            <DeleteBookBtn bookId={id} />
+          </>
+        )}
+      </CardFooter>
+    </Card>
   );
 };
 

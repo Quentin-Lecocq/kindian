@@ -13,8 +13,16 @@ export const fetchGoogleBookInfo = async (title: string, author: string) => {
 
     if (!data.items?.length) return null;
 
-    const book = data.items[0];
-    const volumeInfo = book.volumeInfo;
+    // TODO: fix this any
+    const officialBook = data.items?.find((book: any) => {
+      const info = book.volumeInfo;
+      return (
+        !info.subtitle?.toLowerCase().includes('summary') &&
+        !info.description?.toLowerCase().includes('summary of') &&
+        info.pageCount > 100 //
+      );
+    });
+    const volumeInfo = officialBook?.volumeInfo;
 
     return {
       isbn13: volumeInfo.industryIdentifiers?.find(
@@ -23,16 +31,17 @@ export const fetchGoogleBookInfo = async (title: string, author: string) => {
       isbn10: volumeInfo.industryIdentifiers?.find(
         ({ type }: { type: string }) => type === 'ISBN_10'
       )?.identifier,
-      googleBooksId: book.id,
+      googleBooksId: officialBook?.id,
       imageUrl: volumeInfo.imageLinks?.thumbnail,
       subtitle: volumeInfo.subtitle,
       publishedDate: volumeInfo.publishedDate,
       pageCount: volumeInfo.pageCount,
       description: volumeInfo.description,
       categories: volumeInfo.categories,
-      textSnippet: book.searchInfo?.textSnippet,
+      textSnippet: officialBook?.searchInfo?.textSnippet,
       title: volumeInfo.title,
       author: volumeInfo.authors,
+      googleBooksLink: volumeInfo.previewLink,
     };
   } catch (error) {
     console.error('Error fetching Google Books info', error);

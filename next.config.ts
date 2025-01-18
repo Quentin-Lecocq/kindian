@@ -14,6 +14,14 @@ const nextConfig: NextConfig = {
       },
     ];
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'books.google.com',
+      },
+    ],
+  },
 };
 
 module.exports = withNextIntl(nextConfig);

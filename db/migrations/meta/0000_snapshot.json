@@ -1,5 +1,5 @@
 {
-  "id": "d3465a5b-6110-4892-bc32-ee6b69b18bf8",
+  "id": "3c169bac-e61f-438d-8560-bf6512aa71eb",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -70,6 +70,67 @@
         },
         "isbn13": {
           "name": "isbn13",
+          "type": "varchar(13)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "isbn10": {
+          "name": "isbn10",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "google_books_id": {
+          "name": "google_books_id",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "image_url": {
+          "name": "image_url",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "subtitle": {
+          "name": "subtitle",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "published_date": {
+          "name": "published_date",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "page_count": {
+          "name": "page_count",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "categories": {
+          "name": "categories",
+          "type": "text[]",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'{}'::text[]"
+        },
+        "text_snippet": {
+          "name": "text_snippet",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "google_books_link": {
+          "name": "google_books_link",
           "type": "varchar(255)",
           "primaryKey": false,
           "notNull": false
@@ -98,6 +159,20 @@
           "nullsNotDistinct": false,
           "columns": [
             "isbn13"
+          ]
+        },
+        "books_isbn10_unique": {
+          "name": "books_isbn10_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "isbn10"
+          ]
+        },
+        "books_google_books_id_unique": {
+          "name": "books_google_books_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "google_books_id"
           ]
         }
       },
