@@ -1,11 +1,11 @@
 import { db } from '@/db';
-import { InsertBook } from '@/db/schema';
+import { SelectBook } from '@/db/schema';
 import { getUserByClerkId } from '@/utils/auth';
 import { and, eq } from 'drizzle-orm';
 
 export const getBookDetails = async (
   bookId: string
-): Promise<InsertBook | undefined> => {
+): Promise<SelectBook | undefined> => {
   const user = await getUserByClerkId();
 
   try {

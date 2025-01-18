@@ -18,7 +18,7 @@ export const fetchGoogleBookInfo = async (title: string, author: string) => {
       return (
         !info.subtitle?.toLowerCase().includes('summary') &&
         !info.description?.toLowerCase().includes('summary of') &&
-        info.pageCount > 100 // Les résumés ont généralement moins de pages
+        info.pageCount > 100 //
       );
     });
     const volumeInfo = officialBook?.volumeInfo;
