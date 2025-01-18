@@ -15,6 +15,7 @@ type BookCardProps = {
 
 const BookCard = ({ book }: BookCardProps) => {
   const { title, author, highlightsCount, id } = book;
+
   return (
     <Card className="flex flex-col justify-between">
       <CardHeader>

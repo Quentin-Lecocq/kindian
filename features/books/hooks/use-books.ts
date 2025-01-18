@@ -1,8 +1,10 @@
 import { InsertBook } from '@/db/schema';
 import { deleteBook, getBooks } from '@/features/books/api/books';
+import { useToast } from '@/hooks/use-toast';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useBooks = () => {
+  const { toast } = useToast();
   const queryClient = useQueryClient();
 
   const { data: books = [], isLoading } = useQuery({
@@ -26,9 +28,20 @@ export const useBooks = () => {
       if (context?.previousBooks) {
         queryClient.setQueryData(['books'], context.previousBooks);
       }
+      toast({
+        title: 'Error',
+        variant: 'destructive',
+        description: 'Failed to delete book',
+      });
     },
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ['books'] });
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Book deleted',
+        description: 'The book has been deleted',
+      });
     },
   });
 
