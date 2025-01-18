@@ -33,6 +33,7 @@ export const BooksTable = pgTable(
     highlightsCount: integer('highlights_count').default(0),
     commentsCount: integer('comments_count').default(0),
     bookmarksCount: integer('bookmarks_count').default(0),
+    isbn13: varchar('isbn13', { length: 255 }).unique(),
   },
   (books) => [
     {
