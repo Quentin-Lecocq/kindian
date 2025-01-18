@@ -1,4 +1,5 @@
 import { Book } from '@/features/export/types';
+import { APIResponse } from '@/types/api';
 import { randomUUID } from 'crypto';
 import { NextResponse } from 'next/server';
 
@@ -7,9 +8,12 @@ export const POST = async (req: Request) => {
     const { content } = await req.json();
 
     if (!content || typeof content !== 'string') {
-      return NextResponse.json(
-        { error: 'Invalid file content' },
-        { status: 400 }
+      return NextResponse.json<APIResponse<null>>(
+        {
+          data: null,
+          error: 'Invalid file content',
+        },
+        { status: 422 }
       );
     }
 
@@ -55,8 +59,11 @@ export const POST = async (req: Request) => {
     return NextResponse.json({ data: books });
   } catch (error) {
     console.error('Error extracting books:', error);
-    return NextResponse.json(
-      { error: 'Failed to extract books' },
+    return NextResponse.json<APIResponse<null>>(
+      {
+        data: null,
+        error: 'Failed to extract books',
+      },
       { status: 500 }
     );
   }

@@ -1,4 +1,5 @@
 import { Book } from '@/features/export/types';
+import { APIResponse } from '@/types/api';
 import { NextResponse } from 'next/server';
 
 type MarkdownFile = {
@@ -11,9 +12,12 @@ export const POST = async (req: Request) => {
     const { books } = await req.json();
 
     if (!Array.isArray(books)) {
-      return NextResponse.json(
-        { error: 'Invalid books data' },
-        { status: 400 }
+      return NextResponse.json<APIResponse<null>>(
+        {
+          data: null,
+          error: 'Invalid books data',
+        },
+        { status: 422 }
       );
     }
 
@@ -29,11 +33,20 @@ export const POST = async (req: Request) => {
       };
     });
 
-    return NextResponse.json({ data: markdownFiles });
+    return NextResponse.json<APIResponse<MarkdownFile[]>>(
+      {
+        data: markdownFiles,
+        error: null,
+      },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Error generating markdown:', error);
-    return NextResponse.json(
-      { error: 'Failed to generate markdown' },
+    return NextResponse.json<APIResponse<null>>(
+      {
+        data: null,
+        error: 'Failed to generate markdown',
+      },
       { status: 500 }
     );
   }
