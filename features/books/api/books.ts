@@ -1,14 +1,9 @@
 import { InsertBook } from '@/db/schema';
 
-type ApiResponse<T> = {
-  data: T;
-  error?: string;
-};
-
 export const getBooks = async (): Promise<InsertBook[]> => {
   const response = await fetch('/api/book');
   if (!response.ok) throw new Error('Failed to fetch books');
-  const { data } = (await response.json()) as ApiResponse<InsertBook[]>;
+  const { data } = await response.json();
   return data;
 };
 

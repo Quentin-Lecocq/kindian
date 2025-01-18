@@ -1,8 +1,10 @@
 import { Book } from '@/features/export/types';
+import { useToast } from '@/hooks/use-toast';
 import { useState } from 'react';
 import { extractBooks } from '../api/extract';
 
 export const useFileUpload = () => {
+  const { toast } = useToast();
   const [books, setBooks] = useState<Book[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -15,10 +17,19 @@ export const useFileUpload = () => {
       const extractedBooks = await extractBooks(content);
       setBooks(extractedBooks);
       setError(null);
+      toast({
+        title: 'Books extracted',
+        description: `${extractedBooks.length} books have been extracted from the file`,
+      });
     } catch (error) {
       setError(
         error instanceof Error ? error.message : 'An unknown error occurred'
       );
+      toast({
+        title: 'Error',
+        variant: 'destructive',
+        description: 'An error occurred while extracting books',
+      });
     }
   };
 
