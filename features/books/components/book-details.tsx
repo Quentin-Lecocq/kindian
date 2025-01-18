@@ -1,5 +1,6 @@
 import TypographyH4 from '@/components/typography/typography-h4';
 import TypographySmall from '@/components/typography/typography-small';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { InsertBook } from '@/db/schema';
 import Image from 'next/image';
@@ -25,8 +26,6 @@ const BookDetails = ({ book }: BookDetailsProps) => {
     description,
     googleBooksLink,
   } = book;
-
-  console.log({ categories });
 
   return (
     <div className="">
@@ -63,9 +62,13 @@ const BookDetails = ({ book }: BookDetailsProps) => {
               {'-'}
               <span>ISBN10 : {isbn10}</span>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Categories : {categories}
-            </p>
+            <div className="mt-2">
+              {categories?.map((category, idx) => (
+                <Badge key={idx} className="text-xs font-semibold">
+                  {category}
+                </Badge>
+              ))}
+            </div>
           </div>
           {googleBooksLink && (
             <Button variant="link" className="p-0 self-start">

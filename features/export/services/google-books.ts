@@ -13,6 +13,7 @@ export const fetchGoogleBookInfo = async (title: string, author: string) => {
 
     if (!data.items?.length) return null;
 
+    // TODO: fix this any
     const officialBook = data.items?.find((book: any) => {
       const info = book.volumeInfo;
       return (
