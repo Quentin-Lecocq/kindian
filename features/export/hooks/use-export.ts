@@ -1,3 +1,5 @@
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 import { saveBooksToDb } from '../api/books';
 import { exportToMarkdown } from '../api/export';
 import { Book } from '../types';
@@ -9,6 +11,8 @@ type ExportOptions = {
 };
 
 export const useExport = (allBooks: Book[]) => {
+  const { toast } = useToast();
+  const router = useRouter();
   const { selectedBooks, handleToggleSelectBook, handleToggleSelectAll } =
     useSelection(allBooks);
   const { downloadZip } = useDownload();
@@ -22,9 +26,19 @@ export const useExport = (allBooks: Book[]) => {
       await saveBooksToDb(books);
       const files = await exportToMarkdown(books);
       await downloadZip(files);
+      toast({
+        title: 'Books exported',
+        description: `${books.length} books have been exported`,
+      });
+      router.push('/books');
     } catch (error) {
       // TODO: add toasts/notifications
       console.error('Error exporting books:', error);
+      toast({
+        title: 'Error',
+        description: 'Failed to export books',
+        variant: 'destructive',
+      });
     }
   };
 
