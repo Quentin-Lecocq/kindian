@@ -44,6 +44,7 @@ export const BooksTable = pgTable(
     description: text('description'),
     categories: varchar('categories'),
     textSnippet: text('text_snippet'),
+    googleBooksLink: varchar('google_books_link', { length: 255 }),
   },
   (books) => [
     {

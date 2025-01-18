@@ -15,6 +15,13 @@
       "when": 1737186005985,
       "tag": "0001_mean_iron_man",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1737193781608,
+      "tag": "0002_serious_rocket_raccoon",
+      "breakpoints": true
     }
   ]
 }
