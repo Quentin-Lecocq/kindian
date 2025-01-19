@@ -1,6 +1,12 @@
+import { defaultLocale, locales } from '@/utils/locales';
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
+import { createI18nMiddleware } from 'next-international/middleware';
 
-// const int1Middleware = createMiddleware(routing);
+const I18nMiddleware = createI18nMiddleware({
+  locales,
+  defaultLocale,
+  urlMappingStrategy: 'rewrite',
+});
 
 const isProtectedRoute = createRouteMatcher([
   '/dashboard',
@@ -9,13 +15,13 @@ const isProtectedRoute = createRouteMatcher([
   '/favorites',
   '/highlights',
   '/statistics',
-  '/api/book',
+  '/api/(.*)',
 ]);
 
 export default clerkMiddleware(async (auth, req) => {
   if (isProtectedRoute(req)) await auth.protect();
 
-  // return int1Middleware(req);
+  return I18nMiddleware(req);
 });
 
 export const config = {

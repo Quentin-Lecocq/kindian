@@ -1,7 +1,7 @@
 'use client';
 
+import { useScopedI18n } from '@/locales/clients';
 import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logo from './logo';
@@ -16,8 +16,16 @@ import {
   SidebarMenuItem,
 } from './ui/sidebar';
 
+type SidebarItemTitle =
+  | 'dashboard'
+  | 'books'
+  | 'highlights'
+  | 'export'
+  | 'favorites'
+  | 'statistics';
+
 const items: {
-  title: string;
+  title: SidebarItemTitle;
   url: string;
   icon: React.ElementType;
 }[] = [
@@ -54,7 +62,7 @@ const items: {
 ];
 
 const AppSidebar = () => {
-  const t = useTranslations('export-page.sidebar');
+  const t = useScopedI18n('sidebar');
   // TODO: temporary solution, i'll need to create a nav-main component to handle active state and use use-client at the bottom of the sidebar
   const pathname = usePathname();
 
