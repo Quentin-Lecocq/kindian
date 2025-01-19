@@ -20,4 +20,12 @@ export default {
   statistics_page: {
     title: 'Statistiques',
   },
+  sidebar: {
+    dashboard: 'Tableau de bord',
+    books: 'Livres',
+    highlights: 'Citations',
+    export: 'Exporter',
+    favorites: 'Favoris',
+    statistics: 'Statistiques',
+  },
 } as const;
