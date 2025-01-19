@@ -6,7 +6,7 @@ const DashboardPage: NextPage = async () => {
   const t = await getI18n();
   return (
     <>
-      <TypographyH4>{t('hello.world')}</TypographyH4>
+      <TypographyH4>{t('dashboard_page.title')}</TypographyH4>
     </>
   );
 };

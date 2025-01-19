@@ -1,14 +1,13 @@
 import TypographyH4 from '@/components/typography/typography-h4';
-import TypographyP from '@/components/typography/typography-p';
+import { getI18n } from '@/locales/server';
 import { NextPage } from 'next';
 
-const HighlightsPage: NextPage = () => {
+const HighlightsPage: NextPage = async () => {
+  const t = await getI18n();
+
   return (
     <>
-      <TypographyH4>Highlights</TypographyH4>
-      <TypographyP>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quos.
-      </TypographyP>
+      <TypographyH4>{t('highlights_page.title')}</TypographyH4>
     </>
   );
 };
