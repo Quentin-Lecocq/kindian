@@ -1,4 +1,4 @@
-import GoBackBtn from '@/components/go-back-btn';
+import GoBackBtn from '@/components/buttons/go-back-btn';
 import { getBookDetails } from '@/features/books/api/get-book-details';
 import BookDetails from '@/features/books/components/book-details';
 

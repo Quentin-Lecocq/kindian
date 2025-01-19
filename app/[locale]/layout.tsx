@@ -1,5 +1,5 @@
-import TanStackProvider from '@/components/tanstack-providers';
-import ThemeProvider from '@/components/theme-provider';
+import TanStackProvider from '@/components/providers/tanstack-provider';
+import ThemeProvider from '@/components/providers/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
 import { I18nProviderClient } from '@/locales/clients';
 import { ClerkProvider } from '@clerk/nextjs';
@@ -31,6 +31,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const { locale } = await params;
+
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html className="dark" suppressHydrationWarning>
