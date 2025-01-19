@@ -4,8 +4,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import type { Metadata } from 'next';
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
 
@@ -26,30 +24,24 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
-  params: { locale },
 }: Readonly<{
   children: React.ReactNode;
-  params: { locale: string };
 }>) {
-  const messages = await getMessages();
-
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
-      <html lang={locale} className="dark" suppressHydrationWarning>
+      <html className="dark" suppressHydrationWarning>
         <body
           className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
         >
-          <NextIntlClientProvider messages={messages}>
-            <ThemeProvider
-              attribute="class"
-              defaultTheme="system"
-              enableSystem
-              disableTransitionOnChange
-            >
-              <TanStackProvider>{children}</TanStackProvider>
-            </ThemeProvider>
-            <Toaster />
-          </NextIntlClientProvider>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="system"
+            enableSystem
+            disableTransitionOnChange
+          >
+            <TanStackProvider>{children}</TanStackProvider>
+          </ThemeProvider>
+          <Toaster />
         </body>
       </html>
     </ClerkProvider>

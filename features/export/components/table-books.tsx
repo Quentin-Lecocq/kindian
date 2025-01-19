@@ -8,7 +8,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { KindleBook } from '@/types/books';
-import { useTranslations } from 'next-intl';
 import { FC } from 'react';
 
 type TableBooksProps = {
@@ -22,8 +21,6 @@ const TableBooks: FC<TableBooksProps> = ({
   onSelect,
   onToggleSelectAll,
 }) => {
-  const t = useTranslations('export-page.table-books');
-
   return (
     <Table>
       <TableHeader>
@@ -31,11 +28,11 @@ const TableBooks: FC<TableBooksProps> = ({
           <TableHead className="flex items-center mb-1">
             <Checkbox onCheckedChange={onToggleSelectAll} />
           </TableHead>
-          <TableHead>{t('name')}</TableHead>
-          <TableHead>{t('author')}</TableHead>
-          <TableHead>{t('highlights')}</TableHead>
-          <TableHead>{t('notes')}</TableHead>
-          <TableHead>{t('bookmarks')}</TableHead>
+          <TableHead>Name</TableHead>
+          <TableHead>Author</TableHead>
+          <TableHead>Highlights</TableHead>
+          <TableHead>Notes</TableHead>
+          <TableHead>Bookmarks</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

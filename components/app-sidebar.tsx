@@ -1,7 +1,6 @@
 'use client';
 
 import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import Logo from './logo';
@@ -54,7 +53,6 @@ const items: {
 ];
 
 const AppSidebar = () => {
-  const t = useTranslations('export-page.sidebar');
   // TODO: temporary solution, i'll need to create a nav-main component to handle active state and use use-client at the bottom of the sidebar
   const pathname = usePathname();
 
@@ -75,7 +73,7 @@ const AppSidebar = () => {
                   >
                     <Link href={item.url}>
                       <item.icon />
-                      <span>{t(item.title)}</span>
+                      <span>{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

@@ -3,15 +3,12 @@
 import TypographyP from '@/components/typography/typography-p';
 import { Button } from '@/components/ui/button';
 import { Upload } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 
 type FileDropzoneProps = {
   open: () => void;
 };
 
 const FileDropzone = ({ open }: FileDropzoneProps) => {
-  const t = useTranslations('export-page.upload');
-
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col items-center justify-center gap-4 sm:px-5">
@@ -20,15 +17,15 @@ const FileDropzone = ({ open }: FileDropzoneProps) => {
         </div>
         <div className="flex flex-col gap-px">
           <TypographyP className="text-foreground font-medium">
-            {t('dropzone.title')}
+            Upload your kindle notes
           </TypographyP>
           <TypographyP size="sm" className="text-muted-foreground/70">
-            {t('dropzone.description')}
+            Drag and drop your kindle notes or click to upload
           </TypographyP>
         </div>
       </div>
       <Button className="bg-emerald-400 mt-6" onClick={open}>
-        {t('dropzone.button')}
+        Upload
       </Button>
     </div>
   );
