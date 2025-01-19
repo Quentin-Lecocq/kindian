@@ -1,6 +1,7 @@
 'use client';
 
 import { useChangeLocale, useCurrentLocale } from '@/locales/clients';
+import { locales } from '@/utils/locales';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -20,22 +21,19 @@ const LocaleSwitcher = () => {
           <span className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all">
             {locale.toUpperCase()}
           </span>
-          <span className="sr-only">Toggle theme</span>
+          <span className="sr-only">Toggle locale</span>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem
-          className="cursor-pointer"
-          onClick={() => changeLocale('fr')}
-        >
-          FR
-        </DropdownMenuItem>
-        <DropdownMenuItem
-          className="cursor-pointer"
-          onClick={() => changeLocale('en')}
-        >
-          EN
-        </DropdownMenuItem>
+        {locales.map((locale, index) => (
+          <DropdownMenuItem
+            key={index}
+            className="cursor-pointer"
+            onClick={() => changeLocale(locale)}
+          >
+            {locale.toUpperCase()}
+          </DropdownMenuItem>
+        ))}
       </DropdownMenuContent>
     </DropdownMenu>
   );

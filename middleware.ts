@@ -1,9 +1,11 @@
+import { defaultLocale, locales } from '@/utils/locales';
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 import { createI18nMiddleware } from 'next-international/middleware';
 
 const I18nMiddleware = createI18nMiddleware({
-  locales: ['en', 'fr'],
-  defaultLocale: 'en',
+  locales,
+  defaultLocale,
+  urlMappingStrategy: 'rewrite',
 });
 
 const isProtectedRoute = createRouteMatcher([
