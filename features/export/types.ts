@@ -1,17 +1,8 @@
-export interface Book {
-  id: string;
-  title: string;
-  author: string;
-  highlights: Highlight[];
-  selected?: boolean;
+export interface ExportOptions {
+  onlySelectedBooks: boolean;
 }
 
-export interface Highlight {
-  info: string;
-  quote: string;
-}
-
-export interface MarkdownFile {
-  content: string;
-  filename: string;
+export interface ExportState {
+  isExporting: boolean;
+  progress: number;
 }

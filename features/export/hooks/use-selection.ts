@@ -1,8 +1,8 @@
+import { KindleBook } from '@/types/books';
 import { useState } from 'react';
-import { Book } from '../types';
 
-export const useSelection = (allBooks: Book[]) => {
-  const [selectedBooks, setSelectedBooks] = useState<Book[]>(allBooks);
+export const useSelection = (allBooks: KindleBook[]) => {
+  const [selectedBooks, setSelectedBooks] = useState<KindleBook[]>(allBooks);
 
   const handleToggleSelectBook = (id: string) => {
     setSelectedBooks((prev) =>

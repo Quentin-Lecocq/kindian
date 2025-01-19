@@ -1,5 +1,5 @@
-import { Book } from '@/features/export/types';
 import { APIResponse } from '@/types/api';
+import { KindleBook } from '@/types/books';
 import { randomUUID } from 'crypto';
 import { NextResponse } from 'next/server';
 
@@ -23,7 +23,7 @@ export const POST = async (req: Request) => {
       .map((clipping) => clipping.trim())
       .filter(Boolean);
 
-    const books: Book[] = [];
+    const books: KindleBook[] = [];
 
     for (const clipping of clippings) {
       const lines = clipping.split('\n').filter(Boolean);

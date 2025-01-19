@@ -1,16 +1,20 @@
 import { db } from '@/db';
-import { UsersTable } from '@/db/schema';
+import { SelectUser } from '@/types/db';
 import { auth } from '@clerk/nextjs/server';
-import { eq } from 'drizzle-orm';
 
-export const getUserByClerkId = async () => {
-  const { userId } = await auth();
+export const getUserByClerkId = async (): Promise<SelectUser> => {
+  try {
+    const { userId } = await auth();
+    if (!userId) throw new Error('Unauthorized');
 
-  const user = await db
-    .select()
-    .from(UsersTable)
-    .where(eq(UsersTable.clerkId, userId!))
-    .limit(1);
+    const user = await db.query.UsersTable.findFirst({
+      where: (table, { eq }) => eq(table.clerkId, userId!),
+    });
 
-  return user[0];
+    if (!user) throw new Error('User not found in database');
+    return user;
+  } catch (error) {
+    console.error('Error fetching user', error);
+    throw new Error('Failed to fetch user');
+  }
 };

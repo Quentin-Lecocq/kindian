@@ -1,5 +1,5 @@
-import { Book } from '@/features/export/types';
 import { APIResponse } from '@/types/api';
+import { KindleBook } from '@/types/books';
 import { NextResponse } from 'next/server';
 
 type MarkdownFile = {
@@ -21,7 +21,7 @@ export const POST = async (req: Request) => {
       );
     }
 
-    const markdownFiles: MarkdownFile[] = books.map((book: Book) => {
+    const markdownFiles: MarkdownFile[] = books.map((book: KindleBook) => {
       const bookMd = `# ${book.title} - ${book.author}\n\n## Highlights\n\n`;
       const highlightsMd = book.highlights
         .map((h) => `- ${h.quote}\n  ${h.info}`)

@@ -1,11 +1,7 @@
-import { Book } from '../types';
+import { APIResponse } from '@/types/api';
+import { KindleBook } from '@/types/books';
 
-type ApiResponse<T> = {
-  data: T;
-  error?: string;
-};
-
-export async function saveBooksToDb(books: Book[]): Promise<void> {
+export async function saveBooksToDb(books: KindleBook[]): Promise<void> {
   const response = await fetch('/api/book', {
     method: 'POST',
     headers: {
@@ -19,6 +15,8 @@ export async function saveBooksToDb(books: Book[]): Promise<void> {
     throw new Error(error.message || 'Failed to save books');
   }
 
-  const { data } = (await response.json()) as ApiResponse<void>;
+  const { data } = (await response.json()) as APIResponse<void>;
+  if (!data) throw new Error('Failed to save books');
+
   return data;
 }

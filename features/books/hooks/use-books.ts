@@ -1,13 +1,13 @@
-import { InsertBook } from '@/db/schema';
 import { deleteBook, getBooks } from '@/features/books/api/books';
 import { useToast } from '@/hooks/use-toast';
+import { SelectBook } from '@/types/db';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 export const useBooks = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
-  const { data: books = [], isLoading } = useQuery({
+  const { data: books = [], isLoading } = useQuery<SelectBook[]>({
     queryKey: ['books'],
     queryFn: getBooks,
   });
@@ -16,10 +16,10 @@ export const useBooks = () => {
     mutationFn: deleteBook,
     onMutate: async (bookId) => {
       await queryClient.cancelQueries({ queryKey: ['books'] });
-      const previousBooks = queryClient.getQueryData<InsertBook[]>(['books']);
+      const previousBooks = queryClient.getQueryData<SelectBook[]>(['books']);
 
-      queryClient.setQueryData<InsertBook[]>(['books'], (old = []) =>
-        old.filter((book) => book.id !== bookId)
+      queryClient.setQueryData<SelectBook[]>(['books'], (old = []) =>
+        old.filter(({ id }) => id !== bookId)
       );
 
       return { previousBooks };

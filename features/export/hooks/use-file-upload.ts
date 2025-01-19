@@ -1,11 +1,11 @@
-import { Book } from '@/features/export/types';
 import { useToast } from '@/hooks/use-toast';
+import { KindleBook } from '@/types/books';
 import { useState } from 'react';
 import { extractBooks } from '../api/extract';
 
 export const useFileUpload = () => {
   const { toast } = useToast();
-  const [books, setBooks] = useState<Book[]>([]);
+  const [books, setBooks] = useState<KindleBook[]>([]);
   const [error, setError] = useState<string | null>(null);
 
   const handleFileChange = async (files: File[]) => {

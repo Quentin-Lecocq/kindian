@@ -1,11 +1,7 @@
-import { Book } from '../types';
+import { APIResponse } from '@/types/api';
+import { KindleBook } from '@/types/books';
 
-type ApiResponse<T> = {
-  data: T;
-  error?: string;
-};
-
-export async function extractBooks(content: string): Promise<Book[]> {
+export async function extractBooks(content: string): Promise<KindleBook[]> {
   const response = await fetch('/api/extract', {
     method: 'POST',
     body: JSON.stringify({ content }),
@@ -19,6 +15,8 @@ export async function extractBooks(content: string): Promise<Book[]> {
     throw new Error(error.message || 'Failed to extract books');
   }
 
-  const { data } = (await response.json()) as ApiResponse<Book[]>;
+  const { data } = (await response.json()) as APIResponse<KindleBook[]>;
+  if (!data) throw new Error('Failed to extract books');
+
   return data;
 }

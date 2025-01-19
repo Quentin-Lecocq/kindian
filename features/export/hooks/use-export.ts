@@ -1,16 +1,13 @@
 import { useToast } from '@/hooks/use-toast';
+import { KindleBook } from '@/types/books';
 import { useRouter } from 'next/navigation';
 import { saveBooksToDb } from '../api/books';
 import { exportToMarkdown } from '../api/export';
-import { Book } from '../types';
+import { ExportOptions } from '../types';
 import { useDownload } from './use-download';
 import { useSelection } from './use-selection';
 
-type ExportOptions = {
-  onlySelectedBooks: boolean;
-};
-
-export const useExport = (allBooks: Book[]) => {
+export const useExport = (allBooks: KindleBook[]) => {
   const { toast } = useToast();
   const router = useRouter();
   const { selectedBooks, handleToggleSelectBook, handleToggleSelectAll } =

@@ -1,6 +1,10 @@
+import { InsertBook } from '@/types/db';
 import { cleanKindleTitle } from '../utils/format-title';
 
-export const fetchGoogleBookInfo = async (title: string, author: string) => {
+export const fetchGoogleBookInfo = async (
+  title: string,
+  author: string
+): Promise<Partial<InsertBook> | null> => {
   try {
     const cleanedTitle = cleanKindleTitle(title);
     const query = encodeURIComponent(

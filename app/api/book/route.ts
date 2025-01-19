@@ -1,16 +1,17 @@
 import { NextResponse } from 'next/server';
 
 import { db } from '@/db';
-import { BooksTable, InsertBook, SelectBook } from '@/db/schema';
+import { BooksTable } from '@/db/schema';
 import { fetchGoogleBookInfo } from '@/features/export/services/google-books';
-import { Book } from '@/features/export/types';
 import { APIResponse } from '@/types/api';
+import { KindleBook } from '@/types/books';
+import { InsertBook, SelectBook } from '@/types/db';
 import { getUserByClerkId } from '@/utils/auth';
 import { eq } from 'drizzle-orm';
 
 export const POST = async (req: Request) => {
   const user = await getUserByClerkId();
-  const rawBooks: Book[] = await req.json();
+  const rawBooks: KindleBook[] = await req.json();
 
   if (!Array.isArray(rawBooks)) {
     return NextResponse.json<APIResponse<null>>(
