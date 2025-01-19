@@ -7,6 +7,7 @@ export default {
   },
   book_page: {
     title: 'Livre',
+    not_found: 'Livre non trouvé',
   },
   highlights_page: {
     title: 'Citations',

@@ -7,6 +7,7 @@ export default {
   },
   book_page: {
     title: 'Book',
+    not_found: 'Book not found',
   },
   highlights_page: {
     title: 'Highlights',
