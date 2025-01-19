@@ -1,6 +1,7 @@
 import TanStackProvider from '@/components/tanstack-providers';
 import ThemeProvider from '@/components/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
+import { I18nProviderClient } from '@/locales/clients';
 import { ClerkProvider } from '@clerk/nextjs';
 import { dark } from '@clerk/themes';
 import type { Metadata } from 'next';
@@ -23,10 +24,13 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
+  params,
   children,
 }: Readonly<{
+  params: Promise<{ locale: string }>;
   children: React.ReactNode;
 }>) {
+  const { locale } = await params;
   return (
     <ClerkProvider appearance={{ baseTheme: dark }}>
       <html className="dark" suppressHydrationWarning>
@@ -39,7 +43,9 @@ export default async function RootLayout({
             enableSystem
             disableTransitionOnChange
           >
-            <TanStackProvider>{children}</TanStackProvider>
+            <I18nProviderClient locale={locale}>
+              <TanStackProvider>{children}</TanStackProvider>
+            </I18nProviderClient>
           </ThemeProvider>
           <Toaster />
         </body>
