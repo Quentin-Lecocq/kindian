@@ -7,12 +7,12 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { KindleBook } from '@/types/books';
 import { useTranslations } from 'next-intl';
 import { FC } from 'react';
-import { Book } from '../types';
 
 type TableBooksProps = {
-  books: Book[];
+  books: KindleBook[];
   onSelect: (id: string) => void;
   onToggleSelectAll: () => void;
 };

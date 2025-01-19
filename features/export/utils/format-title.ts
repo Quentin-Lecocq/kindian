@@ -1,4 +1,4 @@
-export const cleanKindleTitle = (kindleTitle: string) => {
+export const cleanKindleTitle = (kindleTitle: string): string => {
   let cleanedTitle = kindleTitle;
 
   if (cleanedTitle.startsWith('L')) {

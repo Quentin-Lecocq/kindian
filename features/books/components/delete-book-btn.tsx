@@ -5,14 +5,14 @@ import { Trash2 } from 'lucide-react';
 import { useBooks } from '../hooks/use-books';
 
 type DeleteBookBtnProps = {
-  bookId: string;
+  id: string;
 };
 
-const DeleteBookBtn = ({ bookId }: DeleteBookBtnProps) => {
+const DeleteBookBtn = ({ id }: DeleteBookBtnProps) => {
   const { deleteBook } = useBooks();
 
   return (
-    <Button variant="ghost" size="icon" onClick={() => deleteBook(bookId)}>
+    <Button variant="ghost" size="icon" onClick={() => deleteBook(id)}>
       <Trash2 className="h-4 w-4" />
     </Button>
   );

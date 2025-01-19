@@ -1,10 +1,10 @@
 import TableBooks from '@/features/export/components/table-books';
-import { Book } from '@/features/export/types';
+import { KindleBook } from '@/types/books';
 import { useExport } from '../hooks/use-export';
 import ExportActions from './export-actions';
 
 type ExportContainerProps = {
-  books: Book[];
+  books: KindleBook[];
 };
 
 const ExportContainer = ({ books }: ExportContainerProps) => {

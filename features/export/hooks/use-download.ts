@@ -1,5 +1,5 @@
+import { MarkdownFile } from '@/types/files';
 import JSZip from 'jszip';
-import { MarkdownFile } from '../types';
 
 export const useDownload = () => {
   const downloadZip = async (files: MarkdownFile[]) => {

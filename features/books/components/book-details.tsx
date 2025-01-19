@@ -2,7 +2,7 @@ import TypographyH4 from '@/components/typography/typography-h4';
 import TypographySmall from '@/components/typography/typography-small';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { InsertBook } from '@/db/schema';
+import { InsertBook } from '@/types/db';
 import Image from 'next/image';
 
 type BookDetailsProps = {

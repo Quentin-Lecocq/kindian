@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { InsertBook } from '@/db/schema';
+import { InsertBook } from '@/types/db';
 import DeleteBookBtn from './delete-book-btn';
 import OpenBookBtn from './open-book-btn';
 
@@ -28,8 +28,8 @@ const BookCard = ({ book }: BookCardProps) => {
       <CardFooter>
         {id && (
           <>
-            <OpenBookBtn bookId={id} />
-            <DeleteBookBtn bookId={id} />
+            <OpenBookBtn id={id} />
+            <DeleteBookBtn id={id} />
           </>
         )}
       </CardFooter>
