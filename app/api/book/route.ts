@@ -6,11 +6,12 @@ import { fetchGoogleBookInfo } from '@/features/export/services/google-books';
 import { APIResponse } from '@/types/api';
 import { KindleBook } from '@/types/books';
 import { InsertBook, SelectBook } from '@/types/db';
-import { getUserByClerkId } from '@/utils/auth';
+import { getUser } from '@/utils/user';
 import { eq } from 'drizzle-orm';
 
 export const POST = async (req: Request) => {
-  const user = await getUserByClerkId();
+  const user = await getUser();
+  if (!user) throw new Error('User not found');
   const rawBooks: KindleBook[] = await req.json();
 
   if (!Array.isArray(rawBooks)) {
@@ -96,7 +97,7 @@ export const POST = async (req: Request) => {
 
 export async function GET() {
   try {
-    const user = await getUserByClerkId();
+    const user = await getUser();
     if (!user) {
       return NextResponse.json<APIResponse<null>>(
         {

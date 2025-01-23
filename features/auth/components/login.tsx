@@ -11,18 +11,21 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import config from '@/config';
-import { ActionState } from '@/lib/auth/middleware';
-import { createClient } from '@/utils/supabase/client';
+import { ActionState } from '@/features/auth/middleware';
+import { createClient } from '@/features/auth/supabase/client';
 import Link from 'next/link';
 import { useActionState, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
-import { signInWithMagicLink } from './actions';
+import { signInWithMagicLink } from '../../../app/(login)/actions';
+import { AuthMode } from '../type';
+import { REDIRECT_TO_AUTH_CALLBACK } from '../utils/constants';
 
-const REDIRECT_TO = `${config.domainName}/api/auth/callback`;
+type LoginProps = {
+  mode: AuthMode;
+};
 
-const Login = ({ mode = 'signin' }: { mode: 'signin' | 'signup' }) => {
+const Login = ({ mode = 'signin' }: LoginProps) => {
   const [loading, setLoading] = useState(false);
 
   const handleGoogleSignIn = () => {
@@ -32,7 +35,7 @@ const Login = ({ mode = 'signin' }: { mode: 'signin' | 'signup' }) => {
     supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: REDIRECT_TO,
+        redirectTo: REDIRECT_TO_AUTH_CALLBACK,
       },
     });
   };
@@ -44,7 +47,7 @@ const Login = ({ mode = 'signin' }: { mode: 'signin' | 'signup' }) => {
     supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: REDIRECT_TO,
+        redirectTo: REDIRECT_TO_AUTH_CALLBACK,
       },
     });
   };

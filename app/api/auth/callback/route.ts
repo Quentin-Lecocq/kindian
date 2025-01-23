@@ -1,5 +1,6 @@
-import { getUser } from '@/queries/user';
-import { createClient } from '@/utils/supabase/server';
+import config from '@/config';
+import { createClient } from '@/features/auth/supabase/server';
+import { getUser } from '@/utils/user';
 import { NextResponse } from 'next/server';
 
 export async function GET(request: Request) {
@@ -17,7 +18,7 @@ export async function GET(request: Request) {
 
     if (userData) {
       try {
-        await fetch('http://localhost:4000/api/users/create', {
+        await fetch(`${config.apiUrl}/api/users/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -37,7 +38,4 @@ export async function GET(request: Request) {
   }
 
   return NextResponse.redirect(`${requestUrl.origin}${redirectTo}`);
-
-  // Successful authentication, redirect to the intended page
-  // Ensure we're using the correct origin
 }
