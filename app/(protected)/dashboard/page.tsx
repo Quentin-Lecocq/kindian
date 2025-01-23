@@ -1,7 +1,7 @@
 import { signOut } from '@/app/(login)/actions';
 import TypographyH4 from '@/components/typography/typography-h4';
 import { Button } from '@/components/ui/button';
-import { getUser } from '@/queries/user';
+import { getUser } from '@/utils/user';
 import { NextPage } from 'next';
 
 const DashboardPage: NextPage = async () => {

@@ -2,12 +2,12 @@
 
 import { db } from '@/db';
 import { SelectBook } from '@/types/db';
-import { getUserByClerkId } from '@/utils/auth';
+import { getUser } from '@/utils/user';
 import { and, eq } from 'drizzle-orm';
 
 export const getBookDetails = async (bookId: string): Promise<SelectBook> => {
-  const user = await getUserByClerkId();
-
+  const user = await getUser();
+  if (!user) throw new Error('User not found');
   try {
     const book = await db.query.BooksTable.findFirst({
       where: ({ id, userId }) => and(eq(id, bookId), eq(userId, user.id)),

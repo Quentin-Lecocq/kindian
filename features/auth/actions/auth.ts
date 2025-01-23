@@ -1,4 +1,5 @@
 'use server';
+
 import config from '@/config';
 import { validatedAction } from '@/features/auth/middleware';
 import { createClient } from '@/features/auth/supabase/server';
