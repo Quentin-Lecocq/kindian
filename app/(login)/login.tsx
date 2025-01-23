@@ -20,19 +20,31 @@ import { FaGithub, FaGoogle } from 'react-icons/fa';
 
 import { signInWithMagicLink } from './actions';
 
+const REDIRECT_TO = `${config.domainName}/api/auth/callback`;
+
 const Login = ({ mode = 'signin' }: { mode: 'signin' | 'signup' }) => {
   const [loading, setLoading] = useState(false);
 
   const handleGoogleSignIn = () => {
-    const redirectTo = `${config.domainName}/api/auth/callback`;
-
     setLoading(true);
 
     const supabase = createClient();
     supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo,
+        redirectTo: REDIRECT_TO,
+      },
+    });
+  };
+
+  const handleGithubSignIn = () => {
+    setLoading(true);
+
+    const supabase = createClient();
+    supabase.auth.signInWithOAuth({
+      provider: 'github',
+      options: {
+        redirectTo: REDIRECT_TO,
       },
     });
   };
@@ -68,7 +80,7 @@ const Login = ({ mode = 'signin' }: { mode: 'signin' | 'signup' }) => {
               <Input type="email" name="email" placeholder="Email" />
               <Button
                 className="text-sm"
-                disabled={pending}
+                disabled={pending || loading}
                 size="default"
                 type="submit"
               >
@@ -95,11 +107,17 @@ const Login = ({ mode = 'signin' }: { mode: 'signin' | 'signup' }) => {
       <CardFooter className="flex flex-col gap-2">
         {!magicLinkState.success && (
           <div className="flex flex-row gap-2 w-full">
-            <Button variant="outline" className="flex-1">
+            <Button
+              disabled={loading}
+              variant="outline"
+              className="flex-1"
+              onClick={handleGithubSignIn}
+            >
               <FaGithub />
               Github
             </Button>
             <Button
+              disabled={loading}
               variant="outline"
               onClick={handleGoogleSignIn}
               className="flex-1"
