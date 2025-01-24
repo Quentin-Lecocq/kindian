@@ -1,14 +1,14 @@
 'use client';
 
-import { useBooks } from '../hooks/use-books';
+import { useGetBooks } from '../hooks/use-get-books';
 import BookCard from './book-card';
 
 const BooksList = () => {
-  const { books, isLoading } = useBooks();
+  const { data: books, isLoading } = useGetBooks();
 
   // TODO: handle loading state and no books found
   if (isLoading) return <div>Loading...</div>;
-
+  if (!books) return <div>No books found</div>;
   if (books.length === 0) return <div>No books found</div>;
 
   return (

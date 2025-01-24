@@ -1,15 +1,22 @@
+'use client';
+
 import TypographyH4 from '@/components/typography/typography-h4';
 import TypographySmall from '@/components/typography/typography-small';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { InsertBook } from '@/types/db';
 import Image from 'next/image';
-
+import { useGetBook } from '../hooks/use-get-book';
 type BookDetailsProps = {
-  book: InsertBook;
+  bookId: string;
 };
 
-const BookDetails = ({ book }: BookDetailsProps) => {
+export const BookDetails = ({ bookId }: BookDetailsProps) => {
+  const { data: book, isLoading, error } = useGetBook(bookId);
+
+  if (isLoading) return <div>Chargement...</div>;
+  if (error) return <div>Une erreur est survenue</div>;
+  if (!book) return <div>Livre non trouvé</div>;
+
   const {
     imageUrl,
     title,

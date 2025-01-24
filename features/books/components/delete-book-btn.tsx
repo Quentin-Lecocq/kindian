@@ -2,14 +2,14 @@
 
 import { Button } from '@/components/ui/button';
 import { Trash2 } from 'lucide-react';
-import { useBooks } from '../hooks/use-books';
+import { useDeleteBook } from '../hooks/use-delete-book';
 
 type DeleteBookBtnProps = {
   id: string;
 };
 
 const DeleteBookBtn = ({ id }: DeleteBookBtnProps) => {
-  const { deleteBook } = useBooks();
+  const { mutate: deleteBook } = useDeleteBook();
 
   return (
     <Button variant="ghost" size="icon" onClick={() => deleteBook(id)}>

@@ -21,14 +21,11 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({
-  // params,
   children,
 }: Readonly<{
   params: Promise<{ locale: string }>;
   children: React.ReactNode;
 }>) {
-  // const { locale } = await params;
-
   return (
     <html className="dark" suppressHydrationWarning>
       <body
@@ -40,9 +37,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {/* <I18nProviderClient locale={locale}> */}
           <TanStackProvider>{children}</TanStackProvider>
-          {/* </I18nProviderClient> */}
         </ThemeProvider>
         <Toaster />
       </body>
