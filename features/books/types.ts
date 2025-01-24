@@ -1,3 +1,3 @@
-import { Database } from '@/database.types';
+import { Tables } from '@/database.types';
 
-export type Book = Database['public']['Tables']['Book']['Row'];
+export type Book = Tables<'Book'>;
