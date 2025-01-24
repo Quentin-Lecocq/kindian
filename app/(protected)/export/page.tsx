@@ -3,8 +3,6 @@ import FileUpload from '@/features/export/components/file-upload';
 import { NextPage } from 'next';
 
 const ExportPage: NextPage = async () => {
-  // const t = await getI18n();
-
   return (
     <div>
       <TypographyH4>Export</TypographyH4>

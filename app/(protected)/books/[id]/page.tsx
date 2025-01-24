@@ -1,5 +1,4 @@
 import GoBackBtn from '@/components/buttons/go-back-btn';
-import { getBookDetails } from '@/features/books/api/get-book-details';
 import BookDetails from '@/features/books/components/book-details';
 
 type BookPageProps = {
@@ -8,16 +7,11 @@ type BookPageProps = {
 
 const BookPage = async ({ params }: BookPageProps) => {
   const { id } = await params;
-  const book = await getBookDetails(id);
-
-  if (!book) {
-    return <div>Book not found</div>;
-  }
 
   return (
     <div>
       <GoBackBtn />
-      <BookDetails book={book} />
+      <BookDetails bookId={id} />
     </div>
   );
 };
