@@ -1,7 +1,7 @@
 import { APIResponse } from '@/types/api';
 import { Book } from '../types';
 
-export const getBookDetails = async (bookId: string): Promise<Book> => {
+export const getBook = async (bookId: string): Promise<Book> => {
   const response = await fetch(`http://localhost:4000/api/books/${bookId}`, {
     method: 'GET',
     headers: {

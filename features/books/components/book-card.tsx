@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { usePrefetchBook } from '../hooks/use-book-details';
+import { usePrefetchGetBook } from '../hooks/use-prefetch-get-book';
 import { Book } from '../types';
 import DeleteBookBtn from './delete-book-btn';
 import OpenBookBtn from './open-book-btn';
@@ -16,7 +16,7 @@ type BookCardProps = {
 
 const BookCard = ({ book }: BookCardProps) => {
   const { title, author, highlightsCount, id } = book;
-  const prefetchBook = usePrefetchBook();
+  const prefetchBook = usePrefetchGetBook();
 
   return (
     <Card

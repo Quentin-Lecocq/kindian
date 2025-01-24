@@ -5,14 +5,13 @@ import TypographySmall from '@/components/typography/typography-small';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
-import { useBookDetails } from '../hooks/use-book-details';
-
+import { useGetBook } from '../hooks/use-get-book';
 type BookDetailsProps = {
   bookId: string;
 };
 
 export const BookDetails = ({ bookId }: BookDetailsProps) => {
-  const { data: book, isLoading, error } = useBookDetails(bookId);
+  const { data: book, isLoading, error } = useGetBook(bookId);
 
   if (isLoading) return <div>Chargement...</div>;
   if (error) return <div>Une erreur est survenue</div>;
