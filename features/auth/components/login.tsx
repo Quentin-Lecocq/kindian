@@ -17,6 +17,7 @@ import Link from 'next/link';
 import { useActionState, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
+import { Spinner } from '@/components/ui/spinner';
 import { useI18n } from '@/locales/clients';
 import { signInWithMagicLink } from '../../../app/[locale]/(login)/actions';
 import { AuthMode } from '../type';
@@ -126,8 +127,10 @@ const Login = ({ mode = 'signin' }: LoginProps) => {
               className="flex-1"
               onClick={handleGithubSignIn}
             >
-              <FaGithub />
-              Github
+              <div className="flex items-center gap-2 font-mono">
+                {loading ? <Spinner size="small" /> : <FaGithub />}
+                Github
+              </div>
             </Button>
             <Button
               disabled={loading}
@@ -135,19 +138,21 @@ const Login = ({ mode = 'signin' }: LoginProps) => {
               onClick={handleGoogleSignIn}
               className="flex-1"
             >
-              <FaGoogle />
-              <span>Google</span>
+              <div className="flex items-center gap-2 font-mono">
+                {loading ? <Spinner size="small" /> : <FaGoogle />}
+                Google
+              </div>
             </Button>
           </div>
         )}
 
         <div className="text-sm text-muted-foreground mt-4">
-          <p>
+          <p className="flex items-center gap-2">
             {mode === 'signin'
               ? t('sign_in_page.new_to_kindian')
               : t('sign_up_page.already_have_account')}
             <Link
-              className="ml-2 text-primary underline"
+              className="text-primary underline"
               href={mode === 'signin' ? '/sign-up' : '/sign-in'}
             >
               {mode === 'signin'
