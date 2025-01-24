@@ -21,6 +21,23 @@ export default {
   statistics_page: {
     title: 'Statistics',
   },
+  sign_in_page: {
+    title: 'Sign in',
+    subtitle: 'Sign in to your account',
+    email: 'Email',
+    magic_link_btn: 'Send magic link',
+    sending: 'Sending...',
+    or_text: 'OR CONTINUE WITH',
+    new_to_kindian: 'New to Kindian?',
+    sign_up_btn: 'Sign up',
+    check_email: 'Check your email for a magic link',
+  },
+  sign_up_page: {
+    title: 'Create an account',
+    subtitle: 'Sign up to create an account',
+    already_have_account: 'Already have an account?',
+    sign_in_btn: 'Sign in',
+  },
   sidebar: {
     dashboard: 'Dashboard',
     books: 'Books',

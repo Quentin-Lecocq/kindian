@@ -1,5 +1,6 @@
 'use client';
 
+import { useScopedI18n } from '@/locales/clients';
 import { BarChart, FileDown, Heart, Home, Inbox, Star } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -61,7 +62,7 @@ const items: {
 ];
 
 const AppSidebar = () => {
-  // const t = useScopedI18n('sidebar');
+  const t = useScopedI18n('sidebar');
   // TODO: temporary solution, i'll need to create a nav-main component to handle active state and use use-client at the bottom of the sidebar
   const pathname = usePathname();
 
@@ -82,7 +83,7 @@ const AppSidebar = () => {
                   >
                     <Link href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span>{t(item.title)}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>

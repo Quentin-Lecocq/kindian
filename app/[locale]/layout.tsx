@@ -1,6 +1,7 @@
 import TanStackProvider from '@/components/providers/tanstack-provider';
 import ThemeProvider from '@/components/providers/theme-provider';
 import { Toaster } from '@/components/ui/toaster';
+import { I18nProviderClient } from '@/locales/clients';
 import type { Metadata } from 'next';
 import { Geist, Geist_Mono } from 'next/font/google';
 import './globals.css';
@@ -22,12 +23,15 @@ export const metadata: Metadata = {
 
 export default async function RootLayout({
   children,
+  params,
 }: Readonly<{
-  params: Promise<{ locale: string }>;
   children: React.ReactNode;
+  params: Promise<{ locale: string }>;
 }>) {
+  const { locale } = await params;
+
   return (
-    <html className="dark" suppressHydrationWarning>
+    <html lang={locale} className="dark" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background`}
       >
@@ -37,7 +41,9 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <TanStackProvider>{children}</TanStackProvider>
+          <I18nProviderClient locale={locale}>
+            <TanStackProvider>{children}</TanStackProvider>
+          </I18nProviderClient>
         </ThemeProvider>
         <Toaster />
       </body>

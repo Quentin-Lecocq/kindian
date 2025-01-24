@@ -1,5 +1,14 @@
 import { updateSession } from '@/features/auth/lib/supabase/middleware';
+import { createI18nMiddleware } from 'next-international/middleware';
 import { type NextRequest } from 'next/server';
+
+const I18nMiddleware = createI18nMiddleware({
+  locales: ['en', 'fr'],
+  defaultLocale: 'en',
+  urlMappingStrategy: 'rewrite',
+});
+
+const publicRoutes = ['/sign-in', '/sign-up'];
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
@@ -12,7 +21,18 @@ export async function middleware(req: NextRequest) {
     return;
   }
 
-  return await updateSession(req);
+  if (!publicRoutes.includes(pathname)) {
+    await updateSession(req);
+  }
+
+  // // D'abord mettre à jour la session
+  // const sessionResponse = await updateSession(req);
+  // if (!sessionResponse.ok) {
+  //   return sessionResponse;
+  // }
+
+  // Ensuite appliquer le middleware i18n
+  return I18nMiddleware(req);
 }
 
 export const config = {

@@ -17,7 +17,8 @@ import Link from 'next/link';
 import { useActionState, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
-import { signInWithMagicLink } from '../../../app/(login)/actions';
+import { useI18n } from '@/locales/clients';
+import { signInWithMagicLink } from '../../../app/[locale]/(login)/actions';
 import { AuthMode } from '../type';
 import { REDIRECT_TO_AUTH_CALLBACK } from '../utils/constants';
 
@@ -26,6 +27,7 @@ type LoginProps = {
 };
 
 const Login = ({ mode = 'signin' }: LoginProps) => {
+  const t = useI18n();
   const [loading, setLoading] = useState(false);
 
   const handleGoogleSignIn = () => {
@@ -64,30 +66,38 @@ const Login = ({ mode = 'signin' }: LoginProps) => {
     <Card className="w-[350px] min-h-[350px]">
       <CardHeader>
         <CardTitle>
-          {mode === 'signin' ? 'Sign in to Kindian' : 'Create an account'}
+          {mode === 'signin'
+            ? t('sign_in_page.title')
+            : t('sign_up_page.title')}
         </CardTitle>
         <CardDescription>
           {mode === 'signin'
-            ? 'Sign in to your account'
-            : 'Sign up to create an account'}
+            ? t('sign_in_page.subtitle')
+            : t('sign_up_page.subtitle')}
         </CardDescription>
       </CardHeader>
       <CardContent className="pb-0">
         {magicLinkState?.success ? (
           <p className="text-sm text-muted-foreground">
-            Check your email for a magic link
+            {t('sign_in_page.check_email')}
           </p>
         ) : (
           <div>
             <form className="flex flex-col gap-2" action={magicLinkAction}>
-              <Input type="email" name="email" placeholder="Email" />
+              <Input
+                type="email"
+                name="email"
+                placeholder={t('sign_in_page.email')}
+              />
               <Button
                 className="text-sm"
                 disabled={pending || loading}
                 size="default"
                 type="submit"
               >
-                {pending ? 'Sending...' : 'Send Magic Link'}
+                {pending
+                  ? t('sign_in_page.sending')
+                  : t('sign_in_page.magic_link_btn')}
               </Button>
             </form>
             {magicLinkState.error && (
@@ -99,7 +109,7 @@ const Login = ({ mode = 'signin' }: LoginProps) => {
               <Separator className="my-4 flex-1" />
               <div className="w-fit flex items-center justify-center">
                 <span className="text-muted-foreground text-xs">
-                  OR CONTINUE WITH
+                  {t('sign_in_page.or_text')}
                 </span>
               </div>
               <Separator className="my-4 flex-1" />
@@ -134,13 +144,15 @@ const Login = ({ mode = 'signin' }: LoginProps) => {
         <div className="text-sm text-muted-foreground mt-4">
           <p>
             {mode === 'signin'
-              ? 'New to Kindian?'
-              : 'Already have an account? '}
+              ? t('sign_in_page.new_to_kindian')
+              : t('sign_up_page.already_have_account')}
             <Link
               className="ml-2 text-primary underline"
               href={mode === 'signin' ? '/sign-up' : '/sign-in'}
             >
-              {mode === 'signin' ? 'Sign up' : 'Sign in'}
+              {mode === 'signin'
+                ? t('sign_in_page.sign_up_btn')
+                : t('sign_up_page.sign_in_btn')}
             </Link>
           </p>
         </div>
