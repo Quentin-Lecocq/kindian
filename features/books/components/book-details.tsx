@@ -1,15 +1,40 @@
+'use client';
+
 import TypographyH4 from '@/components/typography/typography-h4';
 import TypographySmall from '@/components/typography/typography-small';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { InsertBook } from '@/types/db';
 import Image from 'next/image';
+import { useBookDetails } from '../hooks/use-book-details';
 
-type BookDetailsProps = {
-  book: InsertBook;
+type Book = {
+  imageUrl: string;
+  title: string;
+  author: string;
+  bookmarksCount: number;
+  commentsCount: number;
+  highlightsCount: number;
+  publishedDate: string;
+  pageCount: number;
+  isbn13: string;
+  isbn10: string;
+  categories: string[];
+  textSnippet: string;
+  description: string;
+  googleBooksLink: string;
 };
 
-const BookDetails = ({ book }: BookDetailsProps) => {
+type BookDetailsProps = {
+  bookId: string;
+};
+
+export const BookDetails = ({ bookId }: BookDetailsProps) => {
+  const { data: book, isLoading, error } = useBookDetails(bookId);
+
+  if (isLoading) return <div>Chargement...</div>;
+  if (error) return <div>Une erreur est survenue</div>;
+  if (!book) return <div>Livre non trouvé</div>;
+
   const {
     imageUrl,
     title,
