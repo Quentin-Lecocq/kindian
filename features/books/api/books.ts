@@ -1,22 +1,34 @@
 import { APIResponse } from '@/types/api';
-import { SelectBook } from '@/types/db';
+import { getAccessToken } from '@/utils/user';
 
-export const getBooks = async (): Promise<SelectBook[]> => {
-  const response = await fetch('/api/book');
+export const getBooks = async (): Promise<any[]> => {
+  const token = await getAccessToken();
+  if (!token) throw new Error('No token available');
+
+  const response = await fetch('http://localhost:4000/api/books/my-books', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-  const { data } = (await response.json()) as APIResponse<SelectBook[]>;
+  const { data } = (await response.json()) as APIResponse<any[]>;
   if (!data) throw new Error('No data received from server');
 
   return data;
 };
 
 export const deleteBook = async (id: string): Promise<void> => {
-  const response = await fetch(`/api/book/${id}`, {
-    method: 'DELETE',
-  });
-  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+  const token = await getAccessToken();
+  if (!token) throw new Error('No token available');
 
-  const { error } = (await response.json()) as APIResponse<null>;
-  if (error) throw new Error(error);
+  const response = await fetch(`http://localhost:4000/api/books/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 };

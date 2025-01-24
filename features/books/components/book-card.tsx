@@ -5,12 +5,11 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { InsertBook } from '@/types/db';
 import DeleteBookBtn from './delete-book-btn';
 import OpenBookBtn from './open-book-btn';
 
 type BookCardProps = {
-  book: InsertBook;
+  book: any;
 };
 
 const BookCard = ({ book }: BookCardProps) => {
