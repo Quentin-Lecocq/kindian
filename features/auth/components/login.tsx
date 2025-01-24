@@ -17,7 +17,7 @@ import Link from 'next/link';
 import { useActionState, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
-import { signInWithMagicLink } from '../../../app/(login)/actions';
+import { signInWithMagicLink } from '../../../app/[locale]/(login)/actions';
 import { AuthMode } from '../type';
 import { REDIRECT_TO_AUTH_CALLBACK } from '../utils/constants';
 

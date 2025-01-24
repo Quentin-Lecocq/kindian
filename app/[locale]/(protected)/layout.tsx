@@ -1,8 +1,9 @@
 import AppSidebar from '@/components/app-sidebar';
+import LocaleSwitcher from '@/components/switchers/locale-switcher';
 import ThemeSwitcher from '@/components/switchers/theme-switcher';
 import { SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';
 
-const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
+const DashboardLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
     <SidebarProvider>
       <AppSidebar />
@@ -10,6 +11,7 @@ const DashboardLayout = ({ children }: { children: React.ReactNode }) => {
         <header className="border-b flex justify-between items-center p-4">
           <SidebarTrigger />
           <div className="flex items-center gap-4">
+            <LocaleSwitcher />
             <ThemeSwitcher />
           </div>
         </header>
