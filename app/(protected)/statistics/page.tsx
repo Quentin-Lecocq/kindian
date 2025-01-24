@@ -8,7 +8,7 @@ const StatisticsPage: NextPage = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/hello')
+    fetch('http://localhost:4000/api/books/hello')
       .then((res) => res.json())
       .then((data) => setMessage(data.message))
       .catch((error) => console.error(error));
