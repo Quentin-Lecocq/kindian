@@ -68,7 +68,7 @@ const AppSidebar = () => {
 
   return (
     <Sidebar>
-      <SidebarContent className="bg-background">
+      <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="pt-6 pb-4">
             <Logo />
