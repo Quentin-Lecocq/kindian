@@ -1,4 +1,4 @@
-import { getBooks } from '@/features/books/api/books';
+import { getBooks } from '@/features/books/api/get-books';
 import { useQuery } from '@tanstack/react-query';
 
 export const useGetBooks = () => {
