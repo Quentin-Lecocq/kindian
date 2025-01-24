@@ -5,8 +5,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { Book } from '../api/get-book-details';
 import { usePrefetchBook } from '../hooks/use-book-details';
+import { Book } from '../types';
 import DeleteBookBtn from './delete-book-btn';
 import OpenBookBtn from './open-book-btn';
 

@@ -1,22 +1,5 @@
 import { APIResponse } from '@/types/api';
-
-export type Book = {
-  id: string;
-  title: string;
-  author: string;
-  highlightsCount: number;
-  imageUrl?: string;
-  bookmarksCount: number;
-  commentsCount: number;
-  publishedDate?: string;
-  pageCount?: number;
-  isbn13?: string;
-  isbn10?: string;
-  categories?: string[];
-  textSnippet?: string;
-  description?: string;
-  googleBooksLink?: string;
-};
+import { Book } from '../types';
 
 export const getBookDetails = async (bookId: string): Promise<Book> => {
   const response = await fetch(`http://localhost:4000/api/books/${bookId}`, {

@@ -7,23 +7,6 @@ import { Button } from '@/components/ui/button';
 import Image from 'next/image';
 import { useBookDetails } from '../hooks/use-book-details';
 
-type Book = {
-  imageUrl: string;
-  title: string;
-  author: string;
-  bookmarksCount: number;
-  commentsCount: number;
-  highlightsCount: number;
-  publishedDate: string;
-  pageCount: number;
-  isbn13: string;
-  isbn10: string;
-  categories: string[];
-  textSnippet: string;
-  description: string;
-  googleBooksLink: string;
-};
-
 type BookDetailsProps = {
   bookId: string;
 };
