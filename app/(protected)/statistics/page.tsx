@@ -8,10 +8,28 @@ const StatisticsPage: NextPage = () => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/hello')
+    // D'abord, on récupère le token
+    fetch('/api/auth/token')
       .then((res) => res.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error(error));
+      .then((data) => {
+        // Ensuite, on fait la requête avec le token
+        return fetch('http://localhost:4000/api/books/test-token', {
+          headers: {
+            Authorization: `Bearer ${data.token}`,
+          },
+        });
+      })
+      .then((res) => res.json())
+      .then((data) => {
+        // Maintenant data a la structure { status: number, data: { userId, supabaseId } }
+        console.log('User ID:', data.data.userId);
+        console.log('Supabase ID:', data.data.supabaseId);
+        setMessage(`User ID: ${data.data.userId}`); // ou ce que vous voulez afficher
+      })
+      .catch((error) => {
+        console.error(error);
+        setMessage('Erreur lors de la récupération des données');
+      });
   }, []);
 
   return <>{message}</>;

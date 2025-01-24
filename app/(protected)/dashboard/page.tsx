@@ -6,7 +6,6 @@ import { NextPage } from 'next';
 
 const DashboardPage: NextPage = async () => {
   const user = await getUser();
-  // const t = await getI18n();
   return (
     <>
       <TypographyH4>Dashboard</TypographyH4>
