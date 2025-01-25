@@ -10,7 +10,7 @@ const HomePage: NextPage = async () => {
 
   return (
     <>
-      <h1 className="text-2xl">{t('title')}</h1>
+      <h2 className="text-xl mb-6">{t('title')}</h2>
       <h1 className="xl:text-4xl text-3xl">This is my title dashboard</h1>
       <p className="text-muted-foreground text-sm mt-4">
         This is my text dashboard

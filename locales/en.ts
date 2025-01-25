@@ -2,9 +2,6 @@ export default {
   home_page: {
     title: 'Home',
   },
-  dashboard_page: {
-    title: 'Dashboard',
-  },
   books_page: {
     title: 'Books',
   },

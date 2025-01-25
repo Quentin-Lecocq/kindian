@@ -6,10 +6,10 @@ const BooksPage: NextPage = async () => {
   const t = await getScopedI18n('books_page');
 
   return (
-    <div>
-      <h1 className="text-2xl">{t('title')}</h1>
+    <>
+      <h2 className="text-xl mb-6">{t('title')}</h2>
       <BooksList />
-    </div>
+    </>
   );
 };
 
