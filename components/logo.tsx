@@ -6,7 +6,7 @@ const Logo = () => {
   const router = useRouter();
   return (
     <h1
-      className="text-3xl font-bold text-foreground cursor-pointer"
+      className="text-3xl text-foreground cursor-pointer"
       onClick={() => router.push('/')}
     >
       Kindian

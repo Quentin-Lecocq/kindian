@@ -6,7 +6,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/',
-        destination: '/dashboard',
+        destination: '/home',
         permanent: true,
       },
     ];
@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'http',
         hostname: 'books.google.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'lh3.googleusercontent.com',
       },
     ],
   },

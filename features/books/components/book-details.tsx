@@ -1,7 +1,5 @@
 'use client';
 
-import TypographyH4 from '@/components/typography/typography-h4';
-import TypographySmall from '@/components/typography/typography-small';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Image from 'next/image';
@@ -80,7 +78,7 @@ export const BookDetails = ({ bookId }: BookDetailsProps) => {
           {googleBooksLink && (
             <Button variant="link" className="p-0 self-start">
               <a href={googleBooksLink}>
-                <TypographySmall>Read on Google Books</TypographySmall>
+                <p>Read on Google Books</p>
               </a>
             </Button>
           )}
@@ -88,11 +86,11 @@ export const BookDetails = ({ bookId }: BookDetailsProps) => {
       </div>
       <div className="mt-6">
         <div className="mb-6">
-          <TypographyH4>Summary</TypographyH4>
+          <h1>Summary</h1>
           <p className="text-sm text-foreground">{textSnippet}</p>
         </div>
         <div>
-          <TypographyH4>Description</TypographyH4>
+          <h1>Description</h1>
           <p className="text-sm text-foreground">{description}</p>
         </div>
       </div>

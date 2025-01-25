@@ -1,6 +1,6 @@
 export default {
-  dashboard_page: {
-    title: 'Dashboard',
+  home_page: {
+    title: 'Home',
   },
   books_page: {
     title: 'Books',
@@ -14,6 +14,13 @@ export default {
   },
   export_page: {
     title: 'Export',
+    table_book: {
+      name: 'Name',
+      author: 'Author',
+      highlights: 'Highlights',
+      notes: 'Notes',
+      bookmarks: 'Bookmarks',
+    },
   },
   favorites_page: {
     title: 'Favorites',
@@ -39,7 +46,7 @@ export default {
     sign_in_btn: 'Sign in',
   },
   sidebar: {
-    dashboard: 'Dashboard',
+    home: 'Home',
     books: 'Books',
     highlights: 'Highlights',
     export: 'Export',

@@ -6,7 +6,7 @@ const SignIn = async () => {
   const user = await getUser();
 
   if (user) {
-    return redirect('/dashboard');
+    return redirect('/home');
   }
   return <Login mode="signin" />;
 };

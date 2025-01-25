@@ -2,7 +2,7 @@
 
 import config from '@/config';
 import { validatedAction } from '@/features/auth/middleware';
-import { createClient } from '@/features/auth/utils/supabase/server';
+import { createClient } from '@/supabase/server';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 
