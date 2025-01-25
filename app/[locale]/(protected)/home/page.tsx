@@ -1,17 +1,16 @@
 import { signOut } from '@/app/[locale]/(login)/actions';
-import TypographyH4 from '@/components/typography/typography-h4';
 import { Button } from '@/components/ui/button';
 import { getScopedI18n } from '@/locales/server';
 import { getUser } from '@/utils/user';
 import { NextPage } from 'next';
 
-const DashboardPage: NextPage = async () => {
-  const t = await getScopedI18n('dashboard_page');
+const HomePage: NextPage = async () => {
+  const t = await getScopedI18n('home_page');
   const user = await getUser();
 
   return (
     <>
-      <TypographyH4>{t('title')}</TypographyH4>
+      <h1 className="text-2xl">{t('title')}</h1>
       <h1 className="xl:text-4xl text-3xl">This is my title dashboard</h1>
       <p className="text-muted-foreground text-sm mt-4">
         This is my text dashboard
@@ -30,4 +29,4 @@ const DashboardPage: NextPage = async () => {
   );
 };
 
-export default DashboardPage;
+export default HomePage;

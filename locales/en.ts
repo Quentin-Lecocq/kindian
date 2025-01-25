@@ -1,4 +1,7 @@
 export default {
+  home_page: {
+    title: 'Home',
+  },
   dashboard_page: {
     title: 'Dashboard',
   },
@@ -39,7 +42,7 @@ export default {
     sign_in_btn: 'Sign in',
   },
   sidebar: {
-    dashboard: 'Dashboard',
+    home: 'Home',
     books: 'Books',
     highlights: 'Highlights',
     export: 'Export',

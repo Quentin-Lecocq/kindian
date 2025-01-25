@@ -1,6 +1,5 @@
 'use client';
 
-import TypographyP from '@/components/typography/typography-p';
 import { Button } from '@/components/ui/button';
 import { Upload } from 'lucide-react';
 
@@ -16,12 +15,8 @@ const FileDropzone = ({ open }: FileDropzoneProps) => {
           <Upload className="size-7 text-foreground" aria-hidden="true" />
         </div>
         <div className="flex flex-col gap-px">
-          <TypographyP className="text-foreground font-medium">
-            Upload your kindle notes
-          </TypographyP>
-          <TypographyP size="sm" className="text-muted-foreground/70">
-            Drag and drop your kindle notes or click to upload
-          </TypographyP>
+          <p>Upload your kindle notes</p>
+          <p>Drag and drop your kindle notes or click to upload</p>
         </div>
       </div>
       <Button className="bg-emerald-400 mt-6" onClick={open}>

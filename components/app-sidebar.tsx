@@ -17,7 +17,7 @@ import {
 } from './ui/sidebar';
 
 type SidebarItemTitle =
-  | 'dashboard'
+  | 'home'
   | 'books'
   | 'highlights'
   | 'export'
@@ -30,8 +30,8 @@ const items: {
   icon: React.ElementType;
 }[] = [
   {
-    title: 'dashboard',
-    url: '/dashboard',
+    title: 'home',
+    url: '/home',
     icon: Home,
   },
   {
