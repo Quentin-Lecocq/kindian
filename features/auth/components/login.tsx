@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
 import { ActionState } from '@/features/auth/middleware';
-import { createClient } from '@/features/auth/utils/supabase/client';
+import { createClient } from '@/supabase/client';
 import Link from 'next/link';
 import { useActionState, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
@@ -86,6 +86,7 @@ const Login = ({ mode = 'signin' }: LoginProps) => {
           <div>
             <form className="flex flex-col gap-2" action={magicLinkAction}>
               <Input
+                disabled={pending || loading}
                 type="email"
                 name="email"
                 placeholder={t('sign_in_page.email')}

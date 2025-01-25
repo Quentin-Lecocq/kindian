@@ -21,8 +21,11 @@ const FileDropzone = ({ open }: FileDropzoneProps) => {
           </p>
         </div>
       </div>
-      <Button className="w-fit mx-auto" onClick={open}>
-        Upload
+      <Button className="w-fit text-sm mx-auto" onClick={open}>
+        <div className="flex items-center gap-2">
+          <Upload />
+          Upload
+        </div>
       </Button>
     </div>
   );
