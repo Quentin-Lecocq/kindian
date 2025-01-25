@@ -1,4 +1,4 @@
-import { signOut } from '@/app/[locale]/(login)/actions';
+import { signOut } from '@/features/auth/actions/auth';
 import { UserMetadata } from '@supabase/supabase-js';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 import { Button } from './ui/button';

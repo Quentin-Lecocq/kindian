@@ -18,8 +18,8 @@ import { useActionState, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
 
 import { Spinner } from '@/components/ui/spinner';
+import { signInWithMagicLink } from '@/features/auth/actions/auth';
 import { useI18n } from '@/locales/clients';
-import { signInWithMagicLink } from '../../../app/[locale]/(login)/actions';
 import { AuthMode } from '../type';
 import { REDIRECT_TO_AUTH_CALLBACK } from '../utils/constants';
 
