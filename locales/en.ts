@@ -14,6 +14,13 @@ export default {
   },
   export_page: {
     title: 'Export',
+    table_book: {
+      name: 'Name',
+      author: 'Author',
+      highlights: 'Highlights',
+      notes: 'Notes',
+      bookmarks: 'Bookmarks',
+    },
   },
   favorites_page: {
     title: 'Favorites',

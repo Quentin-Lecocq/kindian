@@ -1,3 +1,5 @@
+'use client';
+
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   Table,
@@ -7,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import { useScopedI18n } from '@/locales/clients';
 import { KindleBook } from '@/types/books';
 import { FC } from 'react';
 
@@ -21,18 +24,24 @@ const TableBooks: FC<TableBooksProps> = ({
   onSelect,
   onToggleSelectAll,
 }) => {
+  const t = useScopedI18n('export_page.table_book');
+
   return (
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="flex items-center mb-1">
+          <TableHead className="flex items-center">
             <Checkbox onCheckedChange={onToggleSelectAll} />
           </TableHead>
-          <TableHead>Name</TableHead>
-          <TableHead>Author</TableHead>
-          <TableHead>Highlights</TableHead>
-          <TableHead>Notes</TableHead>
-          <TableHead>Bookmarks</TableHead>
+          <TableHead className="text-sm font-regular">{t('name')}</TableHead>
+          <TableHead className="text-sm font-regular">{t('author')}</TableHead>
+          <TableHead className="text-sm font-regular">
+            {t('highlights')}
+          </TableHead>
+          <TableHead className="text-sm font-regular">{t('notes')}</TableHead>
+          <TableHead className="text-sm font-regular">
+            {t('bookmarks')}
+          </TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>
