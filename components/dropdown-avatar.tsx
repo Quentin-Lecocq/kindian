@@ -1,8 +1,7 @@
-'use client';
-
 import { signOut } from '@/app/[locale]/(login)/actions';
 import { UserMetadata } from '@supabase/supabase-js';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
+import { Button } from './ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -41,11 +40,12 @@ const DropdownAvatar = ({ user }: DropdownAvatarProps) => {
             </DropdownMenuItem>
           </DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem
-            className="cursor-pointer"
-            onClick={() => signOut()}
-          >
-            Logout
+          <DropdownMenuItem asChild className="cursor-pointer">
+            <form action={signOut}>
+              <Button className="p-0 h-5" variant="ghost">
+                Sign out
+              </Button>
+            </form>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
