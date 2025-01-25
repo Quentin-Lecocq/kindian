@@ -1,4 +1,4 @@
-import { updateSession } from '@/features/auth/lib/supabase/middleware';
+import { updateSession } from '@/features/auth/utils/supabase/middleware';
 import { createI18nMiddleware } from 'next-international/middleware';
 import { type NextRequest } from 'next/server';
 
@@ -25,13 +25,6 @@ export async function middleware(req: NextRequest) {
     await updateSession(req);
   }
 
-  // // D'abord mettre à jour la session
-  // const sessionResponse = await updateSession(req);
-  // if (!sessionResponse.ok) {
-  //   return sessionResponse;
-  // }
-
-  // Ensuite appliquer le middleware i18n
   return I18nMiddleware(req);
 }
 
