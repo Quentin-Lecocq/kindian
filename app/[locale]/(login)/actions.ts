@@ -1,7 +1,7 @@
 'use server';
 import config from '@/config';
-import { createClient } from '@/features/auth/lib/supabase/server';
 import { validatedAction } from '@/features/auth/middleware';
+import { createClient } from '@/features/auth/utils/supabase/server';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
 

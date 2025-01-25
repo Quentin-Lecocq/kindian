@@ -1,5 +1,5 @@
 import config from '@/config';
-import { createClient } from '@/features/auth/lib/supabase/server';
+import { createClient } from '@/features/auth/utils/supabase/server';
 import { getUser } from '@/utils/user';
 import { NextResponse } from 'next/server';
 

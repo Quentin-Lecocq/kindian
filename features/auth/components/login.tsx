@@ -11,8 +11,8 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Separator } from '@/components/ui/separator';
-import { createClient } from '@/features/auth/lib/supabase/client';
 import { ActionState } from '@/features/auth/middleware';
+import { createClient } from '@/features/auth/utils/supabase/client';
 import Link from 'next/link';
 import { useActionState, useState } from 'react';
 import { FaGithub, FaGoogle } from 'react-icons/fa';
