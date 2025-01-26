@@ -1,42 +1,29 @@
-import {
-  Card,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { usePrefetchGetBook } from '../hooks/use-prefetch-get-book';
 import { Book } from '../types';
-import DeleteBookBtn from './delete-book-btn';
-import OpenBookBtn from './open-book-btn';
+import BookCardActions from './book-card-actions';
+import BookCardImage from './book-card-image';
+import BookCardInfo from './book-card-info';
 
 type BookCardProps = {
   book: Book;
 };
 
 const BookCard = ({ book }: BookCardProps) => {
-  const { title, author, highlightsCount, id } = book;
+  const { title, author, googleBooksLink, description, id, imageUrl } = book;
   const prefetchBook = usePrefetchGetBook();
 
   return (
     <Card
-      className="flex flex-col justify-between rounded-sm"
+      className="flex flex-col shadow-none justify-between rounded-sm border-none max-w-[28rem] p-2"
       onMouseEnter={() => id && prefetchBook(id)}
     >
-      <CardHeader>
-        <CardTitle>{title}</CardTitle>
-        <CardDescription>{author}</CardDescription>
-        <p className="text-sm text-muted-foreground">
-          {highlightsCount} highlights
-        </p>
-      </CardHeader>
-      <CardFooter>
-        {id && (
-          <>
-            <OpenBookBtn id={id} />
-            <DeleteBookBtn id={id} />
-          </>
-        )}
+      <CardContent className="flex justify-between gap-4 p-0">
+        <BookCardImage id={id} title={title} imageUrl={imageUrl} />
+        <BookCardInfo title={title} author={author} description={description} />
+      </CardContent>
+      <CardFooter className="p-0 mt-2">
+        <BookCardActions id={id} googleBooksLink={googleBooksLink} />
       </CardFooter>
     </Card>
   );
