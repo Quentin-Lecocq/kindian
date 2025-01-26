@@ -23,6 +23,7 @@ const BookCardActions = ({ googleBooksLink, id }: BookCardActionsProps) => {
         </Button>
       </a>
       <div className="flex justify-center w-full items-center">
+        {/* TODO: add download action */}
         <DownloadButton onClick={() => {}} />
         <OpenButtonLink id={id} />
       </div>
