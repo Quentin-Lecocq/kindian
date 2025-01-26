@@ -1,6 +1,6 @@
 import { updateSession } from '@/supabase/middleware';
 import { createI18nMiddleware } from 'next-international/middleware';
-import { type NextRequest } from 'next/server';
+import { type NextRequest, NextResponse } from 'next/server';
 
 const I18nMiddleware = createI18nMiddleware({
   locales: ['en', 'fr'],
@@ -22,7 +22,15 @@ export async function middleware(req: NextRequest) {
   }
 
   if (!publicRoutes.includes(pathname)) {
-    await updateSession(req);
+    const supabase = await updateSession(req);
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (!session) {
+      const redirectUrl = new URL('/sign-in', req.url);
+      return NextResponse.redirect(redirectUrl);
+    }
   }
 
   return I18nMiddleware(req);
