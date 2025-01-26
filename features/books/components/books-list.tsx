@@ -6,8 +6,6 @@ import BookCard from './book-card';
 const BooksList = () => {
   const { data: books, isLoading } = useGetBooks();
 
-  console.log({ books });
-
   // TODO: handle loading state and no books found
   if (isLoading) return <div>Loading...</div>;
   if (!books) return <div>No books found</div>;

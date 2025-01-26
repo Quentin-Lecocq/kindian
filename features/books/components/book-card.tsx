@@ -22,7 +22,7 @@ const BookCard = ({ book }: BookCardProps) => {
         <BookCardImage id={id} title={title} imageUrl={imageUrl} />
         <BookCardInfo title={title} author={author} description={description} />
       </CardContent>
-      <CardFooter className="border p-0 mt-2">
+      <CardFooter className="p-0 mt-2">
         <BookCardActions id={id} googleBooksLink={googleBooksLink} />
       </CardFooter>
     </Card>
