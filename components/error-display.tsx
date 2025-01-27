@@ -5,7 +5,7 @@ type ErrorDisplayProps = {
 };
 
 const ErrorDisplay: FC<ErrorDisplayProps> = ({ error }) => (
-  <p className="text-red-500 text-sm">{error}</p>
+  <p className="text-destructive text-xs">{error}</p>
 );
 
 export default ErrorDisplay;
