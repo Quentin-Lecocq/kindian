@@ -20,6 +20,7 @@ export const useExport = (allBooks: KindleBook[]) => {
       : allBooks;
 
     try {
+      // TODO: can i run this in parallel?
       await saveBooksToDb(books);
       const files = await exportToMarkdown(books);
       await downloadZip(files);

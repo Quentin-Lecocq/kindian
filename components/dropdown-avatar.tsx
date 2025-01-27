@@ -1,7 +1,6 @@
 import { signOut } from '@/features/auth/actions/auth';
 import { UserMetadata } from '@supabase/supabase-js';
 import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
-import { Button } from './ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -42,9 +41,7 @@ const DropdownAvatar = ({ user }: DropdownAvatarProps) => {
           <DropdownMenuSeparator />
           <DropdownMenuItem asChild className="cursor-pointer">
             <form action={signOut}>
-              <Button className="p-0 h-5" variant="ghost">
-                Sign out
-              </Button>
+              <button className="p-0 h-5 w-full text-left">Sign out</button>
             </form>
           </DropdownMenuItem>
         </DropdownMenuContent>
