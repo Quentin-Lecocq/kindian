@@ -4,7 +4,7 @@ import { getAccessToken } from '@/utils/user';
 export async function saveBooksToDb(books: KindleBook[]): Promise<void> {
   const token = await getAccessToken();
   const response = await fetch(
-    'http://localhost:4000/api/books/import-kindle',
+    `${process.env.NEXT_PUBLIC_API_URL}/api/books/import-kindle`,
     {
       method: 'POST',
       headers: {
