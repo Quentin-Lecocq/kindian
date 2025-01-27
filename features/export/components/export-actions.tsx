@@ -1,4 +1,4 @@
-import { Button } from '@/components/ui/button';
+import UIButton from '@/components/buttons/ui-button';
 import { DownloadIcon, FileDownIcon, RefreshCcwIcon } from 'lucide-react';
 
 type ExportActionsProps = {
@@ -10,31 +10,24 @@ const ExportActions = ({ handleExport }: ExportActionsProps) => {
     <div className="flex flex-col gap-4 my-10">
       <p className="text-sm font-regular self-start">Upload successful</p>
       <div className="flex gap-4 items-center">
-        <Button
-          variant="outline"
+        <UIButton
+          type="secondary"
           onClick={() => handleExport({ onlySelectedBooks: true })}
-        >
-          <div className="flex items-center gap-2 text-sm">
-            <FileDownIcon />
-            Export selected books
-          </div>
-        </Button>
-        <Button
-          variant="outline"
+          text="Export selected books"
+          icon={<FileDownIcon />}
+        />
+        <UIButton
+          type="secondary"
           onClick={() => handleExport({ onlySelectedBooks: false })}
-        >
-          <div className="flex items-center gap-2 text-sm">
-            <DownloadIcon />
-            Export all books
-          </div>
-        </Button>
-        {/* TODO: Add logic to reset uploader */}
-        <Button onClick={() => {}} variant="outline">
-          <div className="flex items-center gap-2 text-sm">
-            <RefreshCcwIcon />
-            Reset uploader
-          </div>
-        </Button>
+          text="Export all books"
+          icon={<DownloadIcon />}
+        />
+        <UIButton
+          type="secondary"
+          onClick={() => {}}
+          text="Reset uploader"
+          icon={<RefreshCcwIcon />}
+        />
       </div>
     </div>
   );
