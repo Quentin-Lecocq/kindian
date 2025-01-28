@@ -1,6 +1,6 @@
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { usePrefetchGetBook } from '../hooks/use-prefetch-get-book';
-import { Book } from '../types';
+import { Book } from '../types/types';
 import BookCardActions from './book-card-actions';
 import BookCardImage from './book-card-image';
 import BookCardInfo from './book-card-info';

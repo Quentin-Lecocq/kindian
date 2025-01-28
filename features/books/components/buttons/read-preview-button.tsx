@@ -7,17 +7,17 @@ type ReadPreviewButtonProps = {
 
 const ReadPreviewButton = ({ link }: ReadPreviewButtonProps) => {
   return (
-    <a
-      className="w-full"
-      href={link || ''}
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      <Button className="w-full">
+    <Button className="w-full">
+      <a
+        className="w-full flex items-center justify-center gap-2"
+        href={link || ''}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
         <BookIcon />
         Read Preview
-      </Button>
-    </a>
+      </a>
+    </Button>
   );
 };
 

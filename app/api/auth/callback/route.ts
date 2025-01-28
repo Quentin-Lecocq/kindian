@@ -1,4 +1,3 @@
-import config from '@/config';
 import { createClient } from '@/supabase/server';
 import { getUser } from '@/utils/user';
 import { NextResponse } from 'next/server';
@@ -17,7 +16,7 @@ export async function GET(request: Request) {
 
     if (userData) {
       try {
-        await fetch(`${config.apiUrl}/api/users/create`, {
+        await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/users/create`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

@@ -1,7 +1,6 @@
 'use server';
 
-import config from '@/config';
-import { validatedAction } from '@/features/auth/middleware';
+import { validatedAction } from '@/features/auth/middlewares/middleware';
 import { createClient } from '@/supabase/server';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';
@@ -14,7 +13,7 @@ export const signInWithMagicLink = validatedAction(
   async (data) => {
     const supabase = await createClient();
     const { email } = data;
-    const redirectTo = `${config.domainName}/api/auth/callback`;
+    const redirectTo = `${process.env.NEXT_PUBLIC_DOMAIN_NAME}/api/auth/callback`;
 
     const { error } = await supabase.auth.signInWithOtp({
       email,

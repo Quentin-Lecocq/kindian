@@ -1,6 +1,6 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
+import UIButton from '@/components/buttons/ui-button';
 import { Upload } from 'lucide-react';
 
 type FileDropzoneProps = {
@@ -21,12 +21,14 @@ const FileDropzone = ({ open }: FileDropzoneProps) => {
           </p>
         </div>
       </div>
-      <Button className="w-fit text-sm mx-auto" onClick={open}>
-        <div className="flex items-center gap-2">
-          <Upload />
-          Upload
-        </div>
-      </Button>
+      <div className="w-1/2 mx-auto">
+        <UIButton
+          type="primary"
+          onClick={open}
+          text="Upload"
+          icon={<Upload />}
+        />
+      </div>
     </div>
   );
 };
