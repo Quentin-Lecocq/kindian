@@ -9,12 +9,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { ActionState } from '@/features/auth/middleware';
+import { ActionState } from '@/features/auth/middlewares/middleware';
 import { useI18n } from '@/locales/clients';
 import { createClient } from '@/supabase/client';
 import { useActionState, useState } from 'react';
 import { signInWithMagicLink } from '../actions/auth';
-import { AuthMode } from '../type';
+import { AuthMode } from '../types/type';
 import { REDIRECT_TO_AUTH_CALLBACK } from '../utils/constants';
 import LoginFooter from './login-footer';
 import LoginForm from './login-form';

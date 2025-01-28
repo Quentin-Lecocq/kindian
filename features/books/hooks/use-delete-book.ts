@@ -1,7 +1,7 @@
 import { useToast } from '@/hooks/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteBook } from '../api/delete-book';
-import { Book } from '../types';
+import { Book } from '../types/types';
 
 export const useDeleteBook = () => {
   const { toast } = useToast();

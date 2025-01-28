@@ -1,6 +1,6 @@
 'use server';
 
-import { validatedAction } from '@/features/auth/middleware';
+import { validatedAction } from '@/features/auth/middlewares/middleware';
 import { createClient } from '@/supabase/server';
 import { redirect } from 'next/navigation';
 import { z } from 'zod';

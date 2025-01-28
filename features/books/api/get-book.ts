@@ -1,5 +1,5 @@
 import { APIResponse } from '@/types/api';
-import { Book } from '../types';
+import { Book } from '../types/types';
 
 export const getBook = async (bookId: string): Promise<Book> => {
   const response = await fetch(

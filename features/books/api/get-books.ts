@@ -1,6 +1,6 @@
 import { APIResponse } from '@/types/api';
 import { getAccessToken } from '@/utils/user';
-import { Book } from '../types';
+import { Book } from '../types/types';
 
 export const getBooks = async (): Promise<Book[]> => {
   const token = await getAccessToken();
