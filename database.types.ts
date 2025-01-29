@@ -119,6 +119,178 @@ export type Database = {
           },
         ]
       }
+      Highlight: {
+        Row: {
+          addedAt: string
+          bookAuthor: string
+          bookId: string
+          bookTitle: string
+          content: string
+          createdAt: string
+          id: string
+          isFavorite: boolean
+          location: string
+          page: number
+          updatedAt: string
+          userId: string
+        }
+        Insert: {
+          addedAt: string
+          bookAuthor: string
+          bookId: string
+          bookTitle: string
+          content: string
+          createdAt?: string
+          id: string
+          isFavorite?: boolean
+          location: string
+          page: number
+          updatedAt: string
+          userId: string
+        }
+        Update: {
+          addedAt?: string
+          bookAuthor?: string
+          bookId?: string
+          bookTitle?: string
+          content?: string
+          createdAt?: string
+          id?: string
+          isFavorite?: boolean
+          location?: string
+          page?: number
+          updatedAt?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Highlight_bookId_fkey"
+            columns: ["bookId"]
+            isOneToOne: false
+            referencedRelation: "Book"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "Highlight_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "User"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      HighlightTag: {
+        Row: {
+          highlightId: string
+          tagId: string
+        }
+        Insert: {
+          highlightId: string
+          tagId: string
+        }
+        Update: {
+          highlightId?: string
+          tagId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "HighlightTag_highlightId_fkey"
+            columns: ["highlightId"]
+            isOneToOne: false
+            referencedRelation: "Highlight"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "HighlightTag_tagId_fkey"
+            columns: ["tagId"]
+            isOneToOne: false
+            referencedRelation: "Tag"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      Note: {
+        Row: {
+          content: string
+          createdAt: string
+          highlightId: string
+          id: string
+          updatedAt: string
+        }
+        Insert: {
+          content: string
+          createdAt?: string
+          highlightId: string
+          id: string
+          updatedAt: string
+        }
+        Update: {
+          content?: string
+          createdAt?: string
+          highlightId?: string
+          id?: string
+          updatedAt?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "Note_highlightId_fkey"
+            columns: ["highlightId"]
+            isOneToOne: false
+            referencedRelation: "Highlight"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      SubHighlight: {
+        Row: {
+          createdAt: string
+          endIndex: number
+          highlightId: string
+          id: string
+          startIndex: number
+        }
+        Insert: {
+          createdAt?: string
+          endIndex: number
+          highlightId: string
+          id: string
+          startIndex: number
+        }
+        Update: {
+          createdAt?: string
+          endIndex?: number
+          highlightId?: string
+          id?: string
+          startIndex?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "SubHighlight_highlightId_fkey"
+            columns: ["highlightId"]
+            isOneToOne: false
+            referencedRelation: "Highlight"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      Tag: {
+        Row: {
+          createdAt: string
+          id: string
+          name: string
+        }
+        Insert: {
+          createdAt?: string
+          id: string
+          name: string
+        }
+        Update: {
+          createdAt?: string
+          id?: string
+          name?: string
+        }
+        Relationships: []
+      }
       User: {
         Row: {
           createdAt: string

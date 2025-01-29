@@ -3,7 +3,8 @@ import { KindleBook } from '@/types/books';
 import { useRouter } from 'next/navigation';
 import { saveBooksToDb } from '../api/books';
 import { exportToMarkdown } from '../api/export';
-import { ExportOptions } from '../types';
+import { saveHighlightsToDb } from '../api/highlights';
+import { ExportOptions } from '../types/types';
 import { useDownload } from './use-download';
 import { useSelection } from './use-selection';
 
@@ -23,6 +24,7 @@ export const useExport = (allBooks: KindleBook[]) => {
       // TODO: can i run this in parallel?
       await saveBooksToDb(books);
       const files = await exportToMarkdown(books);
+      await saveHighlightsToDb(files);
       await downloadZip(files);
       toast({
         title: 'Books exported',
