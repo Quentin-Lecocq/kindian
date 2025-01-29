@@ -5,5 +5,6 @@ export const useGetBooks = () => {
   return useQuery({
     queryKey: ['books'],
     queryFn: getBooks,
+    staleTime: 1000 * 60,
   });
 };

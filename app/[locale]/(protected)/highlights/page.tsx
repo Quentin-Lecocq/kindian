@@ -1,3 +1,4 @@
+import HighlightList from '@/features/highlights/components/highlight-list';
 import { getScopedI18n } from '@/locales/server';
 import { NextPage } from 'next';
 
@@ -7,6 +8,7 @@ const HighlightsPage: NextPage = async () => {
   return (
     <>
       <h2 className="text-xl mb-6">{t('title')}</h2>
+      <HighlightList />
     </>
   );
 };
