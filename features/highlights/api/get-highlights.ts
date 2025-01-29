@@ -1,6 +1,6 @@
+import { HighlightWithNotes } from '@/features/highlights/types/types';
 import { APIResponse } from '@/types/api';
 import { getAccessToken } from '@/utils/user';
-import { Highlight } from '../types/types';
 
 export interface GetHighlightsParams {
   orderBy?: 'addedAt' | 'isFavorite';
@@ -9,7 +9,7 @@ export interface GetHighlightsParams {
 
 export const getHighlights = async (
   params?: GetHighlightsParams
-): Promise<Highlight[]> => {
+): Promise<HighlightWithNotes[]> => {
   const token = await getAccessToken();
   if (!token) throw new Error('No token available');
 
@@ -25,7 +25,7 @@ export const getHighlights = async (
 
   if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
 
-  const { data } = (await response.json()) as APIResponse<Highlight[]>;
+  const { data } = (await response.json()) as APIResponse<HighlightWithNotes[]>;
   if (!data) throw new Error('No data received from server');
 
   return data;
