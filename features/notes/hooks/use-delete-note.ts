@@ -23,12 +23,16 @@ export const useDeleteNote = () => {
       return { previousNotes };
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['highlights'] }).then(() => {
-        toast({
-          title: 'Note deleted',
-          description: 'Note has been deleted',
+      queryClient
+        .invalidateQueries({
+          queryKey: ['highlights'],
+        })
+        .then(() => {
+          toast({
+            title: 'Note deleted',
+            description: 'Note has been deleted',
+          });
         });
-      });
     },
     onError: (_, __, context) => {
       if (context?.previousNotes) {

@@ -1,6 +1,6 @@
 import { useDeleteNote } from '@/features/notes/hooks/use-delete-note';
 import { useEditNote } from '@/features/notes/hooks/use-edit-note';
-import { Note } from '@/features/notes/types/types';
+import { Note } from '@/features/notes/utils/types';
 import DeleteNoteButton from './delete-note-button';
 import EditNoteButton from './edit-note-button';
 

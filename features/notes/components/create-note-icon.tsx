@@ -9,8 +9,10 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import { ICON_CLASSNAME } from '@/features/highlights/utils/constants';
 import { Edit } from 'lucide-react';
 import { useState } from 'react';
+import { ICON_SIZE } from '../utils/constants';
 
 type CreateNoteIconProps = {
   onCreate: (content: string) => void;
@@ -28,11 +30,7 @@ const CreateNoteIcon = ({ onCreate }: CreateNoteIconProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Edit
-          height={16}
-          width={16}
-          className="text-muted-foreground cursor-pointer"
-        />
+        <Edit height={ICON_SIZE} width={ICON_SIZE} className={ICON_CLASSNAME} />
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>

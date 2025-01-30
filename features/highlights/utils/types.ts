@@ -1,5 +1,5 @@
 import { Tables } from '@/database.types';
-import { Note } from '@/features/notes/types/types';
+import { Note } from '@/features/notes/utils/types';
 
 export type Highlight = Tables<'Highlight'>;
 

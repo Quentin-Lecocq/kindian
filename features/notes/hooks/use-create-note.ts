@@ -5,6 +5,7 @@ import { createNoteHighlight } from '../api/create-note-highlight';
 export const useCreateNoteHighlight = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
   return useMutation({
     mutationFn: ({
       highlightId,
@@ -14,12 +15,16 @@ export const useCreateNoteHighlight = () => {
       content: string;
     }) => createNoteHighlight(highlightId, content),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['highlights'] }).then(() => {
-        toast({
-          title: 'Note created',
-          description: 'The note has been created',
+      queryClient
+        .invalidateQueries({
+          queryKey: ['highlights'],
+        })
+        .then(() => {
+          toast({
+            title: 'Note created',
+            description: 'The note has been created',
+          });
         });
-      });
     },
     onError: () => {
       toast({

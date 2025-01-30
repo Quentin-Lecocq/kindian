@@ -1,20 +1,19 @@
-import CreateNoteIcon from '@/features/notes/components/create-note-icon';
 import NoteList from '@/features/notes/components/note-list';
-import { Copy, Ellipsis, Highlighter, Pencil, Trash } from 'lucide-react';
-import { ICON_SIZE } from '../utils/constants';
 import { HighlightWithNotes } from '../utils/types';
-import FavoriteHighlightButton from './favorite-highlight-button';
+import HighlightActionsFooter from './highlight-actions-footer';
 
 type HighlightItemProps = {
   highlight: HighlightWithNotes;
   onFavoriteToggle: (id: string, isFavorite: boolean) => void;
   onNoteCreate: (highlightId: string, content: string) => void;
+  onDelete: (id: string) => void;
 };
 
 const HighlightItem = ({
   highlight,
   onFavoriteToggle,
   onNoteCreate,
+  onDelete,
 }: HighlightItemProps) => {
   return (
     <div
@@ -29,44 +28,12 @@ const HighlightItem = ({
       </h3>
       <p className="text-sm text-foreground">{highlight.content}</p>
       {highlight.notes.length ? <NoteList notes={highlight.notes} /> : null}
-
-      <div className="flex gap-2 mt-3 items-center">
-        <Ellipsis
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground"
-        />
-        <FavoriteHighlightButton
-          isFavorite={highlight.isFavorite}
-          onToggle={() => onFavoriteToggle(highlight.id, highlight.isFavorite)}
-        />
-        <p className="text-sm text-muted-foreground">{highlight.location}</p>
-        <Highlighter
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground"
-        />
-        <Pencil
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground hover:scale-110 hover:text-foreground transition-transform cursor-pointer"
-        />
-        <CreateNoteIcon
-          onCreate={(content) => {
-            onNoteCreate(highlight.id, content);
-          }}
-        />
-        <Trash
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground"
-        />
-        <Copy
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground"
-        />
-      </div>
+      <HighlightActionsFooter
+        highlight={highlight}
+        onFavorite={onFavoriteToggle}
+        onNoteCreate={onNoteCreate}
+        onDelete={onDelete}
+      />
     </div>
   );
 };

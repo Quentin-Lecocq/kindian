@@ -1,5 +1,4 @@
 export const editNoteHighlight = async (noteId: string, content: string) => {
-  console.log('editNoteHighlight', noteId, content);
   const response = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/api/notes/${noteId}`,
     {

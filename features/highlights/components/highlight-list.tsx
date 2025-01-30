@@ -3,6 +3,7 @@
 import { useGetHighlights } from '@/features/highlights/hooks/use-get-highlights';
 import { startTransition, useOptimistic } from 'react';
 import { useCreateNoteHighlight } from '../../notes/hooks/use-create-note';
+import { useDeleteHighlight } from '../hooks/use-delete-highlight';
 import { useFavoriteHighlight } from '../hooks/use-favorite-highlight';
 import HighlightItem from './highlight-item';
 
@@ -11,6 +12,7 @@ const HighlightList = () => {
   const { data: highlights, isLoading, error } = useGetHighlights();
   const { mutate: favoriteHighlight } = useFavoriteHighlight();
   const { mutate: createNoteHighlight } = useCreateNoteHighlight();
+  const { mutate: deleteHighlight } = useDeleteHighlight();
 
   const [optimisticHighlights, addOptimisticHighlight] = useOptimistic(
     highlights,
@@ -44,6 +46,7 @@ const HighlightList = () => {
             highlight={highlight}
             onFavoriteToggle={handleFavoriteHighlight}
             onNoteCreate={handleNoteCreate}
+            onDelete={deleteHighlight}
           />
         ))}
       </div>
