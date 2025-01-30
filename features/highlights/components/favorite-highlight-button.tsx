@@ -2,7 +2,7 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
 const heartBaseClasses = `
-  h-[50px] w-[50px] 
+  h-[45px] w-[45px] 
   bg-[url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/66955/web_heart_animation.png')] 
   bg-no-repeat 
   bg-[length:2900%] 
