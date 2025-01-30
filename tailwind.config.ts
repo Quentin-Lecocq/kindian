@@ -67,6 +67,15 @@ export default {
         md: 'calc(var(--radius) - 2px)',
         sm: 'calc(var(--radius) - 4px)',
       },
+      keyframes: {
+        'heart-burst': {
+          from: { backgroundPosition: 'left' },
+          to: { backgroundPosition: 'right' },
+        },
+      },
+      animation: {
+        'heart-burst': 'heart-burst 0.8s steps(28) 1',
+      },
     },
   },
   plugins: [require('tailwindcss-animate')],
