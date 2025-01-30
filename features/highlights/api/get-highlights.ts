@@ -1,4 +1,4 @@
-import { HighlightWithNotes } from '@/features/highlights/types/types';
+import { HighlightWithNotes } from '@/features/highlights/utils/types';
 import { APIResponse } from '@/types/api';
 import { getAccessToken } from '@/utils/user';
 

@@ -1,41 +1,55 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { SortAsc, SortDesc } from 'lucide-react';
-import { GetHighlightsParams } from '../api/get-highlights';
+import { useSortStore } from '../stores/use-sort-store';
+import { ICON_SIZE } from '../utils/constants';
+import { SortBy } from '../utils/types';
 
-type SortControlsProps = {
-  sortParams: GetHighlightsParams;
-  setSortParams: (params: GetHighlightsParams) => void;
-};
+const SortControls = () => {
+  const { order, setOrder, setOrderBy } = useSortStore();
 
-const SortControls = ({ sortParams, setSortParams }: SortControlsProps) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 mb-2">
       <Button
-        onClick={() => setSortParams({ ...sortParams, order: 'asc' })}
-        variant="outline"
+        onClick={() => setOrder('asc')}
+        variant={order === 'asc' ? 'default' : 'outline'}
       >
-        <SortAsc height={16} width={16} className="text-muted-foreground" />
+        <SortAsc
+          height={ICON_SIZE}
+          width={ICON_SIZE}
+          className="text-muted-foreground"
+        />
       </Button>
       <Button
-        onClick={() => setSortParams({ ...sortParams, order: 'desc' })}
-        variant="outline"
+        onClick={() => setOrder('desc')}
+        variant={order === 'desc' ? 'default' : 'outline'}
       >
-        <SortDesc height={16} width={16} className="text-muted-foreground" />
+        <SortDesc
+          height={ICON_SIZE}
+          width={ICON_SIZE}
+          className="text-muted-foreground"
+        />
       </Button>
-      <Button
-        disabled={sortParams.orderBy === 'addedAt'}
-        onClick={() => setSortParams({ ...sortParams, orderBy: 'addedAt' })}
-        variant="outline"
-      >
-        AddedAt
-      </Button>
-      <Button
-        disabled={sortParams.orderBy === 'isFavorite'}
-        onClick={() => setSortParams({ ...sortParams, orderBy: 'isFavorite' })}
-        variant="outline"
-      >
-        Favorite
-      </Button>
+      <Select onValueChange={(value: SortBy) => setOrderBy(value)}>
+        <SelectTrigger className="w-40">
+          <SelectValue placeholder="Sort by" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectItem value="addedAt">AddedAt</SelectItem>
+            <SelectItem value="isFavorite">Favorite</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
     </div>
   );
 };

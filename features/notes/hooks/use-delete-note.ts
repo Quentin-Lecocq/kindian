@@ -1,4 +1,4 @@
-import { HighlightWithNotes } from '@/features/highlights/types/types';
+import { HighlightWithNotes } from '@/features/highlights/utils/types';
 import { useToast } from '@/hooks/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { deleteNoteHighlight } from '../api/delete-note-highlight';

@@ -13,7 +13,10 @@ const NoteList = ({ notes }: NoteListProps) => {
   const { mutate: editNoteHighlight } = useEditNote();
 
   return (
-    <>
+    <div className="flex mt-6 flex-col my-3">
+      <div className="border-b w-full">
+        <h4 className="text-sm font-light text-muted-foreground">Notes</h4>
+      </div>
       {notes.map(({ id, content }) => (
         <div key={id} className="flex items-center gap-4">
           <p className="text-sm text-foreground mr-2">{content}</p>
@@ -28,7 +31,7 @@ const NoteList = ({ notes }: NoteListProps) => {
           </div>
         </div>
       ))}
-    </>
+    </div>
   );
 };
 
