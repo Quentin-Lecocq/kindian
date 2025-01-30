@@ -1,31 +1,23 @@
 'use client';
 
-import { Button } from '@/components/ui/button';
 import { useGetHighlights } from '@/features/highlights/hooks/use-get-highlights';
 import CreateNoteIcon from '@/features/notes/components/create-note-icon';
 import NoteList from '@/features/notes/components/note-list';
-import {
-  Copy,
-  Ellipsis,
-  Highlighter,
-  Pencil,
-  SortAsc,
-  SortDesc,
-  Trash,
-} from 'lucide-react';
+import { Copy, Ellipsis, Highlighter, Pencil, Trash } from 'lucide-react';
 import { startTransition, useOptimistic, useState } from 'react';
 import { useCreateNoteHighlight } from '../../notes/hooks/use-create-note';
 import { GetHighlightsParams } from '../api/get-highlights';
 import { useFavoriteHighlight } from '../hooks/use-favorite-highlight';
 import FavoriteHighlightButton from './favorite-highlight-button';
+import SortControls from './sort-controls';
 
 const HighlightList = () => {
   const [sortParams, setSortParams] = useState<GetHighlightsParams>({
     orderBy: 'addedAt',
     order: 'desc',
   });
-
-  const { data: highlights, isLoading, error } = useGetHighlights(sortParams);
+  // todo: add zustand to store sort params
+  const { data: highlights, isLoading, error } = useGetHighlights();
   const { mutate: favoriteHighlight } = useFavoriteHighlight();
   const { mutate: createNoteHighlight } = useCreateNoteHighlight();
 
@@ -50,41 +42,8 @@ const HighlightList = () => {
 
   return (
     <>
+      <SortControls sortParams={sortParams} setSortParams={setSortParams} />
       <div className="flex flex-col gap-10">
-        <div className="flex items-center gap-2">
-          <Button
-            onClick={() => setSortParams({ ...sortParams, order: 'asc' })}
-            variant="outline"
-          >
-            <SortAsc height={16} width={16} className="text-muted-foreground" />
-          </Button>
-          <Button
-            onClick={() => setSortParams({ ...sortParams, order: 'desc' })}
-            variant="outline"
-          >
-            <SortDesc
-              height={16}
-              width={16}
-              className="text-muted-foreground"
-            />
-          </Button>
-          <Button
-            disabled={sortParams.orderBy === 'addedAt'}
-            onClick={() => setSortParams({ ...sortParams, orderBy: 'addedAt' })}
-            variant="outline"
-          >
-            AddedAt
-          </Button>
-          <Button
-            disabled={sortParams.orderBy === 'isFavorite'}
-            onClick={() =>
-              setSortParams({ ...sortParams, orderBy: 'isFavorite' })
-            }
-            variant="outline"
-          >
-            Favorite
-          </Button>
-        </div>
         {optimisticHighlights?.map((highlight) => (
           <div
             key={highlight.id}
@@ -131,7 +90,7 @@ const HighlightList = () => {
               <Pencil
                 height={16}
                 width={16}
-                className="text-muted-foreground"
+                className="text-muted-foreground hover:scale-110 hover:text-foreground transition-transform cursor-pointer"
               />
               <CreateNoteIcon
                 onCreate={(content) => {
