@@ -15,13 +15,13 @@ export const useFavoriteHighlight = () => {
       highlightId: string;
       value: boolean;
     }) => favoriteHighlight(highlightId, value),
-    onSuccess: (_, { value }) => {
+    onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['highlights'] });
+    },
+    onError: () => {
       toast({
-        title: value ? 'Added to favorites' : 'Removed from favorites',
-        description: value
-          ? 'The highlight has been added to your favorites'
-          : 'The highlight has been removed from your favorites',
+        title: 'Error',
+        description: 'An error occurred while favoriting the highlight',
       });
     },
   });

@@ -28,7 +28,10 @@ const EditNoteButton = ({ content, onEdit }: EditNoteButtonProps) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="link" className="text-xs italic underline p-0">
+        <Button
+          variant="link"
+          className="text-xs italic text-muted-foreground hover:text-foreground transition-colors underline p-0"
+        >
           edit
         </Button>
       </DialogTrigger>
