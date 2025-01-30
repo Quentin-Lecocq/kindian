@@ -7,17 +7,17 @@ import NoteList from '@/features/notes/components/note-list';
 import {
   Copy,
   Ellipsis,
-  Heart,
   Highlighter,
   Pencil,
   SortAsc,
   SortDesc,
   Trash,
 } from 'lucide-react';
-import { useState } from 'react';
+import { startTransition, useOptimistic, useState } from 'react';
 import { useCreateNoteHighlight } from '../../notes/hooks/use-create-note';
 import { GetHighlightsParams } from '../api/get-highlights';
 import { useFavoriteHighlight } from '../hooks/use-favorite-highlight';
+import FavoriteHighlightButton from './favorite-highlight-button';
 
 const HighlightList = () => {
   const [sortParams, setSortParams] = useState<GetHighlightsParams>({
@@ -25,13 +25,28 @@ const HighlightList = () => {
     order: 'desc',
   });
 
-  const { data, isLoading, error } = useGetHighlights(sortParams);
+  const { data: highlights, isLoading, error } = useGetHighlights(sortParams);
   const { mutate: favoriteHighlight } = useFavoriteHighlight();
   const { mutate: createNoteHighlight } = useCreateNoteHighlight();
 
+  const [optimisticHighlights, addOptimisticHighlight] = useOptimistic(
+    highlights,
+    (state, { id, isFavorite }: { id: string; isFavorite: boolean }) =>
+      state?.map((highlight) =>
+        highlight.id === id ? { ...highlight, isFavorite } : highlight
+      )
+  );
+
+  const handleFavoriteHighlight = (id: string, currentValue: boolean) => {
+    startTransition(() => {
+      addOptimisticHighlight({ id, isFavorite: !currentValue });
+    });
+    favoriteHighlight({ highlightId: id, value: !currentValue });
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
-  if (data?.length === 0) return <div>No highlights found</div>;
+  if (highlights?.length === 0) return <div>No highlights found</div>;
 
   return (
     <>
@@ -70,8 +85,7 @@ const HighlightList = () => {
             Favorite
           </Button>
         </div>
-
-        {data?.map((highlight) => (
+        {optimisticHighlights?.map((highlight) => (
           <div
             key={highlight.id}
             className="text-foreground border-b border-border py-4"
@@ -100,17 +114,11 @@ const HighlightList = () => {
                 width={16}
                 className="text-muted-foreground"
               />
-              <Heart
-                fill={highlight.isFavorite ? 'currentColor' : 'none'}
-                onClick={() =>
-                  favoriteHighlight({
-                    highlightId: highlight.id,
-                    value: !highlight.isFavorite,
-                  })
+              <FavoriteHighlightButton
+                isFavorite={highlight.isFavorite}
+                onToggle={() =>
+                  handleFavoriteHighlight(highlight.id, highlight.isFavorite)
                 }
-                height={16}
-                width={16}
-                className="cursor-pointer text-muted-foreground"
               />
               <p className="text-sm text-muted-foreground">
                 {highlight.location}
