@@ -7,6 +7,7 @@ type HighlightItemProps = {
   onFavoriteToggle: (id: string, isFavorite: boolean) => void;
   onNoteCreate: (highlightId: string, content: string) => void;
   onDelete: (id: string) => void;
+  onEdit: (id: string, newContent: string) => void;
 };
 
 const HighlightItem = ({
@@ -14,6 +15,7 @@ const HighlightItem = ({
   onFavoriteToggle,
   onNoteCreate,
   onDelete,
+  onEdit,
 }: HighlightItemProps) => {
   return (
     <div
@@ -33,6 +35,7 @@ const HighlightItem = ({
         onFavorite={onFavoriteToggle}
         onNoteCreate={onNoteCreate}
         onDelete={onDelete}
+        onEdit={onEdit}
       />
     </div>
   );
