@@ -1,8 +1,10 @@
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
+const TAB_INDEX = 0;
+
 const heartBaseClasses = `
-  h-[45px] w-[45px] 
+  h-[40px] w-[40px] 
   bg-[url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/66955/web_heart_animation.png')] 
   bg-no-repeat 
   bg-[length:2900%] 
@@ -12,15 +14,15 @@ const heartBaseClasses = `
   transition-transform
 `;
 
-type FavoriteHighlightButtonProps = {
+type FavoriteHighlightIconProps = {
   isFavorite: boolean;
   onToggle: () => void;
 };
 
-const FavoriteHighlightButton = ({
+const FavoriteHighlightIcon = ({
   isFavorite,
   onToggle,
-}: FavoriteHighlightButtonProps) => {
+}: FavoriteHighlightIconProps) => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
 
   const handleClick = () => {
@@ -37,10 +39,10 @@ const FavoriteHighlightButton = ({
       )}
       onClick={handleClick}
       role="button"
-      tabIndex={0}
+      tabIndex={TAB_INDEX}
       aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
     />
   );
 };
 
-export default FavoriteHighlightButton;
+export default FavoriteHighlightIcon;

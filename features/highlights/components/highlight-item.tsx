@@ -1,21 +1,58 @@
-import CreateNoteIcon from '@/features/notes/components/create-note-icon';
 import NoteList from '@/features/notes/components/note-list';
-import { Copy, Ellipsis, Highlighter, Pencil, Trash } from 'lucide-react';
-import { ICON_SIZE } from '../utils/constants';
-import { HighlightWithNotes } from '../utils/types';
-import FavoriteHighlightButton from './favorite-highlight-button';
+import { HighlightWithNotesAndSubHighlights } from '../utils/types';
+import HighlightActionsFooter from './highlight-actions-footer';
+import HighlightedContent from './highlighted-content';
 
 type HighlightItemProps = {
-  highlight: HighlightWithNotes;
+  highlight: HighlightWithNotesAndSubHighlights;
   onFavoriteToggle: (id: string, isFavorite: boolean) => void;
   onNoteCreate: (highlightId: string, content: string) => void;
+  onDelete: (id: string) => void;
+  onEdit: (id: string, newContent: string) => void;
+  onSubHighlightCreate: (
+    highlightId: string,
+    startIndex: number,
+    endIndex: number
+  ) => void;
+  onSubHighlightDelete: (id: string) => void;
+};
+
+const calculateStartIndex = (range: Range): number => {
+  const preSelectionRange = range.cloneRange();
+
+  const container = range.startContainer.parentElement;
+  if (!container) return 0;
+
+  preSelectionRange.selectNodeContents(container);
+  preSelectionRange.setEnd(range.startContainer, range.startOffset);
+
+  return preSelectionRange.toString().length;
 };
 
 const HighlightItem = ({
   highlight,
   onFavoriteToggle,
   onNoteCreate,
+  onDelete,
+  onEdit,
+  onSubHighlightCreate,
+  onSubHighlightDelete,
 }: HighlightItemProps) => {
+  const handleMouseUp = (id: string) => {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) return;
+
+    const range = selection.getRangeAt(0);
+    const text = selection.toString();
+
+    const startIndex = calculateStartIndex(range);
+    const endIndex = startIndex + text.length;
+
+    onSubHighlightCreate(id, startIndex, endIndex);
+
+    selection.removeAllRanges();
+  };
+
   return (
     <div
       key={highlight.id}
@@ -27,46 +64,24 @@ const HighlightItem = ({
           by {highlight.bookAuthor}
         </span>
       </h3>
-      <p className="text-sm text-foreground">{highlight.content}</p>
-      {highlight.notes.length ? <NoteList notes={highlight.notes} /> : null}
-
-      <div className="flex gap-2 mt-3 items-center">
-        <Ellipsis
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground"
-        />
-        <FavoriteHighlightButton
-          isFavorite={highlight.isFavorite}
-          onToggle={() => onFavoriteToggle(highlight.id, highlight.isFavorite)}
-        />
-        <p className="text-sm text-muted-foreground">{highlight.location}</p>
-        <Highlighter
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground"
-        />
-        <Pencil
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground hover:scale-110 hover:text-foreground transition-transform cursor-pointer"
-        />
-        <CreateNoteIcon
-          onCreate={(content) => {
-            onNoteCreate(highlight.id, content);
-          }}
-        />
-        <Trash
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground"
-        />
-        <Copy
-          height={ICON_SIZE}
-          width={ICON_SIZE}
-          className="text-muted-foreground"
+      <div
+        className="cursor-text text-foreground text-sm"
+        onMouseUp={() => handleMouseUp(highlight.id)}
+      >
+        <HighlightedContent
+          content={highlight.content}
+          subHighlights={highlight.subHighlights}
+          onDelete={onSubHighlightDelete}
         />
       </div>
+      {highlight.notes.length ? <NoteList notes={highlight.notes} /> : null}
+      <HighlightActionsFooter
+        highlight={highlight}
+        onFavorite={onFavoriteToggle}
+        onNoteCreate={onNoteCreate}
+        onDelete={onDelete}
+        onEdit={onEdit}
+      />
     </div>
   );
 };

@@ -1,6 +1,6 @@
-export const editNoteHighlight = async (noteId: string, content: string) => {
+export const editHighlight = async (id: string, content: string) => {
   const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/api/notes/${noteId}`,
+    `${process.env.NEXT_PUBLIC_API_URL}/api/highlights/${id}`,
     {
       method: 'PUT',
       headers: {
@@ -12,6 +12,6 @@ export const editNoteHighlight = async (noteId: string, content: string) => {
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(error.message || 'Failed to edit note');
+    throw new Error(error.message || 'Failed to edit highlight');
   }
 };

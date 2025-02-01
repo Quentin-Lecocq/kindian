@@ -1,19 +1,14 @@
 import { useToast } from '@/hooks/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createNoteHighlight } from '../api/create-note-highlight';
+import { editHighlight } from '../api/edit-highlight';
 
-export const useCreateNoteHighlight = () => {
+export const useEditHighlight = () => {
   const { toast } = useToast();
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: ({
-      highlightId,
-      content,
-    }: {
-      highlightId: string;
-      content: string;
-    }) => createNoteHighlight(highlightId, content),
+    mutationFn: ({ id, content }: { id: string; content: string }) =>
+      editHighlight(id, content),
     onSuccess: () => {
       queryClient
         .invalidateQueries({
@@ -21,15 +16,16 @@ export const useCreateNoteHighlight = () => {
         })
         .then(() => {
           toast({
-            title: 'Note created',
-            description: 'The note has been created',
+            title: 'Highlight updated',
+            description: 'Highlight has been updated',
           });
         });
     },
     onError: () => {
       toast({
         title: 'Error',
-        description: 'An error occurred while creating the note',
+        description: 'Failed to update highlight',
+        variant: 'destructive',
       });
     },
   });

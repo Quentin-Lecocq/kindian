@@ -10,12 +10,16 @@ export const useEditNote = () => {
     mutationFn: ({ id, content }: { id: string; content: string }) =>
       editNoteHighlight(id, content),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['highlights'] }).then(() => {
-        toast({
-          title: 'Note updated',
-          description: 'Note has been updated',
+      queryClient
+        .invalidateQueries({
+          queryKey: ['highlights'],
+        })
+        .then(() => {
+          toast({
+            title: 'Note updated',
+            description: 'Note has been updated',
+          });
         });
-      });
     },
     onError: () => {
       toast({

@@ -3,44 +3,49 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
+  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { ICON_CLASSNAME } from '@/features/highlights/utils/constants';
-import { Edit } from 'lucide-react';
+import { Pencil } from 'lucide-react';
 import { useState } from 'react';
-import { ICON_SIZE } from '../utils/constants';
+import { ICON_CLASSNAME, ICON_SIZE } from '../utils/constants';
 
-type CreateNoteIconProps = {
-  onCreate: (content: string) => void;
+type EditHighlightIconProps = {
+  content: string;
+  onEdit: (newContent: string) => void;
 };
 
-const CreateNoteIcon = ({ onCreate }: CreateNoteIconProps) => {
-  const [newContent, setNewContent] = useState('');
+const EditHighlightIcon = ({ content, onEdit }: EditHighlightIconProps) => {
+  const [editedContent, setEditedContent] = useState(content);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    onCreate(newContent);
-    setNewContent('');
+    onEdit(editedContent);
   };
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Edit height={ICON_SIZE} width={ICON_SIZE} className={ICON_CLASSNAME} />
+        <Pencil
+          height={ICON_SIZE}
+          width={ICON_SIZE}
+          className={ICON_CLASSNAME}
+        />
       </DialogTrigger>
-      <DialogContent>
+      <DialogContent className="sm:max-w-[525px]">
         <DialogHeader>
-          <DialogTitle>Create Note</DialogTitle>
+          <DialogTitle>Edit Highlight</DialogTitle>
+          <DialogDescription>Edit the highlight</DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="flex flex-col gap-2">
             <Textarea
-              value={newContent}
-              onChange={(e) => setNewContent(e.target.value)}
+              value={editedContent}
+              onChange={(e) => setEditedContent(e.target.value)}
             />
             <DialogFooter>
               <DialogClose asChild>
@@ -56,4 +61,4 @@ const CreateNoteIcon = ({ onCreate }: CreateNoteIconProps) => {
   );
 };
 
-export default CreateNoteIcon;
+export default EditHighlightIcon;
