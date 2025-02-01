@@ -14,5 +14,9 @@ export const useSortStore = create<SortState>((set) => ({
   orderBy: 'addedAt',
   setOrder: (order) => set({ order }),
   setOrderBy: (orderBy) => set({ orderBy }),
-  resetSort: () => set({ order: 'desc', orderBy: 'addedAt' }),
+  resetSort: () =>
+    set({
+      order: 'desc',
+      orderBy: 'addedAt',
+    }),
 }));

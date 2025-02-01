@@ -1,6 +1,6 @@
-import { HighlightWithNotes } from '@/features/highlights/utils/types';
 import { useToast } from '@/hooks/use-toast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { HighlightWithNotesAndSubHighlightsAndTags } from '../../highlights/utils/types';
 import { deleteNoteHighlight } from '../api/delete-note-highlight';
 
 export const useDeleteNote = () => {
@@ -11,11 +11,11 @@ export const useDeleteNote = () => {
     mutationFn: deleteNoteHighlight,
     onMutate: async (noteId) => {
       await queryClient.cancelQueries({ queryKey: ['highlights'] });
-      const previousNotes = queryClient.getQueryData<HighlightWithNotes[]>([
-        'highlights',
-      ]);
+      const previousNotes = queryClient.getQueryData<
+        HighlightWithNotesAndSubHighlightsAndTags[]
+      >(['highlights']);
 
-      queryClient.setQueryData<HighlightWithNotes[]>(
+      queryClient.setQueryData<HighlightWithNotesAndSubHighlightsAndTags[]>(
         ['highlights'],
         (old = []) => old.filter(({ id }) => id !== noteId)
       );
