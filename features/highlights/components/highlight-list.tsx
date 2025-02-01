@@ -3,7 +3,9 @@
 import { useGetHighlights } from '@/features/highlights/hooks/use-get-highlights';
 import { startTransition, useOptimistic } from 'react';
 import { useCreateNoteHighlight } from '../../notes/hooks/use-create-note';
+import { useCreateSubHighlight } from '../hooks/use-create-subhighlight';
 import { useDeleteHighlight } from '../hooks/use-delete-highlight';
+import { useDeleteSubhighlight } from '../hooks/use-delete-subhighlight';
 import { useEditHighlight } from '../hooks/use-edit-highlight';
 import { useFavoriteHighlight } from '../hooks/use-favorite-highlight';
 import HighlightItem from './highlight-item';
@@ -14,6 +16,8 @@ const HighlightList = () => {
   const { mutate: createNoteHighlight } = useCreateNoteHighlight();
   const { mutate: deleteHighlight } = useDeleteHighlight();
   const { mutate: editHighlight } = useEditHighlight();
+  const { mutate: createSubHighlight } = useCreateSubHighlight();
+  const { mutate: deleteSubHighlight } = useDeleteSubhighlight();
 
   const [optimisticHighlights, addOptimisticHighlight] = useOptimistic(
     highlights,
@@ -38,6 +42,18 @@ const HighlightList = () => {
     editHighlight({ id, content: newContent });
   };
 
+  const handleDeleteSubHighlight = (id: string) => {
+    deleteSubHighlight(id);
+  };
+
+  const handleSubHighlightCreate = (
+    highlightId: string,
+    startIndex: number,
+    endIndex: number
+  ) => {
+    createSubHighlight({ highlightId, startIndex, endIndex });
+  };
+
   if (isLoading) return <div>Loading...</div>;
   if (error) return <div>Error: {error.message}</div>;
   if (highlights?.length === 0) return <div>No highlights found</div>;
@@ -53,6 +69,8 @@ const HighlightList = () => {
             onNoteCreate={handleNoteCreate}
             onDelete={deleteHighlight}
             onEdit={handleEditHighlight}
+            onSubHighlightCreate={handleSubHighlightCreate}
+            onSubHighlightDelete={handleDeleteSubHighlight}
           />
         ))}
       </div>

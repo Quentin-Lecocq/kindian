@@ -2,9 +2,11 @@ import { Tables } from '@/database.types';
 import { Note } from '@/features/notes/utils/types';
 
 export type Highlight = Tables<'Highlight'>;
+export type SubHighlight = Tables<'SubHighlight'>;
 
-export type HighlightWithNotes = Highlight & {
+export type HighlightWithNotesAndSubHighlights = Highlight & {
   notes: Note[];
+  subHighlights: SubHighlight[];
 };
 
 // zustand

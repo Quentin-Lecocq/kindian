@@ -1,13 +1,32 @@
 import NoteList from '@/features/notes/components/note-list';
-import { HighlightWithNotes } from '../utils/types';
+import { HighlightWithNotesAndSubHighlights } from '../utils/types';
 import HighlightActionsFooter from './highlight-actions-footer';
+import HighlightedContent from './highlighted-content';
 
 type HighlightItemProps = {
-  highlight: HighlightWithNotes;
+  highlight: HighlightWithNotesAndSubHighlights;
   onFavoriteToggle: (id: string, isFavorite: boolean) => void;
   onNoteCreate: (highlightId: string, content: string) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string, newContent: string) => void;
+  onSubHighlightCreate: (
+    highlightId: string,
+    startIndex: number,
+    endIndex: number
+  ) => void;
+  onSubHighlightDelete: (id: string) => void;
+};
+
+const calculateStartIndex = (range: Range): number => {
+  const preSelectionRange = range.cloneRange();
+
+  const container = range.startContainer.parentElement;
+  if (!container) return 0;
+
+  preSelectionRange.selectNodeContents(container);
+  preSelectionRange.setEnd(range.startContainer, range.startOffset);
+
+  return preSelectionRange.toString().length;
 };
 
 const HighlightItem = ({
@@ -16,7 +35,24 @@ const HighlightItem = ({
   onNoteCreate,
   onDelete,
   onEdit,
+  onSubHighlightCreate,
+  onSubHighlightDelete,
 }: HighlightItemProps) => {
+  const handleMouseUp = (id: string) => {
+    const selection = window.getSelection();
+    if (!selection || selection.isCollapsed) return;
+
+    const range = selection.getRangeAt(0);
+    const text = selection.toString();
+
+    const startIndex = calculateStartIndex(range);
+    const endIndex = startIndex + text.length;
+
+    onSubHighlightCreate(id, startIndex, endIndex);
+
+    selection.removeAllRanges();
+  };
+
   return (
     <div
       key={highlight.id}
@@ -28,7 +64,16 @@ const HighlightItem = ({
           by {highlight.bookAuthor}
         </span>
       </h3>
-      <p className="text-sm text-foreground">{highlight.content}</p>
+      <div
+        className="cursor-text text-foreground text-sm"
+        onMouseUp={() => handleMouseUp(highlight.id)}
+      >
+        <HighlightedContent
+          content={highlight.content}
+          subHighlights={highlight.subHighlights}
+          onDelete={onSubHighlightDelete}
+        />
+      </div>
       {highlight.notes.length ? <NoteList notes={highlight.notes} /> : null}
       <HighlightActionsFooter
         highlight={highlight}
