@@ -1,10 +1,11 @@
 import NoteList from '@/features/notes/components/note-list';
-import { HighlightWithNotesAndSubHighlights } from '../utils/types';
+import { HighlightWithNotesAndSubHighlightsAndTags } from '../utils/types';
 import HighlightActionsFooter from './highlight-actions-footer';
+import HighlightTags from './highlight-tags';
 import HighlightedContent from './highlighted-content';
 
 type HighlightItemProps = {
-  highlight: HighlightWithNotesAndSubHighlights;
+  highlight: HighlightWithNotesAndSubHighlightsAndTags;
   onFavoriteToggle: (id: string, isFavorite: boolean) => void;
   onNoteCreate: (highlightId: string, content: string) => void;
   onDelete: (id: string) => void;
@@ -15,6 +16,8 @@ type HighlightItemProps = {
     endIndex: number
   ) => void;
   onSubHighlightDelete: (id: string) => void;
+  onTagCreate: (id: string, content: string) => void;
+  onDeleteHighlightTag: (highlightId: string, tagId: string) => void;
 };
 
 const calculateStartIndex = (range: Range): number => {
@@ -37,6 +40,8 @@ const HighlightItem = ({
   onEdit,
   onSubHighlightCreate,
   onSubHighlightDelete,
+  onTagCreate,
+  onDeleteHighlightTag,
 }: HighlightItemProps) => {
   const handleMouseUp = (id: string) => {
     const selection = window.getSelection();
@@ -75,13 +80,21 @@ const HighlightItem = ({
         />
       </div>
       {highlight.notes.length ? <NoteList notes={highlight.notes} /> : null}
-      <HighlightActionsFooter
-        highlight={highlight}
-        onFavorite={onFavoriteToggle}
-        onNoteCreate={onNoteCreate}
-        onDelete={onDelete}
-        onEdit={onEdit}
-      />
+      <div className="flex mt-3 gap-4">
+        <HighlightActionsFooter
+          highlight={highlight}
+          onFavorite={onFavoriteToggle}
+          onNoteCreate={onNoteCreate}
+          onDelete={onDelete}
+          onEdit={onEdit}
+          onTagCreate={onTagCreate}
+        />
+        <div className="flex items-center gap-2"></div>
+        <HighlightTags
+          tags={highlight.highlightTags}
+          onDelete={(tagId) => onDeleteHighlightTag(highlight.id, tagId)}
+        />
+      </div>
     </div>
   );
 };
