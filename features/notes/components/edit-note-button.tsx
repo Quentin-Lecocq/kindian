@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,19 +12,25 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { useState } from 'react';
+import { actionToast } from '@/hooks/use-toast';
+import { Note } from '@prisma/client';
+import { editNote } from '../actions/notes';
 
 type EditNoteButtonProps = {
-  content: string;
-  onEdit: (newContent: string) => void;
+  note: Note;
+  onOptimisticUpdate: (updatedNote: Note) => void;
 };
 
-const EditNoteButton = ({ content, onEdit }: EditNoteButtonProps) => {
-  const [editedContent, setEditedContent] = useState(content);
+const EditNoteButton = ({ note, onOptimisticUpdate }: EditNoteButtonProps) => {
+  const handleEditNote = async (formData: FormData) => {
+    const id = formData.get('id') as string;
+    const content = formData.get('content') as string;
+    onOptimisticUpdate({ ...note, content });
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onEdit(editedContent);
+    const data = await editNote(id, { content });
+    actionToast({
+      actionData: data,
+    });
   };
 
   return (
@@ -42,12 +50,10 @@ const EditNoteButton = ({ content, onEdit }: EditNoteButtonProps) => {
             Edit the note for this highlight
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
+        <form action={handleEditNote}>
+          <input type="hidden" name="id" value={note.id} />
           <div className="flex flex-col gap-2">
-            <Textarea
-              value={editedContent}
-              onChange={(e) => setEditedContent(e.target.value)}
-            />
+            <Textarea name="content" defaultValue={note.content} />
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="submit" size="sm">

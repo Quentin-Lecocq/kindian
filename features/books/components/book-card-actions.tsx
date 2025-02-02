@@ -1,3 +1,5 @@
+'use client';
+
 import DownloadButton from './buttons/download-button';
 import OpenButtonLink from './buttons/open-button-link';
 import ReadPreviewButton from './buttons/read-preview-button';

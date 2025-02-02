@@ -2,18 +2,19 @@
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Book } from '@prisma/client';
 import Image from 'next/image';
-import { useGetBook } from '../hooks/use-get-book';
+
 type BookDetailsProps = {
-  bookId: string;
+  book: Book;
 };
 
-export const BookDetails = ({ bookId }: BookDetailsProps) => {
-  const { data: book, isLoading, error } = useGetBook(bookId);
+export const BookDetails = ({ book }: BookDetailsProps) => {
+  // const { data: book, isLoading, error } = useGetBook(bookId);
 
-  if (isLoading) return <div>Chargement...</div>;
-  if (error) return <div>Une erreur est survenue</div>;
-  if (!book) return <div>Livre non trouvé</div>;
+  // if (isLoading) return <div>Chargement...</div>;
+  // if (error) return <div>Une erreur est survenue</div>;
+  // if (!book) return <div>Livre non trouvé</div>;
 
   const {
     imageUrl,

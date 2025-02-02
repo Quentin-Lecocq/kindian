@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -10,21 +12,24 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
+import { actionToast } from '@/hooks/use-toast';
+import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Pencil } from 'lucide-react';
-import { useState } from 'react';
-import { ICON_CLASSNAME, ICON_SIZE } from '../utils/constants';
+import { editHighlight } from '../actions/highlights';
 
 type EditHighlightIconProps = {
+  id: string;
   content: string;
-  onEdit: (newContent: string) => void;
 };
 
-const EditHighlightIcon = ({ content, onEdit }: EditHighlightIconProps) => {
-  const [editedContent, setEditedContent] = useState(content);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    onEdit(editedContent);
+const EditHighlightIcon = ({ id, content }: EditHighlightIconProps) => {
+  const handleEditHighlight = async (formData: FormData) => {
+    const id = formData.get('id') as string;
+    const content = formData.get('content') as string;
+    const data = await editHighlight(id, content);
+    actionToast({
+      actionData: data,
+    });
   };
 
   return (
@@ -41,12 +46,10 @@ const EditHighlightIcon = ({ content, onEdit }: EditHighlightIconProps) => {
           <DialogTitle>Edit Highlight</DialogTitle>
           <DialogDescription>Edit the highlight</DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleSubmit}>
-          <div className="flex flex-col gap-2">
-            <Textarea
-              value={editedContent}
-              onChange={(e) => setEditedContent(e.target.value)}
-            />
+        <div className="flex flex-col gap-2">
+          <form action={handleEditHighlight}>
+            <input type="hidden" name="id" value={id} />
+            <Textarea name="content" defaultValue={content} />
             <DialogFooter>
               <DialogClose asChild>
                 <Button type="submit" size="sm">
@@ -54,8 +57,8 @@ const EditHighlightIcon = ({ content, onEdit }: EditHighlightIconProps) => {
                 </Button>
               </DialogClose>
             </DialogFooter>
-          </div>
-        </form>
+          </form>
+        </div>
       </DialogContent>
     </Dialog>
   );

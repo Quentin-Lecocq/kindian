@@ -1,3 +1,5 @@
+'use client';
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -9,14 +11,24 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
+import { actionToast } from '@/hooks/use-toast';
+import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Trash } from 'lucide-react';
-import { ICON_CLASSNAME, ICON_SIZE } from '../utils/constants';
+import { deleteHighlight } from '../actions/highlights';
 
 type DeleteHighlightIconProps = {
-  onDelete: () => void;
+  id: string;
 };
 
-const DeleteHighlightIcon = ({ onDelete }: DeleteHighlightIconProps) => {
+const DeleteHighlightIcon = ({ id }: DeleteHighlightIconProps) => {
+  const handleDeleteHighlight = async (formData: FormData) => {
+    const id = formData.get('id') as string;
+    const data = await deleteHighlight(id);
+    actionToast({
+      actionData: data,
+    });
+  };
+
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
@@ -36,7 +48,10 @@ const DeleteHighlightIcon = ({ onDelete }: DeleteHighlightIconProps) => {
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={onDelete}>Continue</AlertDialogAction>
+          <form action={handleDeleteHighlight}>
+            <input type="hidden" name="id" value={id} />
+            <AlertDialogAction type="submit">Continue</AlertDialogAction>
+          </form>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
