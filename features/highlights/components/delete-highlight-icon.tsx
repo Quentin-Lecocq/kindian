@@ -12,9 +12,9 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { actionToast } from '@/hooks/use-toast';
+import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Trash } from 'lucide-react';
 import { deleteHighlight } from '../actions/highlights';
-import { ICON_CLASSNAME, ICON_SIZE } from '../utils/constants';
 
 type DeleteHighlightIconProps = {
   id: string;

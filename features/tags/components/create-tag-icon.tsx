@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
 import { actionToast } from '@/hooks/use-toast';
+import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Tag } from '@prisma/client';
 import { Tags } from 'lucide-react';
 import { createHighlightTag } from '../actions/tags';
@@ -33,15 +34,18 @@ const CreateTagIcon = ({
       createdAt: new Date(),
     });
     const data = await createHighlightTag(id, tagName);
-    actionToast({
-      actionData: data,
-    });
+
+    if (data.error) {
+      actionToast({
+        actionData: data,
+      });
+    }
   };
 
   return (
     <AlertDialog>
-      <AlertDialogTrigger>
-        <Tags size={16} />
+      <AlertDialogTrigger asChild>
+        <Tags size={ICON_SIZE} className={ICON_CLASSNAME} />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

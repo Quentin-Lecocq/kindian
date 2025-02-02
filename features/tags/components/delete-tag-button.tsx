@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { actionToast } from '@/hooks/use-toast';
 import { Tag } from '@prisma/client';
-import { TrashIcon } from 'lucide-react';
+import { X } from 'lucide-react';
 import { deleteHighlightTag } from '../actions/tags';
 
 type DeleteTagButtonProps = {
@@ -24,17 +24,20 @@ const DeleteTagButton = ({
       createdAt: new Date(),
     });
     const data = await deleteHighlightTag(highlightId, tagId);
-    actionToast({
-      actionData: data,
-    });
+
+    if (data.error) {
+      actionToast({
+        actionData: data,
+      });
+    }
   };
 
   return (
-    <form action={handleDeleteTag}>
+    <form action={handleDeleteTag} className="flex items-center">
       <input type="hidden" name="highlightId" value={highlightId} />
       <input type="hidden" name="tagId" value={tagId} />
-      <Button variant="link" type="submit" className="p-0">
-        <TrashIcon className="w-3 h-3 cursor-pointer" />
+      <Button variant="link" type="submit" className="p-0 h-fit">
+        <X className="cursor-pointer text-background" />
       </Button>
     </form>
   );

@@ -22,7 +22,7 @@ const TagListWrapper = ({ highlightId, tags }: TagListWrapperProps) => {
         case 'create':
           return [action.tag, ...state];
         case 'delete':
-          return state.filter((tag) => tag.id !== action.id);
+          return state.filter(({ id }) => id !== action.id);
         default:
           return state;
       }
@@ -37,7 +37,7 @@ const TagListWrapper = ({ highlightId, tags }: TagListWrapperProps) => {
           addOptimisticAction({ type: 'create', tag: newTag })
         }
       />
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 pl-4">
         {optimisticTags.map((tag) => {
           return (
             <TagItem

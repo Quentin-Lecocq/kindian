@@ -9,8 +9,8 @@ type TagItemProps = {
 
 const TagItem = ({ tag, highlightId, onOptimisticDelete }: TagItemProps) => {
   return (
-    <div className="flex text-background items-center gap-1 text-xs bg-neutral-300 px-1 py-1">
-      {tag.name}
+    <div className="bg-neutral-300 flex items-center gap-1 px-1 py-1">
+      <p className="text-xs text-background pl-1">{tag.name}</p>
       <DeleteTagButton
         highlightId={highlightId}
         tagId={tag.id}

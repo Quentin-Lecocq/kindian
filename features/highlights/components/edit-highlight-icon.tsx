@@ -13,9 +13,9 @@ import {
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
 import { actionToast } from '@/hooks/use-toast';
+import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Pencil } from 'lucide-react';
 import { editHighlight } from '../actions/highlights';
-import { ICON_CLASSNAME, ICON_SIZE } from '../utils/constants';
 
 type EditHighlightIconProps = {
   id: string;

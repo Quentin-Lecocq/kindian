@@ -11,12 +11,11 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { ICON_CLASSNAME } from '@/features/highlights/utils/constants';
 import { actionToast } from '@/hooks/use-toast';
+import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Note } from '@prisma/client';
 import { Edit } from 'lucide-react';
 import { createNote } from '../actions/notes';
-import { ICON_SIZE } from '../utils/constants';
 
 type CreateNoteIconProps = {
   highlightId: string;
