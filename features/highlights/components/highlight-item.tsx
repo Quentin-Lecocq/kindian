@@ -1,62 +1,60 @@
 import NoteList from '@/features/notes/components/note-list';
-import { HighlightWithNotesAndSubHighlightsAndTags } from '../utils/types';
-import HighlightActionsFooter from './highlight-actions-footer';
-import HighlightTags from './highlight-tags';
-import HighlightedContent from './highlighted-content';
+import { Highlight } from '@prisma/client';
 
 type HighlightItemProps = {
-  highlight: HighlightWithNotesAndSubHighlightsAndTags;
-  onFavoriteToggle: (id: string, isFavorite: boolean) => void;
-  onNoteCreate: (highlightId: string, content: string) => void;
-  onDelete: (id: string) => void;
-  onEdit: (id: string, newContent: string) => void;
-  onSubHighlightCreate: (
-    highlightId: string,
-    startIndex: number,
-    endIndex: number
-  ) => void;
-  onSubHighlightDelete: (id: string) => void;
-  onTagCreate: (id: string, content: string) => void;
-  onDeleteHighlightTag: (highlightId: string, tagId: string) => void;
+  highlight: Highlight;
+  // onFavoriteToggle: (id: string, isFavorite: boolean) => void;
+  // onNoteCreate: (highlightId: string, content: string) => void;
+  // onDelete: (id: string) => void;
+  // onEdit: (id: string, newContent: string) => void;
+  // onSubHighlightCreate: (
+  //   highlightId: string,
+  //   startIndex: number,
+  //   endIndex: number
+  // ) => void;
+  // onSubHighlightDelete: (id: string) => void;
+  // onTagCreate: (id: string, content: string) => void;
+  // onDeleteHighlightTag: (highlightId: string, tagId: string) => void;
 };
 
-const calculateStartIndex = (range: Range): number => {
-  const preSelectionRange = range.cloneRange();
+// const calculateStartIndex = (range: Range): number => {
+//   const preSelectionRange = range.cloneRange();
 
-  const container = range.startContainer.parentElement;
-  if (!container) return 0;
+//   const container = range.startContainer.parentElement;
+//   if (!container) return 0;
 
-  preSelectionRange.selectNodeContents(container);
-  preSelectionRange.setEnd(range.startContainer, range.startOffset);
+//   preSelectionRange.selectNodeContents(container);
+//   preSelectionRange.setEnd(range.startContainer, range.startOffset);
 
-  return preSelectionRange.toString().length;
-};
+//   return preSelectionRange.toString().length;
+// };
 
 const HighlightItem = ({
   highlight,
-  onFavoriteToggle,
-  onNoteCreate,
-  onDelete,
-  onEdit,
-  onSubHighlightCreate,
-  onSubHighlightDelete,
-  onTagCreate,
-  onDeleteHighlightTag,
-}: HighlightItemProps) => {
-  const handleMouseUp = (id: string) => {
-    const selection = window.getSelection();
-    if (!selection || selection.isCollapsed) return;
+}: // onFavoriteToggle,
+// onNoteCreate,
+// onDelete,
+// onEdit,
+// onSubHighlightCreate,
+// onSubHighlightDelete,
+// onTagCreate,
+// onDeleteHighlightTag,
+HighlightItemProps) => {
+  // if (!highlight) return null;
+  // const handleMouseUp = (id: string) => {
+  //   const selection = window.getSelection();
+  //   if (!selection || selection.isCollapsed) return;
 
-    const range = selection.getRangeAt(0);
-    const text = selection.toString();
+  //   const range = selection.getRangeAt(0);
+  //   const text = selection.toString();
 
-    const startIndex = calculateStartIndex(range);
-    const endIndex = startIndex + text.length;
+  //   const startIndex = calculateStartIndex(range);
+  //   const endIndex = startIndex + text.length;
 
-    onSubHighlightCreate(id, startIndex, endIndex);
+  //   onSubHighlightCreate(id, startIndex, endIndex);
 
-    selection.removeAllRanges();
-  };
+  //   selection.removeAllRanges();
+  // };
 
   return (
     <div
@@ -69,31 +67,31 @@ const HighlightItem = ({
           by {highlight.bookAuthor}
         </span>
       </h3>
-      <div
+      {/* <div
         className="cursor-text text-foreground text-sm"
         onMouseUp={() => handleMouseUp(highlight.id)}
-      >
-        <HighlightedContent
+      > */}
+      {/* <HighlightedContent
           content={highlight.content}
           subHighlights={highlight.subHighlights}
           onDelete={onSubHighlightDelete}
-        />
-      </div>
-      {highlight.notes.length ? <NoteList notes={highlight.notes} /> : null}
+        /> */}
+      {/* </div> */}
+      <NoteList highlightId={highlight.id} />
       <div className="flex mt-3 gap-4">
-        <HighlightActionsFooter
+        {/* <HighlightActionsFooter
           highlight={highlight}
-          onFavorite={onFavoriteToggle}
-          onNoteCreate={onNoteCreate}
-          onDelete={onDelete}
-          onEdit={onEdit}
-          onTagCreate={onTagCreate}
+          // onFavorite={onFavoriteToggle}
+          // onNoteCreate={onNoteCreate}
+          // onDelete={onDelete}
+          // onEdit={onEdit}
+          // onTagCreate={onTagCreate}
         />
-        <div className="flex items-center gap-2"></div>
-        <HighlightTags
-          tags={highlight.highlightTags}
-          onDelete={(tagId) => onDeleteHighlightTag(highlight.id, tagId)}
-        />
+        {/* <div className="flex items-center gap-2"></div>
+          <HighlightTags
+            tags={highlight.highlightTags}
+            onDelete={(tagId) => onDeleteHighlightTag(highlight.id, tagId)}
+          // /> */}
       </div>
     </div>
   );

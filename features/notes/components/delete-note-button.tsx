@@ -1,17 +1,37 @@
 import { Button } from '@/components/ui/button';
+import { actionToast } from '@/hooks/use-toast';
+import { deleteNote } from '../actions/notes';
 
 type DeleteNoteButtonProps = {
-  onDelete: () => void;
+  id: string;
+  onOptimisticDelete: (id: string) => void;
 };
 
-const DeleteNoteButton = ({ onDelete }: DeleteNoteButtonProps) => (
-  <Button
-    onClick={onDelete}
-    variant="link"
-    className="text-xs italic text-muted-foreground hover:text-foreground transition-colors underline p-0"
-  >
-    delete
-  </Button>
-);
+const DeleteNoteButton = ({
+  id,
+  onOptimisticDelete,
+}: DeleteNoteButtonProps) => {
+  const handleDeleteNote = async (formData: FormData) => {
+    const id = formData.get('id') as string;
+    onOptimisticDelete(id);
+    const data = await deleteNote(id);
+    actionToast({
+      actionData: data,
+    });
+  };
+
+  return (
+    <form action={handleDeleteNote}>
+      <input type="hidden" name="id" value={id} />
+      <Button
+        variant="link"
+        type="submit"
+        className="text-xs italic text-muted-foreground hover:text-foreground transition-colors underline p-0"
+      >
+        delete
+      </Button>
+    </form>
+  );
+};
 
 export default DeleteNoteButton;

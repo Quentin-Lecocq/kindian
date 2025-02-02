@@ -2,9 +2,19 @@ import BooksList from '@/features/books/components/books-list';
 import { prisma } from '@/lib/prisma';
 import { getScopedI18n } from '@/locales/server';
 
+const getBooks = async () => {
+  try {
+    const books = await prisma.book.findMany();
+    return books;
+  } catch (error) {
+    console.error('Error fetching books:', error);
+    return [];
+  }
+};
+
 const BooksPage = async () => {
   const t = await getScopedI18n('books_page');
-  const books = await prisma.book.findMany();
+  const books = await getBooks();
 
   return (
     <>

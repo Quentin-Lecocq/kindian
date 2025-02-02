@@ -1,15 +1,16 @@
-'use client';
-
-import { useHighlightList } from '../hooks/use-highlight-list';
+import { Highlight } from '@prisma/client';
 import HighlightItem from './highlight-item';
 
-const HighlightList = () => {
-  const { highlights, isLoading, error, handlers } = useHighlightList();
-  console.log('render');
+type HighlightListProps = {
+  highlights: Highlight[];
+};
 
-  if (isLoading) return <div>Loading...</div>;
-  if (error) return <div>Error: {error.message}</div>;
-  if (highlights?.length === 0) return <div>No highlights found</div>;
+const HighlightList = ({ highlights }: HighlightListProps) => {
+  // const { handlers } = useHighlightList();
+
+  // if (isLoading) return <div>Loading...</div>;
+  // if (error) return <div>Error: {error.message}</div>;
+  // if (highlights?.length === 0) return <div>No highlights found</div>;
 
   return (
     <>
@@ -18,7 +19,7 @@ const HighlightList = () => {
           <HighlightItem
             key={highlight.id}
             highlight={highlight}
-            {...handlers}
+            // {...handlers}
           />
         ))}
       </div>

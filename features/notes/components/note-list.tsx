@@ -1,36 +1,34 @@
-import { useDeleteNote } from '@/features/notes/hooks/use-delete-note';
-import { useEditNote } from '@/features/notes/hooks/use-edit-note';
-import { Note } from '@/features/notes/utils/types';
-import DeleteNoteButton from './delete-note-button';
-import EditNoteButton from './edit-note-button';
+import { prisma } from '@/lib/prisma';
+import { Note } from '@prisma/client';
+import NoteListWrapper from './note-list-wrapper';
 
 type NoteListProps = {
-  notes: Note[];
+  highlightId: string;
 };
 
-const NoteList = ({ notes }: NoteListProps) => {
-  const { mutate: deleteNoteHighlight } = useDeleteNote();
-  const { mutate: editNoteHighlight } = useEditNote();
+const getNotes = async (highlightId: string): Promise<Note[]> => {
+  try {
+    const notes = await prisma.note.findMany({
+      where: {
+        highlightId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
+    return notes;
+  } catch (error) {
+    console.error('Error fetching notes:', error);
+    return [];
+  }
+};
+
+const NoteList = async ({ highlightId }: NoteListProps) => {
+  const notes = await getNotes(highlightId);
 
   return (
     <div className="flex mt-6 flex-col my-3">
-      <div className="border-b w-full">
-        <h4 className="text-sm font-light text-muted-foreground">Notes</h4>
-      </div>
-      {notes.map(({ id, content }) => (
-        <div key={id} className="flex items-center gap-4">
-          <p className="text-sm text-foreground mr-2">{content}</p>
-          <div className="flex gap-2">
-            <EditNoteButton
-              content={content}
-              onEdit={(newContent) =>
-                editNoteHighlight({ id, content: newContent })
-              }
-            />
-            <DeleteNoteButton onDelete={() => deleteNoteHighlight(id)} />
-          </div>
-        </div>
-      ))}
+      <NoteListWrapper highlightId={highlightId} notes={notes} />
     </div>
   );
 };
