@@ -26,7 +26,7 @@ const EditHighlightIcon = ({ id, content }: EditHighlightIconProps) => {
   const handleEditHighlight = async (formData: FormData) => {
     const id = formData.get('id') as string;
     const content = formData.get('content') as string;
-    const data = await editHighlight(id, content);
+    const data = await editHighlight(id, { content });
     actionToast({
       actionData: data,
     });

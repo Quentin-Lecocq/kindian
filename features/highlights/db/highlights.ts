@@ -1,17 +1,22 @@
 import { prisma } from '@/lib/prisma';
-import { revalidateTag } from 'next/cache';
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export const editHighlightDB = async (id: string, content: string) => {
   const editedHighlight = await prisma.highlight.update({
-    where: { id },
-    data: { content },
+    where: {
+      id,
+    },
+    data: {
+      content,
+    },
   });
 
   if (editedHighlight == null) {
     throw new Error('Highlight not found');
   }
 
-  revalidateTag(`highlight-${editedHighlight.id}`);
+  revalidatePath('/highlights');
+  // revalidateTag(`highlight-${editedHighlight.id}`);
 
   return editedHighlight;
 };

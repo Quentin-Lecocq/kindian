@@ -1,10 +1,12 @@
 'use server';
 
+import { z } from 'zod';
 import {
   deleteHighlightDB,
   editHighlightDB,
   favoriteHighlightDB,
 } from '../db/highlights';
+import { highlightSchema } from '../schemas/highlights';
 
 type HighlightResponse = {
   error: boolean;
@@ -13,10 +15,17 @@ type HighlightResponse = {
 
 export const editHighlight = async (
   id: string,
-  content: string
+  unsafeData: z.infer<typeof highlightSchema>
 ): Promise<HighlightResponse> => {
+  console.log(unsafeData);
+  const { success, data } = highlightSchema.safeParse(unsafeData);
+
+  if (!success) {
+    return { error: true, message: 'Invalid highlight data' };
+  }
+
   try {
-    await editHighlightDB(id, content);
+    await editHighlightDB(id, data.content);
     return { error: false, message: 'Highlight edited successfully' };
   } catch (error) {
     console.error(error);

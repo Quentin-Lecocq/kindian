@@ -26,12 +26,14 @@ export const createNoteDB = async (
   return note;
 };
 
-export const updateNoteDB = async (id: string, data: Partial<Note>) => {
+export const updateNoteDB = async (id: string, content: string) => {
   const note = await prisma.note.update({
     where: {
       id,
     },
-    data,
+    data: {
+      content,
+    },
   });
 
   if (note == null) {
