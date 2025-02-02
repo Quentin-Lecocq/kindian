@@ -1,5 +1,4 @@
 import DeleteHighlightIcon from '@/features/highlights/components/delete-highlight-icon';
-import CreateTagIcon from '@/features/tags/components/create-tag-icon';
 import { Highlight } from '@prisma/client';
 import EditHighlightIcon from './edit-highlight-icon';
 import FavoriteHighlightIcon from './favorite-highlight-icon';
@@ -23,7 +22,6 @@ const HighlightActionsFooter = ({ highlight }: HighlightActionsFooterProps) => {
           onTagCreate(id, content);
         }} */}
       {/* /> */}
-      <CreateTagIcon highlightId={id} />
     </div>
   );
 };

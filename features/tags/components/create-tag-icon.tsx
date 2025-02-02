@@ -1,5 +1,3 @@
-'use client';
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,17 +11,27 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
 import { actionToast } from '@/hooks/use-toast';
+import { Tag } from '@prisma/client';
 import { Tags } from 'lucide-react';
 import { createHighlightTag } from '../actions/tags';
 
 type CreateTagIconProps = {
   highlightId: string;
+  onOptimisticCreate: (tag: Tag) => void;
 };
 
-const CreateTagIcon = ({ highlightId }: CreateTagIconProps) => {
+const CreateTagIcon = ({
+  highlightId,
+  onOptimisticCreate,
+}: CreateTagIconProps) => {
   const handleCreateTag = async (formData: FormData) => {
     const id = formData.get('highlightId') as string;
     const tagName = formData.get('tagName') as string;
+    onOptimisticCreate({
+      id: '',
+      name: tagName,
+      createdAt: new Date(),
+    });
     const data = await createHighlightTag(id, tagName);
     actionToast({
       actionData: data,

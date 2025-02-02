@@ -1,6 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { Tag } from '@prisma/client';
-import TagItem from './tag-item';
+import TagListWrapper from './tag-list-wrapper';
 
 type TagListProps = {
   highlightId: string;
@@ -11,11 +11,7 @@ const TagList = async ({ highlightId }: TagListProps) => {
 
   return (
     <>
-      <div className="flex items-center gap-4">
-        {tags.map((tag) => {
-          return <TagItem key={tag.id} tag={tag} highlightId={highlightId} />;
-        })}
-      </div>
+      <TagListWrapper highlightId={highlightId} tags={tags} />
     </>
   );
 };

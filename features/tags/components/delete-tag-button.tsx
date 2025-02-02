@@ -1,19 +1,28 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import { actionToast } from '@/hooks/use-toast';
+import { Tag } from '@prisma/client';
 import { TrashIcon } from 'lucide-react';
 import { deleteHighlightTag } from '../actions/tags';
 
 type DeleteTagButtonProps = {
   highlightId: string;
   tagId: string;
+  onOptimisticDelete: (tag: Tag) => void;
 };
 
-const DeleteTagButton = ({ highlightId, tagId }: DeleteTagButtonProps) => {
+const DeleteTagButton = ({
+  highlightId,
+  tagId,
+  onOptimisticDelete,
+}: DeleteTagButtonProps) => {
   const handleDeleteTag = async (formData: FormData) => {
     const highlightId = formData.get('highlightId') as string;
     const tagId = formData.get('tagId') as string;
+    onOptimisticDelete({
+      id: tagId,
+      name: '',
+      createdAt: new Date(),
+    });
     const data = await deleteHighlightTag(highlightId, tagId);
     actionToast({
       actionData: data,
