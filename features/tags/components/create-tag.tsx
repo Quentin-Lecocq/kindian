@@ -16,24 +16,25 @@ import { Tag } from '@prisma/client';
 import { Tags } from 'lucide-react';
 import { createHighlightTag } from '../actions/tags';
 
-type CreateTagIconProps = {
+type CreateTagProps = {
   highlightId: string;
   onOptimisticCreate: (tag: Tag) => void;
 };
 
-const CreateTagIcon = ({
-  highlightId,
-  onOptimisticCreate,
-}: CreateTagIconProps) => {
+const CreateTag = ({ highlightId, onOptimisticCreate }: CreateTagProps) => {
   const handleCreateTag = async (formData: FormData) => {
     const id = formData.get('highlightId') as string;
-    const tagName = formData.get('tagName') as string;
+    const name = formData.get('name') as string;
+    if (!name.length) return;
+
     onOptimisticCreate({
       id: '',
-      name: tagName,
+      name,
       createdAt: new Date(),
     });
-    const data = await createHighlightTag(id, tagName);
+    const data = await createHighlightTag(id, {
+      name,
+    });
 
     if (data.error) {
       actionToast({
@@ -56,8 +57,8 @@ const CreateTagIcon = ({
         </AlertDialogDescription>
         <form action={handleCreateTag}>
           <input type="hidden" name="highlightId" value={highlightId} />
-          <Input name="tagName" placeholder="Tag name" />
-          <AlertDialogFooter>
+          <Input name="name" placeholder="name" />
+          <AlertDialogFooter className="mt-4">
             <AlertDialogCancel>Cancel</AlertDialogCancel>
             <AlertDialogAction type="submit">Create</AlertDialogAction>
           </AlertDialogFooter>
@@ -67,4 +68,4 @@ const CreateTagIcon = ({
   );
 };
 
-export default CreateTagIcon;
+export default CreateTag;

@@ -9,11 +9,7 @@ type TagListProps = {
 const TagList = async ({ highlightId }: TagListProps) => {
   const tags = await getTags(highlightId);
 
-  return (
-    <>
-      <TagListWrapper highlightId={highlightId} tags={tags} />
-    </>
-  );
+  return <TagListWrapper highlightId={highlightId} tags={tags} />;
 };
 
 export default TagList;

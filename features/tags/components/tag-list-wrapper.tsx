@@ -2,7 +2,7 @@
 
 import { Tag } from '@prisma/client';
 import { useOptimistic } from 'react';
-import CreateTagIcon from './create-tag-icon';
+import CreateTag from './create-tag';
 import TagItem from './tag-item';
 
 type TagListWrapperProps = {
@@ -31,7 +31,7 @@ const TagListWrapper = ({ highlightId, tags }: TagListWrapperProps) => {
 
   return (
     <>
-      <CreateTagIcon
+      <CreateTag
         highlightId={highlightId}
         onOptimisticCreate={(newTag) =>
           addOptimisticAction({ type: 'create', tag: newTag })
