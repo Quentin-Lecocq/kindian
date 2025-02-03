@@ -17,15 +17,12 @@ import { Note } from '@prisma/client';
 import { Edit } from 'lucide-react';
 import { createNote } from '../actions/notes';
 
-type CreateNoteIconProps = {
+type CreateNoteProps = {
   highlightId: string;
   onOptimisticCreate: (newNote: Note) => void;
 };
 
-const CreateNoteIcon = ({
-  highlightId,
-  onOptimisticCreate,
-}: CreateNoteIconProps) => {
+const CreateNote = ({ highlightId, onOptimisticCreate }: CreateNoteProps) => {
   const handleCreateNote = async (formData: FormData) => {
     const content = formData.get('content') as string;
     onOptimisticCreate({
@@ -37,9 +34,11 @@ const CreateNoteIcon = ({
     });
     const data = await createNote(highlightId, { content });
 
-    actionToast({
-      actionData: data,
-    });
+    if (data.error) {
+      actionToast({
+        actionData: data,
+      });
+    }
   };
 
   return (
@@ -68,4 +67,4 @@ const CreateNoteIcon = ({
   );
 };
 
-export default CreateNoteIcon;
+export default CreateNote;

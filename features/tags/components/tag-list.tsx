@@ -1,36 +1,17 @@
-import { prisma } from '@/lib/prisma';
-import { Tag } from '@prisma/client';
+import { HighlightTag, Tag } from '@prisma/client';
 import TagListWrapper from './tag-list-wrapper';
 
 type TagListProps = {
   highlightId: string;
+  highlightTags: (HighlightTag & {
+    tag: Tag;
+  })[];
 };
 
-const TagList = async ({ highlightId }: TagListProps) => {
-  const tags = await getTags(highlightId);
-
+const TagList = async ({ highlightId, highlightTags }: TagListProps) => {
   return (
-    <>
-      <TagListWrapper highlightId={highlightId} tags={tags} />
-    </>
+    <TagListWrapper highlightId={highlightId} initialTags={highlightTags} />
   );
 };
 
 export default TagList;
-
-const getTags = async (highlightId: string): Promise<Tag[]> => {
-  const tags = await prisma.tag.findMany({
-    where: {
-      highlightTags: {
-        some: {
-          highlightId,
-        },
-      },
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  });
-
-  return tags;
-};

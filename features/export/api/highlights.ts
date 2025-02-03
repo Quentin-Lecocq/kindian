@@ -21,6 +21,5 @@ export async function saveHighlightsToDb(
     throw new Error(error.message || 'Failed to save highlights');
   }
 
-  const result = await response.json();
-  console.log({ result });
+  await response.json();
 }

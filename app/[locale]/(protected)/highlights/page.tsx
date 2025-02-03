@@ -1,4 +1,5 @@
 import HighlightItem from '@/features/highlights/components/highlight-item';
+import { HighlightWithTagsAndNotes } from '@/features/highlights/types/types';
 import { prisma } from '@/lib/prisma';
 import { getScopedI18n } from '@/locales/server';
 
@@ -20,9 +21,30 @@ const HighlightsPage = async () => {
 
 export default HighlightsPage;
 
-const getHighlights = async () => {
+const getHighlights = async (): Promise<HighlightWithTagsAndNotes[]> => {
   try {
-    const highlights = await prisma.highlight.findMany();
+    const highlights = await prisma.highlight.findMany({
+      orderBy: {
+        addedAt: 'asc',
+      },
+      include: {
+        highlightTags: {
+          include: {
+            tag: true,
+          },
+          orderBy: {
+            tag: {
+              createdAt: 'desc',
+            },
+          },
+        },
+        notes: {
+          orderBy: {
+            createdAt: 'desc',
+          },
+        },
+      },
+    });
     return highlights;
   } catch (error) {
     console.error('Error fetching highlights:', error);

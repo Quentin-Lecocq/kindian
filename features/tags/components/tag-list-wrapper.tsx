@@ -1,22 +1,24 @@
 'use client';
 
-import { Tag } from '@prisma/client';
+import { HighlightTag, Tag } from '@prisma/client';
 import { useOptimistic } from 'react';
-import CreateTagIcon from './create-tag-icon';
+import CreateTag from './create-tag';
 import TagItem from './tag-item';
 
 type TagListWrapperProps = {
   highlightId: string;
-  tags: Tag[];
+  initialTags: (HighlightTag & {
+    tag: Tag;
+  })[];
 };
 
 type OptimisticAction =
   | { type: 'create'; tag: Tag }
   | { type: 'delete'; id: string };
 
-const TagListWrapper = ({ highlightId, tags }: TagListWrapperProps) => {
+const TagListWrapper = ({ highlightId, initialTags }: TagListWrapperProps) => {
   const [optimisticTags, addOptimisticAction] = useOptimistic(
-    tags,
+    initialTags.map((tag) => tag.tag),
     (state: Tag[], action: OptimisticAction) => {
       switch (action.type) {
         case 'create':
@@ -31,7 +33,7 @@ const TagListWrapper = ({ highlightId, tags }: TagListWrapperProps) => {
 
   return (
     <>
-      <CreateTagIcon
+      <CreateTag
         highlightId={highlightId}
         onOptimisticCreate={(newTag) =>
           addOptimisticAction({ type: 'create', tag: newTag })

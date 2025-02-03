@@ -39,7 +39,7 @@ export const editNote = async (
   }
 
   try {
-    await updateNoteDB(id, data);
+    await updateNoteDB(id, data.content);
     return { error: false, message: 'Note edited successfully' };
   } catch (error) {
     console.error(error);

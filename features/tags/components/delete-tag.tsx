@@ -4,17 +4,17 @@ import { Tag } from '@prisma/client';
 import { X } from 'lucide-react';
 import { deleteHighlightTag } from '../actions/tags';
 
-type DeleteTagButtonProps = {
+type DeleteTagProps = {
   highlightId: string;
   tagId: string;
   onOptimisticDelete: (tag: Tag) => void;
 };
 
-const DeleteTagButton = ({
+const DeleteTag = ({
   highlightId,
   tagId,
   onOptimisticDelete,
-}: DeleteTagButtonProps) => {
+}: DeleteTagProps) => {
   const handleDeleteTag = async (formData: FormData) => {
     const highlightId = formData.get('highlightId') as string;
     const tagId = formData.get('tagId') as string;
@@ -43,4 +43,4 @@ const DeleteTagButton = ({
   );
 };
 
-export default DeleteTagButton;
+export default DeleteTag;

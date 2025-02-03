@@ -16,11 +16,11 @@ import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Trash } from 'lucide-react';
 import { deleteHighlight } from '../actions/highlights';
 
-type DeleteHighlightIconProps = {
+type DeleteHighlightProps = {
   id: string;
 };
 
-const DeleteHighlightIcon = ({ id }: DeleteHighlightIconProps) => {
+const DeleteHighlight = ({ id }: DeleteHighlightProps) => {
   const handleDeleteHighlight = async (formData: FormData) => {
     const id = formData.get('id') as string;
     const data = await deleteHighlight(id);
@@ -58,4 +58,4 @@ const DeleteHighlightIcon = ({ id }: DeleteHighlightIconProps) => {
   );
 };
 
-export default DeleteHighlightIcon;
+export default DeleteHighlight;

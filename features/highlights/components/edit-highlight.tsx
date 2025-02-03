@@ -17,16 +17,16 @@ import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Pencil } from 'lucide-react';
 import { editHighlight } from '../actions/highlights';
 
-type EditHighlightIconProps = {
+type EditHighlightProps = {
   id: string;
   content: string;
 };
 
-const EditHighlightIcon = ({ id, content }: EditHighlightIconProps) => {
+const EditHighlight = ({ id, content }: EditHighlightProps) => {
   const handleEditHighlight = async (formData: FormData) => {
     const id = formData.get('id') as string;
     const content = formData.get('content') as string;
-    const data = await editHighlight(id, content);
+    const data = await editHighlight(id, { content });
     actionToast({
       actionData: data,
     });
@@ -64,4 +64,4 @@ const EditHighlightIcon = ({ id, content }: EditHighlightIconProps) => {
   );
 };
 
-export default EditHighlightIcon;
+export default EditHighlight;
