@@ -15,8 +15,7 @@ export const editHighlightDB = async (id: string, content: string) => {
     throw new Error('Highlight not found');
   }
 
-  revalidatePath('/highlights');
-  // revalidateTag(`highlight-${editedHighlight.id}`);
+  revalidateTag(`highlight-${editedHighlight.id}`);
 
   return editedHighlight;
 };
@@ -30,7 +29,7 @@ export const deleteHighlightDB = async (id: string) => {
     throw new Error('Highlight not found');
   }
 
-  revalidateTag(`highlight-${deletedHighlight.id}`);
+  revalidatePath('/highlights');
 
   return deletedHighlight;
 };

@@ -29,20 +29,25 @@ const NoteActions = ({
     const id = formData.get('id') as string;
     const content = formData.get('content') as string;
     onOptimisticUpdate({ ...note, content });
-
     const data = await editNote(id, { content });
-    actionToast({
-      actionData: data,
-    });
+
+    if (data.error) {
+      actionToast({
+        actionData: data,
+      });
+    }
   };
 
   const handleDeleteNote = async (formData: FormData) => {
     const id = formData.get('id') as string;
     onOptimisticDelete(id);
     const data = await deleteNote(id);
-    actionToast({
-      actionData: data,
-    });
+
+    if (data.error) {
+      actionToast({
+        actionData: data,
+      });
+    }
   };
 
   return (

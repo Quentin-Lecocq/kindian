@@ -34,9 +34,11 @@ const CreateNote = ({ highlightId, onOptimisticCreate }: CreateNoteProps) => {
     });
     const data = await createNote(highlightId, { content });
 
-    actionToast({
-      actionData: data,
-    });
+    if (data.error) {
+      actionToast({
+        actionData: data,
+      });
+    }
   };
 
   return (

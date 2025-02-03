@@ -17,7 +17,6 @@ export const editHighlight = async (
   id: string,
   unsafeData: z.infer<typeof highlightSchema>
 ): Promise<HighlightResponse> => {
-  console.log(unsafeData);
   const { success, data } = highlightSchema.safeParse(unsafeData);
 
   if (!success) {
