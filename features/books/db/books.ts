@@ -1,5 +1,6 @@
 import { prisma } from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
+import { revalidatePath } from 'next/cache';
 
 export const findBook = async (googleBooksId: string) => {
   return prisma.book.findFirst({
@@ -36,4 +37,20 @@ export const getBookByTitleDB = async (title: string) => {
   }
 
   return book;
+};
+
+export const deleteBookDB = async (id: string) => {
+  const deletedBook = await prisma.book.delete({
+    where: {
+      id,
+    },
+  });
+
+  if (deletedBook == null) {
+    throw new Error('Book not found');
+  }
+
+  revalidatePath('/books');
+
+  return deletedBook;
 };
