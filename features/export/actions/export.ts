@@ -1,10 +1,15 @@
 'use server';
 
-import { prisma } from '@/lib/prisma';
+import {
+  findBook,
+  getBookByTitleDB,
+  saveBooksDB,
+} from '@/features/books/db/books';
 import { KindleBook } from '@/types/books';
 import { getUserBySupabaseId } from '@/utils/user';
 import { Prisma } from '@prisma/client';
 import { randomUUID } from 'crypto';
+import { saveHighlightsDB } from '../db/export';
 
 interface GoogleBookVolumeInfo {
   title: string;
@@ -44,9 +49,9 @@ interface GoogleBookResponse {
   items?: GoogleBookItem[];
 }
 
-export async function extractBooksAction(
+export const extractBooksAction = async (
   content: string
-): Promise<KindleBook[]> {
+): Promise<KindleBook[]> => {
   console.log('extractBooks', content);
 
   try {
@@ -94,11 +99,11 @@ export async function extractBooksAction(
     console.error('Error extracting books', error);
     throw error;
   }
-}
+};
 
-export async function exportToMarkdownAction(
+export const exportToMarkdown = async (
   books: KindleBook[]
-): Promise<MarkdownFile[]> {
+): Promise<MarkdownFile[]> => {
   const markdownFiles = await Promise.all(
     books.map((book: KindleBook) => {
       const bookMd = `# ${book.title} - ${book.author}\n\n## Highlights\n\n`;
@@ -114,13 +119,13 @@ export async function exportToMarkdownAction(
   );
 
   return markdownFiles;
-}
+};
 
-function fromFileNameToTitle(filename: string): string {
+const fromFileNameToTitle = (filename: string): string => {
   return filename
-    .replace(/\.md$/, '') // Remove the .md extension
-    .replace(/-/g, ' ') // Replace hyphens with spaces
-    .replace(/\b\w/g, (char) => char.toUpperCase()) // Capitalize first letter of each word
+    .replace(/\.md$/, '')
+    .replace(/-/g, ' ')
+    .replace(/\b\w/g, (char) => char.toUpperCase())
     .replace(/\(.*?\)/g, '')
     .replace(/\[.*?\]/g, '')
     .replace(/['']/g, "'")
@@ -133,26 +138,25 @@ function fromFileNameToTitle(filename: string): string {
     .replace(/[ç]/g, 'c')
     .replace(/[']/g, '')
     .trim();
-}
+};
 
-async function getBookIdAndAuthorByTitle(title: string): Promise<{
+export const getBookIdAndAuthorByTitle = async (
+  title: string
+): Promise<{
   id: string;
   author: string;
   title: string;
-} | null> {
-  const book = await prisma.book.findFirst({
-    where: {
-      title: {
-        equals: title,
-        mode: 'insensitive',
-      },
-    },
-  });
+} | null> => {
+  try {
+    const book = await getBookByTitleDB(title);
+    return { id: book.id, author: book.author, title: book.title };
+  } catch (error) {
+    console.error('Error getting book id and author by title', error);
+    return null;
+  }
+};
 
-  return book ? { id: book.id, author: book.author, title: book.title } : null;
-}
-
-export async function saveHighlightsToDB(highlights: MarkdownFile[]) {
+export const saveHighlights = async (highlights: MarkdownFile[]) => {
   const user = await getUserBySupabaseId();
   if (!user) throw new Error('User not found');
 
@@ -191,15 +195,13 @@ export async function saveHighlightsToDB(highlights: MarkdownFile[]) {
   }
 
   try {
-    await prisma.highlight.createMany({
-      data: dataToSave,
-    });
+    await saveHighlightsDB(dataToSave);
   } catch (error) {
     console.error('Error saving highlights:', error);
   }
-}
+};
 
-export async function saveBooksToDB(books: KindleBook[]) {
+export const saveBooks = async (books: KindleBook[]) => {
   const user = await getUserBySupabaseId();
   if (!user) throw new Error('User not found');
 
@@ -209,11 +211,7 @@ export async function saveBooksToDB(books: KindleBook[]) {
       if (!bookInfo) return null;
 
       if (bookInfo.googleBooksId) {
-        const existingBook = await prisma.book.findFirst({
-          where: {
-            googleBooksId: bookInfo.googleBooksId,
-          },
-        });
+        const existingBook = await findBook(bookInfo.googleBooksId);
 
         if (existingBook) return null;
       }
@@ -247,14 +245,14 @@ export async function saveBooksToDB(books: KindleBook[]) {
     return [];
   }
 
-  await prisma.book.createMany({
-    data: validBooks,
-  });
+  try {
+    await saveBooksDB(validBooks);
+  } catch (error) {
+    console.error('Error saving books:', error);
+  }
+};
 
-  // return validBooks;
-}
-
-function cleanKindleTitle(title: string): string {
+const cleanKindleTitle = (title: string): string => {
   return title
     .replace(/\(.*?\)/g, '')
     .replace(/\[.*?\]/g, '')
@@ -268,9 +266,12 @@ function cleanKindleTitle(title: string): string {
     .replace(/[ç]/g, 'c')
     .replace(/[']/g, '')
     .trim();
-}
+};
 
-export async function fetchGoogleBookInfoAction(title: string, author: string) {
+export const fetchGoogleBookInfoAction = async (
+  title: string,
+  author: string
+) => {
   try {
     const apiKey = process.env.GOOGLE_BOOKS_API_KEY;
     if (!apiKey) {
@@ -345,4 +346,4 @@ export async function fetchGoogleBookInfoAction(title: string, author: string) {
     console.error('Error fetching Google Books info:', error);
     return null;
   }
-}
+};
