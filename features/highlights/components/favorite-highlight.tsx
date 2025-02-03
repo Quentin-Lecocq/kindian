@@ -1,7 +1,7 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { startTransition, useOptimistic, useState } from 'react';
 import { favoriteHighlight } from '../actions/highlights';
 
 const TAB_INDEX = 0;
@@ -17,19 +17,26 @@ const heartBaseClasses = `
   transition-transform
 `;
 
-type FavoriteHighlightIconProps = {
+type FavoriteHighlightProps = {
   id: string;
   isFavorite: boolean;
 };
 
-const FavoriteHighlightIcon = ({
-  id,
-  isFavorite,
-}: FavoriteHighlightIconProps) => {
+const FavoriteHighlight = ({ id, isFavorite }: FavoriteHighlightProps) => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
+
+  const [optimisticIsFavorite, addOptimisticAction] = useOptimistic(
+    isFavorite,
+    (state: boolean) => {
+      return !state;
+    }
+  );
 
   const handleClick = () => {
     setShouldAnimate(!isFavorite);
+    startTransition(() => {
+      addOptimisticAction(!isFavorite);
+    });
     favoriteHighlight(id, !isFavorite);
   };
 
@@ -37,15 +44,17 @@ const FavoriteHighlightIcon = ({
     <div
       className={cn(
         heartBaseClasses,
-        isFavorite && 'bg-right',
-        shouldAnimate && isFavorite && 'animate-heart-burst'
+        optimisticIsFavorite && 'bg-right',
+        shouldAnimate && optimisticIsFavorite && 'animate-heart-burst'
       )}
       onClick={handleClick}
       role="button"
       tabIndex={TAB_INDEX}
-      aria-label={isFavorite ? 'Remove from favorites' : 'Add to favorites'}
+      aria-label={
+        optimisticIsFavorite ? 'Remove from favorites' : 'Add to favorites'
+      }
     />
   );
 };
 
-export default FavoriteHighlightIcon;
+export default FavoriteHighlight;
