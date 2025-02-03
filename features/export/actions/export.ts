@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma';
 import { KindleBook } from '@/types/books';
 import { getUserBySupabaseId } from '@/utils/user';
+import { Prisma } from '@prisma/client';
 import { randomUUID } from 'crypto';
 
 interface GoogleBookVolumeInfo {
@@ -113,6 +114,89 @@ export async function exportToMarkdownAction(
   );
 
   return markdownFiles;
+}
+
+function fromFileNameToTitle(filename: string): string {
+  return filename
+    .replace(/\.md$/, '') // Remove the .md extension
+    .replace(/-/g, ' ') // Replace hyphens with spaces
+    .replace(/\b\w/g, (char) => char.toUpperCase()) // Capitalize first letter of each word
+    .replace(/\(.*?\)/g, '')
+    .replace(/\[.*?\]/g, '')
+    .replace(/['']/g, "'")
+    .replace(/[""]/g, '"')
+    .replace(/[éèêë]/g, 'e')
+    .replace(/[àâä]/g, 'a')
+    .replace(/[îï]/g, 'i')
+    .replace(/[ôö]/g, 'o')
+    .replace(/[ûüù]/g, 'u')
+    .replace(/[ç]/g, 'c')
+    .replace(/[']/g, '')
+    .trim();
+}
+
+async function getBookIdAndAuthorByTitle(title: string): Promise<{
+  id: string;
+  author: string;
+  title: string;
+} | null> {
+  const book = await prisma.book.findFirst({
+    where: {
+      title: {
+        equals: title,
+        mode: 'insensitive',
+      },
+    },
+  });
+
+  return book ? { id: book.id, author: book.author, title: book.title } : null;
+}
+
+export async function saveHighlightsToDBAction(highlights: MarkdownFile[]) {
+  const user = await getUserBySupabaseId();
+  if (!user) throw new Error('User not found');
+
+  const dataToSave: Prisma.HighlightCreateManyInput[] = [];
+
+  for (const highlight of highlights) {
+    const book = await getBookIdAndAuthorByTitle(
+      fromFileNameToTitle(highlight.filename)
+    );
+
+    if (!book?.id) {
+      console.log('Book not found for', highlight.filename);
+      continue;
+    }
+
+    const highlightsArray = highlight.content.split('\n\n');
+    const rawHighlights = highlightsArray.slice(2);
+
+    rawHighlights.forEach((rawHighlight) => {
+      const [content, metadata] = rawHighlight.split('\n  - ');
+      const pageMatch = metadata.match(/page (\d+)/);
+      const locationMatch = metadata.match(/location (\d+-\d+)/);
+      const dateMatch = metadata.match(/added on (.+)$/);
+
+      dataToSave.push({
+        content: content.replace('- ', '').trim(),
+        page: pageMatch ? parseInt(pageMatch[1]) : 0,
+        location: locationMatch ? locationMatch[1] : '',
+        addedAt: new Date(dateMatch ? dateMatch[1] : new Date()),
+        bookTitle: book.title,
+        bookId: book.id,
+        bookAuthor: book.author,
+        userId: user.id,
+      });
+    });
+  }
+
+  try {
+    await prisma.highlight.createMany({
+      data: dataToSave,
+    });
+  } catch (error) {
+    console.error('Error saving highlights:', error);
+  }
 }
 
 export async function saveBooksToDB(books: KindleBook[]) {
