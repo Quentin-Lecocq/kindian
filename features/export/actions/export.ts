@@ -34,6 +34,11 @@ interface GoogleBookItem {
   };
 }
 
+type MarkdownFile = {
+  content: string;
+  filename: string;
+};
+
 interface GoogleBookResponse {
   items?: GoogleBookItem[];
 }
@@ -88,6 +93,26 @@ export async function extractBooksAction(
     console.error('Error extracting books', error);
     throw error;
   }
+}
+
+export async function exportToMarkdownAction(
+  books: KindleBook[]
+): Promise<MarkdownFile[]> {
+  const markdownFiles = await Promise.all(
+    books.map((book: KindleBook) => {
+      const bookMd = `# ${book.title} - ${book.author}\n\n## Highlights\n\n`;
+      const highlightsMd = book.highlights
+        .map((h) => `- ${h.quote}\n  ${h.info}`)
+        .join('\n\n');
+
+      return {
+        content: bookMd + highlightsMd,
+        filename: `${book.title.toLowerCase().replace(/\s+/g, '-')}.md`,
+      };
+    })
+  );
+
+  return markdownFiles;
 }
 
 export async function saveBooksToDB(books: KindleBook[]) {
