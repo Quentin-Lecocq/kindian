@@ -152,7 +152,7 @@ async function getBookIdAndAuthorByTitle(title: string): Promise<{
   return book ? { id: book.id, author: book.author, title: book.title } : null;
 }
 
-export async function saveHighlightsToDBAction(highlights: MarkdownFile[]) {
+export async function saveHighlightsToDB(highlights: MarkdownFile[]) {
   const user = await getUserBySupabaseId();
   if (!user) throw new Error('User not found');
 
