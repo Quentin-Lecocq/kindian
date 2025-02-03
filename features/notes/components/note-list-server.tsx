@@ -1,14 +1,18 @@
-import { getNotesDB } from '../db/notes';
+import { Note } from '@prisma/client';
 import NoteListWrapper from './note-list-wrapper';
 
 type NoteListProps = {
   highlightId: string;
+  highlightNotes: Note[];
 };
 
-const NoteListServer = async ({ highlightId }: NoteListProps) => {
-  const notes = await getNotesDB(highlightId);
-
-  return <NoteListWrapper highlightId={highlightId} notes={notes} />;
+const NoteListServer = async ({
+  highlightId,
+  highlightNotes,
+}: NoteListProps) => {
+  return (
+    <NoteListWrapper highlightId={highlightId} initialNotes={highlightNotes} />
+  );
 };
 
 export default NoteListServer;

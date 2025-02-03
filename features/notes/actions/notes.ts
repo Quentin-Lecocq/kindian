@@ -1,28 +1,12 @@
 'use server';
 
-import { Note } from '@prisma/client';
 import { z } from 'zod';
-import {
-  createNoteDB,
-  deleteNoteDB,
-  getNotesDB,
-  updateNoteDB,
-} from '../db/notes';
+import { createNoteDB, deleteNoteDB, updateNoteDB } from '../db/notes';
 import { noteSchema } from '../schemas/notes';
 
 type NoteResponse = {
   error: boolean;
   message: string;
-};
-
-export const getNotes = async (highlightId: string): Promise<Note[]> => {
-  try {
-    const notes = await getNotesDB(highlightId);
-    return notes;
-  } catch (error) {
-    console.error('Error fetching notes:', error);
-    return [];
-  }
 };
 
 export const createNote = async (

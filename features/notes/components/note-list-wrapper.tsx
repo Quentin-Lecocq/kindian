@@ -12,12 +12,15 @@ type OptimisticAction =
 
 type NoteListWrapperProps = {
   highlightId: string;
-  notes: Note[];
+  initialNotes: Note[];
 };
 
-const NoteListWrapper = ({ highlightId, notes }: NoteListWrapperProps) => {
+const NoteListWrapper = ({
+  highlightId,
+  initialNotes,
+}: NoteListWrapperProps) => {
   const [optimisticNotes, addOptimisticAction] = useOptimistic(
-    notes,
+    initialNotes,
     (state: Note[], action: OptimisticAction) => {
       switch (action.type) {
         case 'update':
