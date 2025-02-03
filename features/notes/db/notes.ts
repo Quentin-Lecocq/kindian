@@ -2,6 +2,19 @@ import { prisma } from '@/lib/prisma';
 import { Note } from '@prisma/client';
 import { revalidateTag } from 'next/cache';
 
+export const getNotesDB = async (highlightId: string): Promise<Note[]> => {
+  const notes = await prisma.note.findMany({
+    where: {
+      highlightId,
+    },
+    orderBy: {
+      createdAt: 'desc',
+    },
+  });
+
+  return notes;
+};
+
 export const createNoteDB = async (
   highlightId: string,
   content: string

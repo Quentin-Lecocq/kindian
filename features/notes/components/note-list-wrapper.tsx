@@ -2,7 +2,7 @@
 
 import { Note } from '@prisma/client';
 import { useOptimistic } from 'react';
-import CreateNoteIcon from './create-note-icon';
+import CreateNote from './create-note';
 import NoteListClient from './note-list-client';
 
 type OptimisticAction =
@@ -38,7 +38,7 @@ const NoteListWrapper = ({ highlightId, notes }: NoteListWrapperProps) => {
     <div className="flex mt-6 flex-col my-3">
       <div className="border-b w-full flex justify-between items-center">
         <h4 className="text-sm font-light text-muted-foreground">Notes</h4>
-        <CreateNoteIcon
+        <CreateNote
           highlightId={highlightId}
           onOptimisticCreate={(newNote) =>
             addOptimisticAction({ type: 'create', note: newNote })
