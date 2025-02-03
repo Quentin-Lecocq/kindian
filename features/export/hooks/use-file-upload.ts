@@ -1,7 +1,7 @@
 import { useToast } from '@/hooks/use-toast';
 import { KindleBook } from '@/types/books';
 import { useState } from 'react';
-import { extractBooks } from '../api/extract';
+import { extractBooksAction } from '../actions/export';
 
 export const useFileUpload = () => {
   const { toast } = useToast();
@@ -14,7 +14,7 @@ export const useFileUpload = () => {
 
     try {
       const content = await file.text();
-      const extractedBooks = await extractBooks(content);
+      const extractedBooks = await extractBooksAction(content);
       setBooks(extractedBooks);
       setError(null);
       toast({

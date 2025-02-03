@@ -1,20 +1,32 @@
 'use client';
 
 import { Button } from '@/components/ui/button';
+import { actionToast } from '@/hooks/use-toast';
 import { Trash2 } from 'lucide-react';
-import { useDeleteBook } from '../hooks/use-delete-book';
-
+import { deleteBook } from '../actions/books';
 type DeleteBookBtnProps = {
   id: string;
 };
 
 const DeleteBookBtn = ({ id }: DeleteBookBtnProps) => {
-  const { mutate: deleteBook } = useDeleteBook();
+  const handleDeleteBook = async (formData: FormData) => {
+    const bookId = formData.get('bookId') as string;
+    const data = await deleteBook(bookId);
+
+    if (data.error) {
+      actionToast({
+        actionData: data,
+      });
+    }
+  };
 
   return (
-    <Button variant="ghost" size="icon" onClick={() => deleteBook(id)}>
-      <Trash2 className="h-4 w-4" />
-    </Button>
+    <form action={handleDeleteBook}>
+      <input type="hidden" name="bookId" value={id} />
+      <Button variant="ghost" size="icon" type="submit">
+        <Trash2 className="h-4 w-4" />
+      </Button>
+    </form>
   );
 };
 

@@ -1,9 +1,7 @@
 import { useToast } from '@/hooks/use-toast';
 import { KindleBook } from '@/types/books';
 import { useRouter } from 'next/navigation';
-import { saveBooksToDb } from '../api/books';
-import { exportToMarkdown } from '../api/export';
-import { saveHighlightsToDb } from '../api/highlights';
+import { exportToMarkdown, saveBooks, saveHighlights } from '../actions/export';
 import { ExportOptions } from '../types/types';
 import { useDownload } from './use-download';
 import { useSelection } from './use-selection';
@@ -22,9 +20,9 @@ export const useExport = (allBooks: KindleBook[]) => {
 
     try {
       // TODO: can i run this in parallel?
-      await saveBooksToDb(books);
+      await saveBooks(books);
       const files = await exportToMarkdown(books);
-      await saveHighlightsToDb(files);
+      await saveHighlights(files);
       await downloadZip(files);
       toast({
         title: 'Books exported',
