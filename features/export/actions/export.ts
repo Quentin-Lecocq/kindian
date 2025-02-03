@@ -1,22 +1,14 @@
-import { APIResponse } from '@/types/api';
+'use server';
+
 import { KindleBook } from '@/types/books';
 import { randomUUID } from 'crypto';
-import { NextResponse } from 'next/server';
 
-export const POST = async (req: Request) => {
+export async function extractBooksAction(
+  content: string
+): Promise<KindleBook[]> {
+  console.log('extractBooks', content);
+
   try {
-    const { content } = await req.json();
-
-    if (!content || typeof content !== 'string') {
-      return NextResponse.json<APIResponse<null>>(
-        {
-          data: null,
-          error: 'Invalid file content',
-        },
-        { status: 422 }
-      );
-    }
-
     const clippings = content
       .replace(/\uFEFF/g, '')
       .split('==========')
@@ -56,15 +48,9 @@ export const POST = async (req: Request) => {
       });
     }
 
-    return NextResponse.json({ data: books });
+    return books;
   } catch (error) {
-    console.error('Error extracting books:', error);
-    return NextResponse.json<APIResponse<null>>(
-      {
-        data: null,
-        error: 'Failed to extract books',
-      },
-      { status: 500 }
-    );
+    console.error('Error extracting books', error);
+    throw error;
   }
-};
+}
