@@ -2,6 +2,9 @@
   "name": "kindian",
   "version": "0.1.0",
   "private": true,
+  "prisma": {
+    "schema": "prisma/schema.prisma"
+  },
   "scripts": {
     "dev": "dotenv -e .env.local -- next dev --turbo",
     "dev:prod": "dotenv -e .env.production -- next dev --turbo",
