@@ -16,16 +16,26 @@ export async function GET(request: Request) {
     const userData = await getUser();
 
     if (userData) {
-      await prisma.user.create({
-        data: {
-          email: userData.email!,
-          id: userData.id,
-          supabaseId: userData.id,
-          name: userData.user_metadata?.full_name || null,
-          image: userData.user_metadata?.avatar_url || null,
-          createdAt: new Date().toISOString(),
-        },
-      });
+      try {
+        const existingUser = await prisma.user.findUnique({
+          where: { supabaseId: userData.id },
+        });
+
+        if (!existingUser) {
+          await prisma.user.create({
+            data: {
+              email: userData.email!,
+              id: userData.id,
+              supabaseId: userData.id,
+              name: userData.user_metadata?.full_name || null,
+              image: userData.user_metadata?.avatar_url || null,
+              createdAt: new Date().toISOString(),
+            },
+          });
+        }
+      } catch (error) {
+        console.error("Erreur lors de l'appel à l'API:", error);
+      }
     }
   }
 
