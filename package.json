@@ -17,7 +17,8 @@
     "db:push": "dotenv -e .env.local -- prisma db push",
     "db:push:prod": "dotenv -e .env.production -- prisma db push",
     "db:studio": "dotenv -e .env.local -- prisma studio",
-    "db:studio:prod": "dotenv -e .env.production -- prisma studio"
+    "db:studio:prod": "dotenv -e .env.production -- prisma studio",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^6.3.0",
