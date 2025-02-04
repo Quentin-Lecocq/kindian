@@ -43,7 +43,9 @@ export const updateNoteDB = async (id: string, content: string) => {
 
 export const deleteNoteDB = async (id: string) => {
   const deletedNote = await prisma.note.delete({
-    where: { id },
+    where: {
+      id,
+    },
   });
 
   if (deletedNote == null) {

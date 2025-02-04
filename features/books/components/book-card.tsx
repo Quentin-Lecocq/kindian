@@ -1,5 +1,3 @@
-// 'use client';
-
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Book } from '@prisma/client';
 import BookCardActions from './book-card-actions';

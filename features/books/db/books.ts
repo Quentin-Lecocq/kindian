@@ -39,10 +39,10 @@ export const getBookByTitleDB = async (title: string) => {
   return book;
 };
 
-export const deleteBookDB = async (id: string) => {
+export const deleteBookDB = async (bookId: string) => {
   const deletedBook = await prisma.book.delete({
     where: {
-      id,
+      id: bookId,
     },
   });
 
