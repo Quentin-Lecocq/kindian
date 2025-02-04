@@ -1,14 +1,12 @@
 import { ImageOff } from 'lucide-react';
 import Image from 'next/image';
-import DeleteBook from './delete-book';
 
 type BookCardImageProps = {
-  id: string;
   title: string;
   imageUrl: string | null;
 };
 
-const BookCardImage = ({ id, title, imageUrl }: BookCardImageProps) => {
+const BookCardImage = ({ title, imageUrl }: BookCardImageProps) => {
   return (
     <div className="flex flex-col gap-1">
       <div className="border p-1 h-fit">
@@ -28,7 +26,7 @@ const BookCardImage = ({ id, title, imageUrl }: BookCardImageProps) => {
           )}
         </div>
       </div>
-      <DeleteBook id={id} />
+      {/* <DeleteBook id={id} onOptimisticDelete={onOptimisticDelete} /> */}
     </div>
   );
 };
