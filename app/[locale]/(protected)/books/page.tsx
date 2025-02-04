@@ -19,7 +19,7 @@ const BooksPage = async () => {
   return (
     <>
       <h2 className="text-xl mb-6">{t('title')}</h2>
-      <BooksList books={books} />
+      <BooksList initialBooks={books} />
     </>
   );
 };

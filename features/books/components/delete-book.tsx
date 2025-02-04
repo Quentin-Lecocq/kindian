@@ -7,11 +7,13 @@ import { deleteBook } from '../actions/books';
 
 type DeleteBookProps = {
   id: string;
+  onOptimisticDelete: (id: string) => void;
 };
 
-const DeleteBook = ({ id }: DeleteBookProps) => {
+const DeleteBook = ({ id, onOptimisticDelete }: DeleteBookProps) => {
   const handleDeleteBook = async (formData: FormData) => {
     const bookId = formData.get('bookId') as string;
+    onOptimisticDelete(bookId);
     const data = await deleteBook(bookId);
 
     if (data.error) {

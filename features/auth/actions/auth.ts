@@ -32,6 +32,8 @@ export const signInWithMagicLink = validatedAction(
 
 export const signOut = async () => {
   const supabase = await createClient();
+
   await supabase.auth.signOut();
+
   redirect('/sign-in');
 };
