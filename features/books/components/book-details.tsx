@@ -1,5 +1,3 @@
-'use client';
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Book } from '@prisma/client';
@@ -10,12 +8,6 @@ type BookDetailsProps = {
 };
 
 export const BookDetails = ({ book }: BookDetailsProps) => {
-  // const { data: book, isLoading, error } = useGetBook(bookId);
-
-  // if (isLoading) return <div>Chargement...</div>;
-  // if (error) return <div>Une erreur est survenue</div>;
-  // if (!book) return <div>Livre non trouvé</div>;
-
   const {
     imageUrl,
     title,

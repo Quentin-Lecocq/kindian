@@ -6,7 +6,6 @@ type BooksListProps = {
 };
 
 const BooksList = ({ books }: BooksListProps) => {
-  // TODO: handle loading state and no books found
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
       {books.map((book) => (

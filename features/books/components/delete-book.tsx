@@ -5,11 +5,11 @@ import { actionToast } from '@/hooks/use-toast';
 import { Trash2 } from 'lucide-react';
 import { deleteBook } from '../actions/books';
 
-type DeleteBookBtnProps = {
+type DeleteBookProps = {
   id: string;
 };
 
-const DeleteBookBtn = ({ id }: DeleteBookBtnProps) => {
+const DeleteBook = ({ id }: DeleteBookProps) => {
   const handleDeleteBook = async (formData: FormData) => {
     const bookId = formData.get('bookId') as string;
     const data = await deleteBook(bookId);
@@ -31,4 +31,4 @@ const DeleteBookBtn = ({ id }: DeleteBookBtnProps) => {
   );
 };
 
-export default DeleteBookBtn;
+export default DeleteBook;
