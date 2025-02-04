@@ -12,10 +12,10 @@ import {
 import { ActionState } from '@/features/auth/middlewares/middleware';
 import { useI18n } from '@/locales/clients';
 import { createClient } from '@/supabase/client';
+import { getAuthRedirectUrl } from '@/utils/url';
 import { useActionState, useState } from 'react';
 import { signInWithMagicLink } from '../actions/auth';
 import { AuthMode } from '../types/type';
-import { REDIRECT_TO_AUTH_CALLBACK } from '../utils/constants';
 import LoginFooter from './login-footer';
 import LoginForm from './login-form';
 import LoginProviderButtons from './login-provider-buttons';
@@ -36,7 +36,7 @@ const Login = ({ mode = 'signin' }: LoginProps) => {
     supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
-        redirectTo: REDIRECT_TO_AUTH_CALLBACK,
+        redirectTo: getAuthRedirectUrl(),
       },
     });
   };
@@ -48,7 +48,7 @@ const Login = ({ mode = 'signin' }: LoginProps) => {
     supabase.auth.signInWithOAuth({
       provider: 'github',
       options: {
-        redirectTo: REDIRECT_TO_AUTH_CALLBACK,
+        redirectTo: getAuthRedirectUrl(),
       },
     });
   };
