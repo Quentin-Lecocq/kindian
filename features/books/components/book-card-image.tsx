@@ -1,6 +1,6 @@
 import { ImageOff } from 'lucide-react';
 import Image from 'next/image';
-import DeleteBookBtn from './delete-book-btn';
+import DeleteBook from './delete-book';
 
 type BookCardImageProps = {
   id: string;
@@ -28,7 +28,7 @@ const BookCardImage = ({ id, title, imageUrl }: BookCardImageProps) => {
           )}
         </div>
       </div>
-      <DeleteBookBtn id={id} />
+      <DeleteBook id={id} />
     </div>
   );
 };
