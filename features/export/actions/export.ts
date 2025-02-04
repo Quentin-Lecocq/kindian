@@ -52,11 +52,9 @@ interface GoogleBookResponse {
 export const extractBooksAction = async (
   content: string
 ): Promise<KindleBook[]> => {
-  console.log('extractBooks', content);
-
   try {
     const clippings = content
-      .replace(/\uFEFF/g, '')
+      .replace(/\uFEFF/g, '') // Remove BOM characters
       .split('==========')
       .map((clipping) => clipping.trim())
       .filter(Boolean);
@@ -64,14 +62,23 @@ export const extractBooksAction = async (
     const books: KindleBook[] = [];
 
     for (const clipping of clippings) {
-      const lines = clipping.split('\n').filter(Boolean);
-      if (lines.length < 3) continue;
+      const lines = clipping.split('\n');
 
-      const [titleLine, infoLine, quote] = lines;
+      // Skip invalid entries
+      if (lines.length < 4) continue;
+
+      // First line is always the title/author
+      const titleLine = lines[0].trim();
+      // Second line is always the highlight info
+      const infoLine = lines[1].trim();
+      // The actual highlight starts after the empty line
+      // Join all remaining lines (except empty ones) as the quote might contain line breaks
+      const quote = lines.slice(3).filter(Boolean).join('\n').trim();
+
       const title = titleLine.match(/^[^(]+/)?.[0]?.trim();
       const author = titleLine.match(/\(([^)]+)\)$/)?.[1];
 
-      if (!title || !author) continue;
+      if (!title || !author || !quote) continue;
 
       let book = books.find(
         (book) => book.title.toLowerCase() === title.toLowerCase()

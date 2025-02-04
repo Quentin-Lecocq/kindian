@@ -15,6 +15,7 @@ export const useFileUpload = () => {
     try {
       const content = await file.text();
       const extractedBooks = await extractBooksAction(content);
+      console.log(extractedBooks);
       setBooks(extractedBooks);
       setError(null);
       toast({
