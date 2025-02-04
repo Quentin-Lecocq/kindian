@@ -26,7 +26,6 @@ const BookCardImage = ({ title, imageUrl }: BookCardImageProps) => {
           )}
         </div>
       </div>
-      {/* <DeleteBook id={id} onOptimisticDelete={onOptimisticDelete} /> */}
     </div>
   );
 };
