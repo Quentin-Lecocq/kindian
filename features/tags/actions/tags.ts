@@ -12,28 +12,19 @@ type HighlightTagResponse = {
 export const createHighlightTag = async (
   highlightId: string,
   unsafeData: z.infer<typeof tagSchema>
-): Promise<HighlightTagResponse> => {
+) => {
   const { success, data } = tagSchema.safeParse(unsafeData);
 
   if (!success) {
-    return {
-      error: true,
-      message: 'Invalid tag data',
-    };
+    throw new Error('Invalid tag data');
   }
 
   try {
-    await createHighlightTagDB(highlightId, data.name);
-    return {
-      error: false,
-      message: 'Highlight tag created successfully',
-    };
+    const newHighlightTag = await createHighlightTagDB(highlightId, data.name);
+    return newHighlightTag;
   } catch (error) {
     console.error(error);
-    return {
-      error: true,
-      message: 'Failed to create highlight tag',
-    };
+    throw error;
   }
 };
 

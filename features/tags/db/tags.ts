@@ -24,6 +24,9 @@ export const createHighlightTagDB = async (
       highlightId,
       tagId: tag.id,
     },
+    include: {
+      tag: true,
+    },
   });
 
   if (createdHighlightTag == null) {

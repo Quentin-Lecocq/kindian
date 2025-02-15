@@ -10,38 +10,16 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog';
 import { Input } from '@/components/ui/input';
-import { actionToast } from '@/hooks/use-toast';
 import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
-import { Tag } from '@prisma/client';
 import { Tags } from 'lucide-react';
-import { createHighlightTag } from '../actions/tags';
+import { useState } from 'react';
 
 type CreateTagProps = {
-  highlightId: string;
-  onOptimisticCreate: (tag: Tag) => void;
+  onCreate: (name: string) => void;
 };
 
-const CreateTag = ({ highlightId, onOptimisticCreate }: CreateTagProps) => {
-  const handleCreateTag = async (formData: FormData) => {
-    const id = formData.get('highlightId') as string;
-    const name = formData.get('name') as string;
-    if (!name.length) return;
-
-    onOptimisticCreate({
-      id: '',
-      name,
-      createdAt: new Date(),
-    });
-    const data = await createHighlightTag(id, {
-      name,
-    });
-
-    if (data.error) {
-      actionToast({
-        actionData: data,
-      });
-    }
-  };
+const CreateTag = ({ onCreate }: CreateTagProps) => {
+  const [name, setName] = useState('');
 
   return (
     <AlertDialog>
@@ -55,14 +33,17 @@ const CreateTag = ({ highlightId, onOptimisticCreate }: CreateTagProps) => {
         <AlertDialogDescription>
           Create a tag for this highlight
         </AlertDialogDescription>
-        <form action={handleCreateTag}>
-          <input type="hidden" name="highlightId" value={highlightId} />
-          <Input name="name" placeholder="name" />
-          <AlertDialogFooter className="mt-4">
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction type="submit">Create</AlertDialogAction>
-          </AlertDialogFooter>
-        </form>
+        <Input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="name"
+        />
+        <AlertDialogFooter className="mt-4">
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={() => onCreate(name)} disabled={!name}>
+            Create
+          </AlertDialogAction>
+        </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
   );
