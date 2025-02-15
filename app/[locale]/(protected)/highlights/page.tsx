@@ -1,5 +1,5 @@
 import { getHighlights } from '@/features/highlights/actions/highlights';
-import HighlightsList from '@/features/highlights/components/highlights-list';
+import HighlightsListWrapper from '@/features/highlights/components/highlights-list-wrapper';
 import { getScopedI18n } from '@/locales/server';
 
 const HighlightsPage = async () => {
@@ -9,7 +9,7 @@ const HighlightsPage = async () => {
   return (
     <>
       <h2 className="text-xl mb-6">{t('title')}</h2>
-      <HighlightsList initialData={initialData} />
+      <HighlightsListWrapper initialData={initialData} />
     </>
   );
 };
