@@ -1,5 +1,5 @@
-import NoteListServer from '@/features/notes/components/note-list-server';
-import TagList from '@/features/tags/components/tag-list';
+import NoteListWrapper from '@/features/notes/components/note-list-wrapper';
+import TagListWrapper from '@/features/tags/components/tag-list-wrapper';
 import { HighlightWithTagsAndNotes } from '../types/types';
 import HighlightActions from './highlight-actions';
 
@@ -7,7 +7,7 @@ type HighlightItemProps = {
   highlight: HighlightWithTagsAndNotes;
 };
 
-const HighlightItem = async ({ highlight }: HighlightItemProps) => {
+const HighlightItem = ({ highlight }: HighlightItemProps) => {
   const { id, bookTitle, bookAuthor, content, highlightTags, notes, location } =
     highlight;
 
@@ -19,11 +19,11 @@ const HighlightItem = async ({ highlight }: HighlightItemProps) => {
       </h3>
       <p className="text-muted-foreground text-sm mb-2">Location: {location}</p>
       <div className="text-foreground text-sm">{content}</div>
-      <NoteListServer highlightId={id} highlightNotes={notes} />
+      <NoteListWrapper highlightId={id} initialNotes={notes} />
       <div className="flex mt-3 gap-4">
         <HighlightActions highlight={highlight} />
         <div className="flex items-center gap-2">
-          <TagList highlightId={id} highlightTags={highlightTags} />
+          <TagListWrapper highlightId={id} initialTags={highlightTags} />
         </div>
       </div>
     </div>

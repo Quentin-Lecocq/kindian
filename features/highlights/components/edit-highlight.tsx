@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,24 +10,20 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { actionToast } from '@/hooks/use-toast';
 import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Pencil } from 'lucide-react';
-import { editHighlight } from '../actions/highlights';
+import { useState } from 'react';
 
 type EditHighlightProps = {
-  id: string;
+  onEdit: (content: string) => void;
   content: string;
 };
 
-const EditHighlight = ({ id, content }: EditHighlightProps) => {
-  const handleEditHighlight = async (formData: FormData) => {
-    const id = formData.get('id') as string;
-    const content = formData.get('content') as string;
-    const data = await editHighlight(id, { content });
-    actionToast({
-      actionData: data,
-    });
+const EditHighlight = ({ onEdit, content }: EditHighlightProps) => {
+  const [newContent, setNewContent] = useState(content);
+
+  const handleEditHighlight = () => {
+    onEdit(newContent);
   };
 
   return (
@@ -47,17 +41,17 @@ const EditHighlight = ({ id, content }: EditHighlightProps) => {
           <DialogDescription>Edit the highlight</DialogDescription>
         </DialogHeader>
         <div className="flex flex-col gap-2">
-          <form action={handleEditHighlight}>
-            <input type="hidden" name="id" value={id} />
-            <Textarea name="content" defaultValue={content} />
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button type="submit" size="sm">
-                  Save
-                </Button>
-              </DialogClose>
-            </DialogFooter>
-          </form>
+          <Textarea
+            value={newContent}
+            onChange={(e) => setNewContent(e.target.value)}
+          />
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="submit" size="sm" onClick={handleEditHighlight}>
+                Save
+              </Button>
+            </DialogClose>
+          </DialogFooter>
         </div>
       </DialogContent>
     </Dialog>

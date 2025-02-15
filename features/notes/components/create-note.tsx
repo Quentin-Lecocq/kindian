@@ -11,34 +11,22 @@ import {
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Textarea } from '@/components/ui/textarea';
-import { actionToast } from '@/hooks/use-toast';
 import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
-import { Note } from '@prisma/client';
 import { Edit } from 'lucide-react';
-import { createNote } from '../actions/notes';
+import { useState } from 'react';
+import { useAddNoteToHighlight } from '../hooks/use-notes';
 
 type CreateNoteProps = {
   highlightId: string;
-  onOptimisticCreate: (newNote: Note) => void;
 };
 
-const CreateNote = ({ highlightId, onOptimisticCreate }: CreateNoteProps) => {
-  const handleCreateNote = async (formData: FormData) => {
-    const content = formData.get('content') as string;
-    onOptimisticCreate({
-      id: '',
-      content,
-      highlightId,
-      createdAt: new Date(),
-      updatedAt: new Date(),
-    });
-    const data = await createNote(highlightId, { content });
+const CreateNote = ({ highlightId }: CreateNoteProps) => {
+  const [content, setContent] = useState('');
+  const { mutate: createNote } = useAddNoteToHighlight();
 
-    if (data.error) {
-      actionToast({
-        actionData: data,
-      });
-    }
+  const handleCreateNote = () => {
+    createNote({ id: highlightId, content });
+    setContent('');
   };
 
   return (
@@ -50,18 +38,19 @@ const CreateNote = ({ highlightId, onOptimisticCreate }: CreateNoteProps) => {
         <DialogHeader>
           <DialogTitle>Create Note</DialogTitle>
         </DialogHeader>
-        <form action={handleCreateNote}>
-          <div className="flex flex-col gap-2">
-            <Textarea name="content" />
-            <DialogFooter>
-              <DialogClose asChild>
-                <Button type="submit" size="sm">
-                  Save
-                </Button>
-              </DialogClose>
-            </DialogFooter>
-          </div>
-        </form>
+        <div className="flex flex-col gap-2">
+          <Textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+          />
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button type="submit" size="sm" onClick={handleCreateNote}>
+                Save
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );
