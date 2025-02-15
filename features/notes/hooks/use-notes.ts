@@ -91,6 +91,7 @@ export const useDeleteNoteFromHighlight = () => {
     },
   });
 };
+
 export const useEditNote = () => {
   const queryClient = useQueryClient();
 
