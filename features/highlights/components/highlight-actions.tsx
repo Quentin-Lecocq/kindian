@@ -1,3 +1,5 @@
+'use client';
+
 import { Highlight } from '@prisma/client';
 import EditHighlight from './edit-highlight';
 import FavoriteHighlight from './favorite-highlight';
