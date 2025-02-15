@@ -1,6 +1,42 @@
 import { prisma } from '@/lib/prisma';
 import { revalidatePath, revalidateTag } from 'next/cache';
 
+export const getHighlightsDB = async (cursor?: string) => {
+  const items = await prisma.highlight.findMany({
+    take: 10 + 1,
+    ...(cursor
+      ? {
+          skip: 1,
+          cursor: {
+            id: cursor,
+          },
+        }
+      : {}),
+    orderBy: {
+      addedAt: 'asc',
+    },
+    include: {
+      highlightTags: {
+        include: {
+          tag: true,
+        },
+        orderBy: {
+          tag: {
+            createdAt: 'desc',
+          },
+        },
+      },
+      notes: {
+        orderBy: {
+          createdAt: 'desc',
+        },
+      },
+    },
+  });
+
+  return items;
+};
+
 export const editHighlightDB = async (id: string, content: string) => {
   const editedHighlight = await prisma.highlight.update({
     where: {

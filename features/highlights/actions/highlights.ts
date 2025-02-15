@@ -1,11 +1,11 @@
 'use server';
 
-import { prisma } from '@/lib/prisma';
 import { z } from 'zod';
 import {
   deleteHighlightDB,
   editHighlightDB,
   favoriteHighlightDB,
+  getHighlightsDB,
 } from '../db/highlights';
 import { highlightSchema } from '../schemas/highlights';
 import { HighlightWithTagsAndNotes } from '../types/types';
@@ -25,37 +25,7 @@ export const getHighlights = async (
   cursor?: string
 ): Promise<PaginatedHighlights> => {
   try {
-    const items = await prisma.highlight.findMany({
-      take: 10 + 1,
-      ...(cursor
-        ? {
-            skip: 1,
-            cursor: {
-              id: cursor,
-            },
-          }
-        : {}),
-      orderBy: {
-        addedAt: 'asc',
-      },
-      include: {
-        highlightTags: {
-          include: {
-            tag: true,
-          },
-          orderBy: {
-            tag: {
-              createdAt: 'desc',
-            },
-          },
-        },
-        notes: {
-          orderBy: {
-            createdAt: 'desc',
-          },
-        },
-      },
-    });
+    const items = await getHighlightsDB(cursor);
 
     const hasMore = items.length > 10;
     const highlights = hasMore ? items.slice(0, -1) : items;
