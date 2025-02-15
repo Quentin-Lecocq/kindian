@@ -1,5 +1,3 @@
-'use client';
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,17 +11,14 @@ import {
 } from '@/components/ui/alert-dialog';
 import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Trash } from 'lucide-react';
-import { useDeleteHighlight } from '../hooks/use-highlights';
 
 type DeleteHighlightProps = {
-  id: string;
+  onDelete: () => void;
 };
 
-const DeleteHighlight = ({ id }: DeleteHighlightProps) => {
-  const { mutate } = useDeleteHighlight();
-
+const DeleteHighlight = ({ onDelete }: DeleteHighlightProps) => {
   const handleDeleteHighlight = () => {
-    mutate({ id });
+    onDelete();
   };
 
   return (

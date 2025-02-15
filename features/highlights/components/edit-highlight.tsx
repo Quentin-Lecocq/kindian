@@ -1,5 +1,3 @@
-'use client';
-
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -15,19 +13,17 @@ import { Textarea } from '@/components/ui/textarea';
 import { ICON_CLASSNAME, ICON_SIZE } from '@/utils/constants';
 import { Pencil } from 'lucide-react';
 import { useState } from 'react';
-import { useEditHighlight } from '../hooks/use-highlights';
 
 type EditHighlightProps = {
-  id: string;
+  onEdit: (content: string) => void;
   content: string;
 };
 
-const EditHighlight = ({ id, content }: EditHighlightProps) => {
+const EditHighlight = ({ onEdit, content }: EditHighlightProps) => {
   const [newContent, setNewContent] = useState(content);
-  const { mutate } = useEditHighlight();
 
   const handleEditHighlight = () => {
-    mutate({ id, content: newContent });
+    onEdit(newContent);
   };
 
   return (

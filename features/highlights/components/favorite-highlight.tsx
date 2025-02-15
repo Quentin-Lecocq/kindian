@@ -1,8 +1,5 @@
-'use client';
-
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
-import { useFavoriteHighlight } from '../hooks/use-highlights';
 
 const TAB_INDEX = 0;
 
@@ -18,18 +15,19 @@ const heartBaseClasses = `
 `;
 
 type FavoriteHighlightProps = {
-  id: string;
+  onFavorite: (isFavorite: boolean) => void;
   isFavorite: boolean;
 };
 
-const FavoriteHighlight = ({ id, isFavorite }: FavoriteHighlightProps) => {
+const FavoriteHighlight = ({
+  onFavorite,
+  isFavorite,
+}: FavoriteHighlightProps) => {
   const [shouldAnimate, setShouldAnimate] = useState(false);
-
-  const { mutate } = useFavoriteHighlight();
 
   const handleClick = () => {
     setShouldAnimate(!isFavorite);
-    mutate({ id, isFavorite: !isFavorite });
+    onFavorite(!isFavorite);
   };
 
   return (
