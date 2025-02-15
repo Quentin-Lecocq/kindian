@@ -5,11 +5,11 @@ import {
   useQueryClient,
 } from '@tanstack/react-query';
 import {
+  editHighlight,
   favoriteHighlight,
   getHighlights,
   PaginatedHighlights,
 } from '../actions/highlights';
-
 export const HIGHLIGHTS_QUERY_KEY = ['highlights'];
 
 export function useHighlights(initialData: PaginatedHighlights) {
@@ -51,6 +51,48 @@ export function useFavoriteHighlight() {
               ...page,
               highlights: page.highlights.map((highlight) =>
                 highlight.id === id ? { ...highlight, isFavorite } : highlight
+              ),
+            })),
+          };
+        }
+      );
+
+      return { previousData };
+    },
+    onError: (_, __, context) => {
+      if (context?.previousData) {
+        queryClient.setQueryData<HighlightsInfiniteData>(
+          HIGHLIGHTS_QUERY_KEY,
+          context.previousData
+        );
+      }
+    },
+  });
+}
+
+export function useEditHighlight() {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, content }: { id: string; content: string }) =>
+      editHighlight(id, { content }),
+    onMutate: async ({ id, content }) => {
+      await queryClient.cancelQueries({ queryKey: HIGHLIGHTS_QUERY_KEY });
+
+      const previousData =
+        queryClient.getQueryData<HighlightsInfiniteData>(HIGHLIGHTS_QUERY_KEY);
+
+      queryClient.setQueryData<HighlightsInfiniteData>(
+        HIGHLIGHTS_QUERY_KEY,
+        (old) => {
+          if (!old) return old;
+
+          return {
+            pageParams: old.pageParams,
+            pages: old.pages.map((page) => ({
+              ...page,
+              highlights: page.highlights.map((highlight) =>
+                highlight.id === id ? { ...highlight, content } : highlight
               ),
             })),
           };
