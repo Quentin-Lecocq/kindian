@@ -13,7 +13,7 @@ import {
 } from '../actions/highlights';
 
 export const HIGHLIGHTS_QUERY_KEY = ['highlights'];
-type HighlightsInfiniteData = InfiniteData<PaginatedHighlights>;
+export type HighlightsInfiniteData = InfiniteData<PaginatedHighlights>;
 
 export const useHighlights = (initialData: PaginatedHighlights) => {
   return useInfiniteQuery({

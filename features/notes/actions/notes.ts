@@ -4,9 +4,12 @@ import { z } from 'zod';
 import { createNoteDB, deleteNoteDB, updateNoteDB } from '../db/notes';
 import { noteSchema } from '../schemas/notes';
 
-type NoteResponse = {
-  error: boolean;
-  message: string;
+export type NoteResponse = {
+  id: string;
+  content: string;
+  createdAt: Date;
+  updatedAt: Date;
+  highlightId: string;
 };
 
 export const createNote = async (
@@ -16,15 +19,15 @@ export const createNote = async (
   const { success, data } = noteSchema.safeParse(unsafeData);
 
   if (!success) {
-    return { error: true, message: 'Invalid note data' };
+    throw new Error('Invalid note data');
   }
 
   try {
-    await createNoteDB(highlightId, data.content);
-    return { error: false, message: 'Note created successfully' };
+    const newNote = await createNoteDB(highlightId, data.content);
+    return newNote;
   } catch (error) {
     console.error(error);
-    return { error: true, message: 'Failed to create note' };
+    throw new Error('Failed to create note');
   }
 };
 
@@ -35,24 +38,23 @@ export const editNote = async (
   const { success, data } = noteSchema.safeParse(unsafeData);
 
   if (!success) {
-    return { error: true, message: 'Invalid note data' };
+    throw new Error('Invalid note data');
   }
 
   try {
-    await updateNoteDB(id, data.content);
-    return { error: false, message: 'Note edited successfully' };
+    const updatedNote = await updateNoteDB(id, data.content);
+    return updatedNote;
   } catch (error) {
     console.error(error);
-    return { error: true, message: 'Failed to edit note' };
+    throw new Error('Failed to edit note');
   }
 };
 
-export const deleteNote = async (id: string): Promise<NoteResponse> => {
+export const deleteNote = async (id: string): Promise<void> => {
   try {
     await deleteNoteDB(id);
-    return { error: false, message: 'Note deleted successfully' };
   } catch (error) {
     console.error(error);
-    return { error: true, message: 'Failed to delete note' };
+    throw new Error('Failed to delete note');
   }
 };
