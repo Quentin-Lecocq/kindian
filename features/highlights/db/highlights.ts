@@ -42,6 +42,9 @@ export const getFavoritesHighlightsDB = async () => {
     where: {
       isFavorite: true,
     },
+    orderBy: {
+      addedAt: 'asc',
+    },
   });
 
   if (favoritesHighlights == null) {

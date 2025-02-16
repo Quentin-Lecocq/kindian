@@ -1,7 +1,5 @@
 import Loader from '@/components/loader';
 
-const Loading = () => {
-  return <Loader />;
-};
+const Loading = () => <Loader />;
 
 export default Loading;
