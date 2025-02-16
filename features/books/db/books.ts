@@ -2,6 +2,17 @@ import { prisma } from '@/lib/prisma';
 import { Prisma } from '@prisma/client';
 import { revalidatePath } from 'next/cache';
 
+export const getFavoritesBooksDB = async () => {
+  // favorites books doesnt exist yet
+  const favoritesBooks = await prisma.book.findMany();
+
+  if (favoritesBooks == null) {
+    throw new Error('Favorites books not found');
+  }
+
+  return favoritesBooks;
+};
+
 export const findBook = async (googleBooksId: string) => {
   return prisma.book.findFirst({
     where: {
