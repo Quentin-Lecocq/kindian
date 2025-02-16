@@ -5,6 +5,7 @@ import {
   deleteHighlightDB,
   editHighlightDB,
   favoriteHighlightDB,
+  getFavoritesHighlightsDB,
   getHighlightsDB,
 } from '../db/highlights';
 import { highlightSchema } from '../schemas/highlights';
@@ -43,6 +44,16 @@ export const getHighlights = async (
       hasMore: false,
       nextCursor: undefined,
     };
+  }
+};
+
+export const getFavoritesHighlights = async () => {
+  try {
+    const favoritesHighlights = await getFavoritesHighlightsDB();
+    return favoritesHighlights;
+  } catch (error) {
+    console.error(error);
+    return [];
   }
 };
 

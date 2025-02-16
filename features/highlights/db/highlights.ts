@@ -37,6 +37,20 @@ export const getHighlightsDB = async (cursor?: string) => {
   return items;
 };
 
+export const getFavoritesHighlightsDB = async () => {
+  const favoritesHighlights = await prisma.highlight.findMany({
+    where: {
+      isFavorite: true,
+    },
+  });
+
+  if (favoritesHighlights == null) {
+    throw new Error('Favorites highlights not found');
+  }
+
+  return favoritesHighlights;
+};
+
 export const editHighlightDB = async (id: string, content: string) => {
   const editedHighlight = await prisma.highlight.update({
     where: {
