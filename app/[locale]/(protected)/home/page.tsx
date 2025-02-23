@@ -1,25 +1,24 @@
+import Greetings from '@/features/home/component/greetings';
+import LastBook from '@/features/home/component/last-book';
 import { getScopedI18n } from '@/locales/server';
 import { getUser } from '@/utils/user';
 import { NextPage } from 'next';
 
+const IDENTITY_INDEX = 1;
+const DEFAULT_NAME = 'no name';
+
 const HomePage: NextPage = async () => {
   const t = await getScopedI18n('home_page');
   const user = await getUser();
+  const name =
+    user?.identities?.[IDENTITY_INDEX]?.identity_data?.full_name ??
+    DEFAULT_NAME;
 
   return (
     <>
       <h2 className="text-xl mb-6">{t('title')}</h2>
-      <h1 className="xl:text-4xl text-3xl">This is my title dashboard</h1>
-      <p className="text-muted-foreground text-sm mt-4">
-        This is my text dashboard
-      </p>
-      <p className="text-destructive text-sm mt-4">
-        This is my destructive text
-      </p>
-      <br />
-      <h2 className="text-sm font-regular">This is my subtitle dashboard</h2>
-      <br />
-      <p>Hello {user?.email}</p>
+      <Greetings name={name} />
+      <LastBook />
     </>
   );
 };
