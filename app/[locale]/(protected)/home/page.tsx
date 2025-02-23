@@ -1,5 +1,6 @@
 import Greetings from '@/features/home/component/greetings';
 import LastBook from '@/features/home/component/last-book';
+import RandomBooks from '@/features/home/component/random-books';
 import { getScopedI18n } from '@/locales/server';
 import { getUser } from '@/utils/user';
 import { NextPage } from 'next';
@@ -19,6 +20,7 @@ const HomePage: NextPage = async () => {
       <h2 className="text-xl mb-6">{t('title')}</h2>
       <Greetings name={name} />
       <LastBook />
+      <RandomBooks />
     </>
   );
 };
