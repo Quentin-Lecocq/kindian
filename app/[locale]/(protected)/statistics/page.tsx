@@ -1,12 +1,16 @@
-import { getScopedI18n } from '@/locales/server';
+import { getStatistics } from '@/features/statistics/actions/statistics';
+import StatisticsWrapper from '@/features/statistics/components/statistics-wrapper';
 import { NextPage } from 'next';
 
 const StatisticsPage: NextPage = async () => {
-  const t = await getScopedI18n('statistics_page');
+  const statistics = await getStatistics();
+  console.log(statistics);
+  // const t = await getScopedI18n('statistics_page');
 
   return (
     <>
-      <h2 className="text-xl mb-6">{t('title')}</h2>
+      <h1>Statistics Wrapper</h1>
+      <StatisticsWrapper statistics={statistics} />
     </>
   );
 };
